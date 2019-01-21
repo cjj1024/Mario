@@ -8,7 +8,7 @@ class GameMenu():
 
 
     def show(self):
-        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
+        self.screen.blit(background['background'], (0, 0))
         for i in range(0, 800, 40):
             self.screen.blit(ground['brick'], (i, 560))
         self.screen.blit(background['bush1'], (0, 435))

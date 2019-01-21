@@ -7,8 +7,12 @@ def load_image(directory, colorkey=(255, 0, 255), accept=('.jpg', '.bmp', '.png'
     for filename in os.listdir(directory):
         name, ext = os.path.splitext(filename)
         if ext.lower() in accept:
-            img = pygame.image.load(os.path.join(directory, filename)).convert()
-            img.set_colorkey(colorkey)
+            img = pygame.image.load(os.path.join(directory, filename))
+            if img.get_alpha():
+                img = img.convert_alpha()
+            else:
+                img.set_colorkey(colorkey)
+                img = img.convert()
             images[name] = img
 
     return images
