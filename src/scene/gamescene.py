@@ -2,21 +2,26 @@ import sys
 from pygame.locals import *
 
 from src.sprite.mario import *
+from src.sprite.goomba import *
 
 class GameScene():
     def __init__(self, screen):
         self.screen = screen
 
     def show(self):
+        palyer = pygame.sprite.Group()
+        enemy = pygame.sprite.Group()
         mario = Mario()
-        marioGroup = pygame.sprite.Group()
-        marioGroup.add(mario)
+        palyer.add(mario)
+        toomba = Goomba()
+        enemy.add(toomba)
+
         clock = pygame.time.Clock()
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit(0)
-                elif event.type == KEYDOWN:
+                if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         sys.exit(0)
                     elif event.key == K_LEFT:
@@ -25,16 +30,21 @@ class GameScene():
                     elif event.key == K_RIGHT:
                         mario.set_status(WALK)
                         mario.set_direction(RIGHT)
+                    elif event.key == K_a:
+                        mario.set_status(JUMP)
+                        print('Jump')
                     else:
                         mario.set_status(STAND)
                 else:
                     mario.set_status(STAND)
 
 
-            self.screen.blit(background['background'], (0, 0))
+            self.screen.blit(background_img['background'], (0, 0))
             for i in range(0, 800, 40):
-                self.screen.blit(ground['brick'], (i, 560))
-            marioGroup.update()
-            marioGroup.draw(self.screen)
+                self.screen.blit(ground_img['brick'], (i, 560))
+            palyer.update()
+            palyer.draw(self.screen)
+            enemy.update()
+            enemy.draw(self.screen)
             pygame.display.update()
             clock.tick(30)

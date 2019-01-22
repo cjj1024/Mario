@@ -8,16 +8,16 @@ class GameMenu():
 
 
     def show(self):
-        self.screen.blit(background['background'], (0, 0))
+        self.screen.blit(background_img['background'], (0, 0))
         for i in range(0, 800, 40):
-            self.screen.blit(ground['brick'], (i, 560))
-        self.screen.blit(background['bush1'], (0, 435))
-        self.screen.blit(background['bush3'], (300, 515))
-        self.screen.blit(background['bush2'], (620, 420))
+            self.screen.blit(ground_img['brick'], (i, 560))
+        self.screen.blit(background_img['bush1'], (0, 435))
+        self.screen.blit(background_img['bush3'], (300, 515))
+        self.screen.blit(background_img['bush2'], (620, 420))
 
         write_word(screen, '开始游戏', 36, (255, 255, 255), (350, 250))
         write_word(screen, '退出游戏', 36, (255, 255, 255), (350, 300))
-        self.screen.blit(bonus['life'], (300, 250))
+        self.screen.blit(bonus_img['life'], (300, 250))
 
         pygame.mixer.music.load(music['main_theme'])
         pygame.mixer.music.play()
@@ -32,12 +32,12 @@ class GameMenu():
                     elif event.key == K_DOWN:
                         if self.status == 1:
                             screen.fill((100, 150, 250), (300, 250, 40, 40))
-                            screen.blit(bonus['life'], (300, 300))
+                            screen.blit(bonus_img['life'], (300, 300))
                             self.status = 2
                     elif event.key == K_UP:
                         if self.status == 2:
                             screen.fill((100, 150, 250), (300, 300, 40, 40))
-                            screen.blit(bonus['life'], (300, 250))
+                            screen.blit(bonus_img['life'], (300, 250))
                             self.status = 1
                     elif event.key == K_RETURN:
                         if self.status == 1:
