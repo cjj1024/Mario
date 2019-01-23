@@ -3,7 +3,7 @@ from src.tool.init import *
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = mario_big_right_img['stand']
+        self.image = mario_small_right_img['stand']
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.shape = SMALL
@@ -11,20 +11,32 @@ class Mario(pygame.sprite.Sprite):
         self.direction = RIGHT
         self.animationNum = 0
         self.speed = 10
-        self.jump_hori_speed = 8
-        self.jump_vert_speed = -15
-        self.gravity = 1
+        self.jump_hori_speed = JUMP_HORI_SPEED
+        self.jump_vert_speed = JUMP_VERT_SPEED
+        self.gravity = GRAVITY
 
         self.init_animation()
         self.set_shape(SMALL)
 
 
     def detect_collision(self, group):
+        if self.status == DEATH:
+            return (0, 0)
+        i = 0
         for s in group:
+            if s.get_status() == DEATH:
+                continue
             if pygame.Rect.colliderect(self.rect, s.rect):
-                return True
-
-        return False
+                print('mario rect')
+                print(self.rect)
+                print('goomba rect')
+                print(s.rect)
+                if self.rect.y + 35 > s.rect.y:
+                    return (2, self)
+                else:
+                    return (1, s)
+            i += 1
+        return (0, None)
 
 
     def update(self):
@@ -45,9 +57,10 @@ class Mario(pygame.sprite.Sprite):
         self.rect.y += self.jump_vert_speed
         self.jump_vert_speed += self.gravity
 
+
     def jump(self):
         if self.rect.y + self.jump_vert_speed > 520:
-            self.jump_vert_speed = -15
+            self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
         else:
             self.rect.y += self.jump_vert_speed
@@ -93,12 +106,17 @@ class Mario(pygame.sprite.Sprite):
 
 
     def set_status(self, status):
-        if self.status != JUMP or self.status != DEATH:
+        if self.status == DEATH:
+            return
+        if status == DEATH:
+            self.status = DEATH
+            pygame.mixer.Sound.play(sound['death'])
+            return
+        if self.status != JUMP:
             self.status = status
         if status == JUMP:
             pygame.mixer.Sound.play(sound['small_jump'])
-        if status == DEATH:
-            pygame.mixer.Sound.play(sound['death'])
+
 
     def set_direction(self, direction):
         if self.status != JUMP:

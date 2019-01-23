@@ -27,6 +27,10 @@ DEATH =      5
 SMALL =     1
 BIG =       2
 
+JUMP_VERT_SPEED =   -20
+JUMP_HORI_SPEED =   4
+GRAVITY         =   2
+
 background_img['background'] =  pygame.Surface((800, 600))
 background_img['background'].fill((100, 150, 250))
 
