@@ -32,12 +32,13 @@ class GameScene():
                         mario.set_direction(RIGHT)
                     elif event.key == K_a:
                         mario.set_status(JUMP)
-                        print('Jump')
                     else:
                         mario.set_status(STAND)
                 else:
                     mario.set_status(STAND)
 
+            if mario.detect_collision(enemy):
+                mario.set_status(DEATH)
 
             self.screen.blit(background_img['background'], (0, 0))
             for i in range(0, 800, 40):

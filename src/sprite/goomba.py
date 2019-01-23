@@ -6,7 +6,7 @@ class Goomba(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = goomba_img['goomba_left']
         self.rect = self.image.get_rect()
-        self.rect.x = 0
+        self.rect.x = 800
         self.rect.y = 520
         self.direction = LEFT
         self.speed = 5

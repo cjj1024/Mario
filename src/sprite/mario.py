@@ -11,11 +11,20 @@ class Mario(pygame.sprite.Sprite):
         self.direction = RIGHT
         self.animationNum = 0
         self.speed = 10
-        self.speed_up = -15
+        self.jump_hori_speed = 8
+        self.jump_vert_speed = -15
         self.gravity = 1
 
         self.init_animation()
         self.set_shape(SMALL)
+
+
+    def detect_collision(self, group):
+        for s in group:
+            if pygame.Rect.colliderect(self.rect, s.rect):
+                return True
+
+        return False
 
 
     def update(self):
@@ -25,24 +34,34 @@ class Mario(pygame.sprite.Sprite):
             self.walk()
         elif self.status == JUMP:
             self.jump()
+        elif self.status == DEATH:
+            self.death()
 
+
+    def death(self):
+        if self.rect.y > 600:
+            self.kill()
+        self.image = self.small_dead
+        self.rect.y += self.jump_vert_speed
+        self.jump_vert_speed += self.gravity
 
     def jump(self):
-        if self.rect.y + self.speed_up > 520:
-            self.speed_up = -15
+        if self.rect.y + self.jump_vert_speed > 520:
+            self.jump_vert_speed = -15
             self.status = STAND
         else:
-            self.rect.y += self.speed_up
-            self.speed_up += self.gravity
+            self.rect.y += self.jump_vert_speed
+            self.jump_vert_speed += self.gravity
+
         if self.direction == LEFT:
-            if self.rect.x - self.speed < 0:
+            if self.rect.x - self.jump_hori_speed < 0:
                 return
-            self.rect.x -= self.speed
+            self.rect.x -= self.jump_hori_speed
             self.image = self.small_jump_left
         else:
-            if self.rect.x + self.speed > 780:
+            if self.rect.x + self.jump_hori_speed > 780:
                 return
-            self.rect.x += self.speed
+            self.rect.x += self.jump_hori_speed
             self.image = self.small_jump_right
 
     def walk(self):
@@ -73,11 +92,13 @@ class Mario(pygame.sprite.Sprite):
             self.image = self.small_stand_right
 
 
-
     def set_status(self, status):
-        if self.status != JUMP:
+        if self.status != JUMP or self.status != DEATH:
             self.status = status
-
+        if status == JUMP:
+            pygame.mixer.Sound.play(sound['small_jump'])
+        if status == DEATH:
+            pygame.mixer.Sound.play(sound['death'])
 
     def set_direction(self, direction):
         if self.status != JUMP:
@@ -114,3 +135,5 @@ class Mario(pygame.sprite.Sprite):
 
         self.small_jump_left = mario_small_left_img['jump']
         self.small_jump_right = mario_small_right_img['jump']
+
+        self.small_dead = mario_small_right_img['dead']

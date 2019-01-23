@@ -6,7 +6,6 @@ class GameMenu():
         self.status = 1
 
 
-
     def show(self):
         self.screen.blit(background_img['background'], (0, 0))
         for i in range(0, 800, 40):
