@@ -1,5 +1,6 @@
 
 from src.tool.init import *
+from src.tool.globaldata import *
 
 class Goomba(pygame.sprite.Sprite):
     def __init__(self):
@@ -26,12 +27,16 @@ class Goomba(pygame.sprite.Sprite):
         self.image = goomba_img['death']
         self.rect.x -= self.speed
 
+    # 到达屏幕左边界则向右走
+    # 到达屏幕右边界则向左走
     def walk(self):
-        if self.rect.x > 0 and self.rect.x < 760:
-            if self.direction == LEFT:
-                self.rect.x -= self.speed
-            elif self.direction == RIGHT:
-                self.rect.x += self.speed
+        # 向左走
+        if self.direction == LEFT and self.rect.x > 0:
+            self.rect.x -= self.speed
+        # 向右走
+        elif self.direction == RIGHT and self.rect.x < 760:
+            self.rect.x += self.speed
+        # 掉头
         else:
             if self.rect.x <= 10:
                 self.image = goomba_img['walk_right']

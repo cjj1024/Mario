@@ -1,11 +1,12 @@
 import pygame
 import os
 
-
 def load_image(directory, colorkey=(255, 0, 255), accept=('.jpg', '.bmp', '.png')):
     images = {}
     for filename in os.listdir(directory):
+        # 把文件名分成名字和扩展名
         name, ext = os.path.splitext(filename)
+        # 判断文件是否为可接受的文件类型
         if ext.lower() in accept:
             img = pygame.image.load(os.path.join(directory, filename))
             if img.get_alpha():
@@ -18,6 +19,8 @@ def load_image(directory, colorkey=(255, 0, 255), accept=('.jpg', '.bmp', '.png'
     return images
 
 
+# pygame不能直接一次性加载全部music
+# 此函数只加载了music的文件名
 def load_music(directory, accept=('.mp3', '.wav', '.ogg')):
     music_dir = {}
     for filename in os.listdir(directory):
@@ -41,6 +44,9 @@ def load_sound(directory, accept=('.mp3', '.wav', '.ogg')):
 
 
 def write_word(screen, word, size, color, position):
+    # 加载字体并设置字体大小
     font = pygame.font.Font('./res/font/geteshi.ttf', size)
-    start_game = font.render(word, False, color)
-    screen.blit(start_game, position)
+    # 把文字画在一个Surface上
+    word_image = font.render(word, False, color)
+    # 把得到的文字Surface画在屏幕Surface上
+    screen.blit(word_image, position)

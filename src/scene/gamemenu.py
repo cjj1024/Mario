@@ -1,9 +1,14 @@
+
 from src.scene.gamescene import *
+from src.tool.init import *
 
 class GameMenu():
     def __init__(self, screen):
         self.screen = screen
-        self.status = 1
+        # 记录用户的选择
+        # 1 为开始游戏
+        # 2 为退出游戏
+        self.selected = 1
 
 
     def show(self):
@@ -29,20 +34,20 @@ class GameMenu():
                     if event.key == K_ESCAPE:
                         sys.exit(0)
                     elif event.key == K_DOWN:
-                        if self.status == 1:
+                        if self.selected == 1:
                             screen.fill((100, 150, 250), (300, 250, 40, 40))
                             screen.blit(bonus_img['life'], (300, 300))
-                            self.status = 2
+                            self.selected = 2
                     elif event.key == K_UP:
-                        if self.status == 2:
+                        if self.selected == 2:
                             screen.fill((100, 150, 250), (300, 300, 40, 40))
                             screen.blit(bonus_img['life'], (300, 250))
-                            self.status = 1
+                            self.selected = 1
                     elif event.key == K_RETURN:
-                        if self.status == 1:
+                        if self.selected == 1:
                             gamescene = GameScene(self.screen)
                             gamescene.show()
-                        elif self.status == 2:
+                        elif self.selected == 2:
                             sys.exit(0)
 
             pygame.display.update()

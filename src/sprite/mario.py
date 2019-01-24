@@ -1,4 +1,6 @@
+
 from src.tool.init import *
+from src.tool.globaldata import *
 
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
@@ -19,6 +21,10 @@ class Mario(pygame.sprite.Sprite):
         self.set_shape(SMALL)
 
 
+    # 检测Mario是否与group中的Sprite发生碰撞
+    # 返回一个二元列表
+    # 第一个元素表示谁死亡, 0 没有Sprite死亡, 1 敌人死亡, 2 自己死亡
+    # 第二个元素为死亡的Sprite
     def detect_collision(self, group):
         if self.status == DEATH:
             return (0, 0)
@@ -27,11 +33,11 @@ class Mario(pygame.sprite.Sprite):
             if s.get_status() == DEATH:
                 continue
             if pygame.Rect.colliderect(self.rect, s.rect):
-                print('mario rect')
+                # 踩在敌人的头上, 杀死敌人
+                # 其他位置碰到敌人, 死亡
                 print(self.rect)
-                print('goomba rect')
                 print(s.rect)
-                if self.rect.y + 35 > s.rect.y:
+                if self.rect.y + 30 > s.rect.y:
                     return (2, self)
                 else:
                     return (1, s)
@@ -40,6 +46,8 @@ class Mario(pygame.sprite.Sprite):
 
 
     def update(self):
+        if self.status != DEATH and scene1[int(self.rect.y / 40) + 1][int(self.rect.x / 40)] == 0:
+            self.rect.y += 10
         if self.status == STAND:
             self.stand()
         elif self.status == WALK:
@@ -59,38 +67,60 @@ class Mario(pygame.sprite.Sprite):
 
 
     def jump(self):
-        if self.rect.y + self.jump_vert_speed > 520:
+        if self.direction == LEFT:
+            # 到达屏幕左边界
+            if self.rect.x - self.jump_hori_speed < 0:
+                return
+            self.rect.x -= self.jump_hori_speed
+            self.image = self.small_jump_left
+        else:
+            # 到达屏幕右边界
+            if self.rect.x + self.jump_hori_speed > 780:
+                return
+            self.rect.x += self.jump_hori_speed
+            self.image = self.small_jump_right
+
+        # 计算当前坐标在二维数组中的映射
+        i = int((self.rect.y + self.jump_vert_speed) / 40)
+        j = int(self.rect.x / 40)
+
+        # 跳跃上升时头上有物体
+        if scene1[i][j] != 0 and self.jump_vert_speed < 0:
+            brick_manager.bump(i, j)
+            self.jump_vert_speed = JUMP_VERT_SPEED
+            self.status = STAND
+        # 跳跃下降时脚下有物体
+        elif scene1[i + 1][j] != 0 and self.jump_vert_speed > 0:
+            self.rect.y = i * 40
             self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
         else:
             self.rect.y += self.jump_vert_speed
             self.jump_vert_speed += self.gravity
 
-        if self.direction == LEFT:
-            if self.rect.x - self.jump_hori_speed < 0:
-                return
-            self.rect.x -= self.jump_hori_speed
-            self.image = self.small_jump_left
-        else:
-            if self.rect.x + self.jump_hori_speed > 780:
-                return
-            self.rect.x += self.jump_hori_speed
-            self.image = self.small_jump_right
 
     def walk(self):
         if self.direction == LEFT:
+            # 到达屏幕左边界
             if self.rect.x - self.speed < 0:
                 return
+
             self.rect.x -= self.speed
+
+            # 循环播放walk动画
             if self.animationNum < len(self.small_walk_left) - 1:
                 self.animationNum += 1
             else:
                 self.animationNum = 0
             self.image = self.small_walk_left[self.animationNum]
         else:
+            # 到达屏幕右边界
             if self.rect.x + self.speed > 780:
                 return
+
             self.rect.x += self.speed
+
+            # 循环播放walk动画
             if self.animationNum < len(self.small_walk_right) - 1:
                 self.animationNum += 1
             else:

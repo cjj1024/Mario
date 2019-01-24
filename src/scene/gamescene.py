@@ -21,14 +21,21 @@ class GameScene():
         while True:
             self.check_event()
 
+            # 检测是否与敌人发生碰撞
             death = self.mario.detect_collision(self.enemy)
             if death[0] != 0:
                 death[1].set_status(DEATH)
 
 
             self.screen.blit(background_img['background'], (0, 0))
-            for i in range(0, 800, 40):
-                self.screen.blit(ground_img['brick'], (i, 560))
+            # for i in range(0, 800, 40):
+            #     self.screen.blit(ground_img['brick'], (i, 560))
+            for i in range(len(scene1)):
+                for j in range(len(scene1[i])):
+                    if scene1[i][j] == 1:
+                        self.screen.blit(ground_img['brick'], (j * 40, i * 40))
+                    elif scene1[i][j] == 2:
+                        self.screen.blit(bonus_img['crackstone'], (j * 40, i * 40))
             self.palyer.update()
             self.palyer.draw(self.screen)
             self.enemy.update()
