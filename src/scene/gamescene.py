@@ -3,16 +3,19 @@ from pygame.locals import *
 
 from src.sprite.mario import *
 from src.sprite.goomba import *
+from src.sprite.coin import *
 
 class GameScene():
     def __init__(self, screen):
         self.screen = screen
         self.palyer = pygame.sprite.Group()
         self.enemy = pygame.sprite.Group()
+        self.bonus = pygame.sprite.Group()
         self.mario = Mario()
         self.palyer.add(self.mario)
         self.toomba = Goomba()
         self.enemy.add(self.toomba)
+
 
     def show(self):
 
@@ -36,10 +39,20 @@ class GameScene():
                         self.screen.blit(ground_img['brick'], (j * 40, i * 40))
                     elif scene1[i][j] == 2:
                         self.screen.blit(bonus_img['crackstone'], (j * 40, i * 40))
+                    elif scene1[i][j] == 3:
+                        self.screen.blit(bonus_img['box'], (j * 40, i * 40))
+                    elif scene1[i][j] == 4:
+                        self.screen.blit(bonus_img['boxempty'], (j * 40, i * 40))
+                    elif scene1[i][j] == 5:
+                        self.bonus.add(Coin(j * 40, i * 40))
+                        scene1[i][j] = 0
+
             self.palyer.update()
             self.palyer.draw(self.screen)
             self.enemy.update()
             self.enemy.draw(self.screen)
+            self.bonus.update()
+            self.bonus.draw(self.screen)
             pygame.display.update()
             clock.tick(30)
 
