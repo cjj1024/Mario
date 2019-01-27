@@ -4,6 +4,8 @@ from pygame.locals import *
 from src.sprite.mario import *
 from src.sprite.goomba import *
 from src.sprite.coin import *
+from src.sprite.mushroom import *
+
 
 class GameScene():
     def __init__(self, screen):
@@ -15,37 +17,22 @@ class GameScene():
         self.palyer.add(self.mario)
         self.toomba = Goomba()
         self.enemy.add(self.toomba)
+        self.start = 0
 
 
     def show(self):
-
-
         clock = pygame.time.Clock()
         while True:
+            self.draw_background()
+
             self.check_event()
 
-            # 检测是否与敌人发生碰撞
-            death = self.mario.detect_collision(self.enemy)
-            if death[0] != 0:
-                death[1].set_status(DEATH)
+            # 处理与敌人发生碰撞
+            self.mario.process_enemy_collision(self.enemy)
 
+            # 处理与奖励蘑菇发生碰撞
+            self.mario.process_bonus_collision(self.bonus)
 
-            self.screen.blit(background_img['background'], (0, 0))
-            # for i in range(0, 800, 40):
-            #     self.screen.blit(ground_img['brick'], (i, 560))
-            for i in range(len(scene1)):
-                for j in range(len(scene1[i])):
-                    if scene1[i][j] == 1:
-                        self.screen.blit(ground_img['brick'], (j * 40, i * 40))
-                    elif scene1[i][j] == 2:
-                        self.screen.blit(bonus_img['crackstone'], (j * 40, i * 40))
-                    elif scene1[i][j] == 3:
-                        self.screen.blit(bonus_img['box'], (j * 40, i * 40))
-                    elif scene1[i][j] == 4:
-                        self.screen.blit(bonus_img['boxempty'], (j * 40, i * 40))
-                    elif scene1[i][j] == 5:
-                        self.bonus.add(Coin(j * 40, i * 40))
-                        scene1[i][j] = 0
 
             self.palyer.update()
             self.palyer.draw(self.screen)
@@ -55,6 +42,34 @@ class GameScene():
             self.bonus.draw(self.screen)
             pygame.display.update()
             clock.tick(30)
+
+
+    def draw_background(self):
+        self.screen.blit(background_img['background'], (0, 0))
+        # for i in range(0, 800, 40):
+        #     self.screen.blit(ground_img['brick'], (i, 560))
+        x = self.start
+        end = self.start + 800
+        while x < end:
+            for i in range(15):
+                j = int(x / 40)
+                if level.map[i][j] == 1:
+                    self.screen.blit(ground_img['brick'], (j * 40 - self.start, i * 40))
+                elif level.map[i][j] == 2:
+                    self.screen.blit(bonus_img['crackstone'], (j * 40 - self.start, i * 40))
+                elif level.map[i][j] == 3:
+                    self.screen.blit(bonus_img['box'], (j * 40 - self.start, i * 40))
+                elif level.map[i][j] == 4:
+                    self.screen.blit(bonus_img['boxempty'], (j * 40 - self.start, i * 40))
+                elif level.map[i][j] == 5:
+                    self.bonus.add(Coin(j * 40 - self.start, i * 40))
+                    level.map[i][j] = 0
+                elif level.map[i][j] == 6:
+                    self.screen.blit(bonus_img['box'], (j * 40 - self.start, i * 40))
+                elif level.map[i][j] == 7:
+                    self.bonus.add(Mushroom(j * 40 - self.start, i * 40))
+                    level.map[i][j] = 0
+            x += 40
 
 
     def check_event(self):
@@ -76,3 +91,7 @@ class GameScene():
                     self.mario.set_status(STAND)
             else:
                 self.mario.set_status(STAND)
+
+
+    def set_start_index(self, index):
+        self.start_index = index

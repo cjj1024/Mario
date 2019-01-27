@@ -43,6 +43,7 @@ def load_sound(directory, accept=('.mp3', '.wav', '.ogg')):
     return sounds
 
 
+# 把文字转化为图片, 显示在屏幕上
 def write_word(screen, word, size, color, position):
     # 加载字体并设置字体大小
     font = pygame.font.Font('./res/font/geteshi.ttf', size)

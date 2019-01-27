@@ -21,32 +21,37 @@ class Mario(pygame.sprite.Sprite):
         self.set_shape(SMALL)
 
 
-    # 检测Mario是否与group中的Sprite发生碰撞
-    # 返回一个二元列表
-    # 第一个元素表示谁死亡, 0 没有Sprite死亡, 1 敌人死亡, 2 自己死亡
-    # 第二个元素为死亡的Sprite
-    def detect_collision(self, group):
+    # 处理与group中的奖励蘑菇发生碰撞
+    def process_bonus_collision(self, group):
+        for bonus in group:
+            if pygame.Rect.colliderect(self.rect, bonus.rect):
+                # 变大蘑菇
+                if bonus.get_type() == GROW_BIGGER:
+                    self.set_shape(BIG)
+                    bonus.kill()
+
+
+    # 处理与group中的敌人发生碰撞
+    def process_enemy_collision(self, group):
         if self.status == DEATH:
             return (0, 0)
-        i = 0
-        for s in group:
-            if s.get_status() == DEATH:
+        for enemy in group:
+            if enemy.get_status() == DEATH:
                 continue
-            if pygame.Rect.colliderect(self.rect, s.rect):
+            if pygame.Rect.colliderect(self.rect, enemy.rect):
                 # 踩在敌人的头上, 杀死敌人
+                # print(self.rect)
+                # print(enemy.rect)
+                if self.rect.y + 30 > enemy.rect.y:
+                    self.set_status(DEATH)
                 # 其他位置碰到敌人, 死亡
-                print(self.rect)
-                print(s.rect)
-                if self.rect.y + 30 > s.rect.y:
-                    return (2, self)
                 else:
-                    return (1, s)
-            i += 1
-        return (0, None)
+                    enemy.set_status(DEATH)
+
 
 
     def update(self):
-        if self.status != DEATH and scene1[int(self.rect.y / 40) + 1][int(self.rect.x / 40)] == 0:
+        if self.status != DEATH and level.map[int(self.rect.y / 40) + 1][int(self.rect.x / 40)] == 0:
             self.rect.y += 10
         if self.status == STAND:
             self.stand()
@@ -70,27 +75,30 @@ class Mario(pygame.sprite.Sprite):
         if self.direction == LEFT:
             # 到达屏幕左边界
             if self.rect.x - self.jump_hori_speed < 0:
-                return
-            self.rect.x -= self.jump_hori_speed
+                self.rect.x = 0
+            else:
+                self.rect.x -= self.jump_hori_speed
             self.image = self.small_jump_left
         else:
             # 到达屏幕右边界
             if self.rect.x + self.jump_hori_speed > 780:
-                return
-            self.rect.x += self.jump_hori_speed
+                self.rect.x = 760
+            else:
+                self.rect.x += self.jump_hori_speed
             self.image = self.small_jump_right
 
         # 计算当前坐标在二维数组中的映射
-        i = int((self.rect.y + self.jump_vert_speed) / 40)
-        j = int(self.rect.x / 40)
+        # 加横坐标, 纵坐标都加20为Mario的中心
+        i = int((self.rect.y + 20 + self.jump_vert_speed) / 40)
+        j = int((self.rect.x + 20) / 40)
 
         # 跳跃上升时头上有物体
-        if scene1[i][j] != 0 and self.jump_vert_speed < 0:
+        if level.map[i][j] != 0 and self.jump_vert_speed < 0:
             brick_manager.bump(i, j)
             self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
         # 跳跃下降时脚下有物体
-        elif scene1[i + 1][j] != 0 and self.jump_vert_speed > 0:
+        elif level.map[i + 1][j] != 0 and self.jump_vert_speed > 0:
             self.rect.y = i * 40
             self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
@@ -156,8 +164,10 @@ class Mario(pygame.sprite.Sprite):
     def set_shape(self, shape):
         self.shape = shape
         if self.shape == SMALL:
+            self.image = self.small_stand_right
             self.rect.y = 520
         elif self.shape == BIG:
+            self.image = self.big_stand_right
             self.rect.y = 480
 
 
@@ -185,3 +195,12 @@ class Mario(pygame.sprite.Sprite):
         self.small_jump_right = mario_small_right_img['jump']
 
         self.small_dead = mario_small_right_img['dead']
+
+
+    def get_rect(self):
+        return self.rect
+
+
+    def move_left(self, len):
+        self.rect.x -= len
+

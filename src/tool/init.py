@@ -1,4 +1,8 @@
+
+
 from src.tool.tool import *
+from src.scene.level import *
+
 
 
 pygame.init()
@@ -43,6 +47,9 @@ pygame.display.set_caption('超级玛丽')
 icon = pygame.image.load('./res/image/icon.bmp')
 icon.set_colorkey((255, 0, 255))
 pygame.display.set_icon(icon)
+
+
+level = Level(1)
 
 # 防止循环import
 # 必须放在sound的声明后
