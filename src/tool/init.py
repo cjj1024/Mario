@@ -44,7 +44,7 @@ for key in mario_small_right_img.keys():
 
 
 pygame.display.set_caption('超级玛丽')
-icon = pygame.image.load('./res/image/icon.bmp')
+icon = pygame.image.load('./res/image/Mario.png')
 icon.set_colorkey((255, 0, 255))
 pygame.display.set_icon(icon)
 

@@ -17,6 +17,8 @@ class Mario(pygame.sprite.Sprite):
         self.jump_vert_speed = JUMP_VERT_SPEED
         self.gravity = GRAVITY
 
+        self.move_scene = False
+
         self.init_animation()
         self.set_shape(SMALL)
 
@@ -49,9 +51,13 @@ class Mario(pygame.sprite.Sprite):
                     enemy.set_status(DEATH)
 
 
+    def check_move_scene(self):
+        return self.move_scene
+
+
 
     def update(self):
-        if self.status != DEATH and level.map[int(self.rect.y / 40) + 1][int(self.rect.x / 40)] == 0:
+        if self.status != DEATH and level.map[int((self.rect.y + self.rect.height + 5) / 40)][int((self.rect.x + level.start) / 40)] == 0:
             self.rect.y += 10
         if self.status == STAND:
             self.stand()
@@ -62,6 +68,11 @@ class Mario(pygame.sprite.Sprite):
         elif self.status == DEATH:
             self.death()
 
+        if self.rect.x > 400 and level.start + 840 < level.length:
+            self.rect.x -= 10
+            self.move_scene = True
+        else:
+            self.move_scene = False
 
     def death(self):
         if self.rect.y > 600:
@@ -78,28 +89,32 @@ class Mario(pygame.sprite.Sprite):
                 self.rect.x = 0
             else:
                 self.rect.x -= self.jump_hori_speed
-            self.image = self.small_jump_left
+            self.image = self.jump_left
         else:
             # 到达屏幕右边界
             if self.rect.x + self.jump_hori_speed > 780:
                 self.rect.x = 760
             else:
                 self.rect.x += self.jump_hori_speed
-            self.image = self.small_jump_right
+            self.image = self.jump_right
 
         # 计算当前坐标在二维数组中的映射
         # 加横坐标, 纵坐标都加20为Mario的中心
-        i = int((self.rect.y + 20 + self.jump_vert_speed) / 40)
-        j = int((self.rect.x + 20) / 40)
+        # i_head 为头顶上一格
+        # i_foot 为脚底下一格
+        i_head = int((self.rect.y + self.jump_vert_speed) / 40)
+        i_foot = int((self.rect.y + self.rect.height + self.jump_vert_speed) / 40)
+        j = int((self.rect.x + level.start + 20) / 40)
 
         # 跳跃上升时头上有物体
-        if level.map[i][j] != 0 and self.jump_vert_speed < 0:
-            brick_manager.bump(i, j)
+        if level.map[i_head][j] != 0 and self.jump_vert_speed < 0:
+            brick_manager.bump(i_head, j)
             self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
         # 跳跃下降时脚下有物体
-        elif level.map[i + 1][j] != 0 and self.jump_vert_speed > 0:
-            self.rect.y = i * 40
+
+        elif level.map[i_foot][j] != 0 and self.jump_vert_speed > 0:
+            self.rect.y = i_head * 40
             self.jump_vert_speed = JUMP_VERT_SPEED
             self.status = STAND
         else:
@@ -116,11 +131,11 @@ class Mario(pygame.sprite.Sprite):
             self.rect.x -= self.speed
 
             # 循环播放walk动画
-            if self.animationNum < len(self.small_walk_left) - 1:
+            if self.animationNum < len(self.walk_left) - 1:
                 self.animationNum += 1
             else:
                 self.animationNum = 0
-            self.image = self.small_walk_left[self.animationNum]
+            self.image = self.walk_left[self.animationNum]
         else:
             # 到达屏幕右边界
             if self.rect.x + self.speed > 780:
@@ -129,18 +144,18 @@ class Mario(pygame.sprite.Sprite):
             self.rect.x += self.speed
 
             # 循环播放walk动画
-            if self.animationNum < len(self.small_walk_right) - 1:
+            if self.animationNum < len(self.walk_right) - 1:
                 self.animationNum += 1
             else:
                 self.animationNum = 0
-            self.image = self.small_walk_right[self.animationNum]
+            self.image = self.walk_right[self.animationNum]
 
 
     def stand(self):
         if self.direction == LEFT:
-            self.image = self.small_stand_left
+            self.image = self.stand_left
         else:
-            self.image = self.small_stand_right
+            self.image = self.stand_right
 
 
     def set_status(self, status):
@@ -164,10 +179,24 @@ class Mario(pygame.sprite.Sprite):
     def set_shape(self, shape):
         self.shape = shape
         if self.shape == SMALL:
-            self.image = self.small_stand_right
+            self.stand_left = self.small_stand_left
+            self.stand_right = self.small_stand_right
+            self.walk_left = self.small_walk_left
+            self.walk_right = self.small_walk_right
+            self.jump_left = self.small_jump_left
+            self.jump_right = self.small_jump_right
+            self.rect.width = self.stand_left.get_rect().width
+            self.rect.height = self.stand_left.get_rect().height
             self.rect.y = 520
         elif self.shape == BIG:
-            self.image = self.big_stand_right
+            self.stand_left = self.big_stand_left
+            self.stand_right = self.big_stand_right
+            self.walk_left = self.big_walk_left
+            self.walk_right = self.big_walk_right
+            self.jump_left = self.big_jump_left
+            self.jump_right = self.big_jump_right
+            self.rect.width = self.stand_left.get_rect().width
+            self.rect.height = self.stand_left.get_rect().height
             self.rect.y = 480
 
 
@@ -196,11 +225,4 @@ class Mario(pygame.sprite.Sprite):
 
         self.small_dead = mario_small_right_img['dead']
 
-
-    def get_rect(self):
-        return self.rect
-
-
-    def move_left(self, len):
-        self.rect.x -= len
 

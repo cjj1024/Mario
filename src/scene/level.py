@@ -7,9 +7,10 @@ class Level():
         filename = './res/level/level' + str(level) + '.json'
         with open(filename) as fp:
             data = json.load(fp)
-            print(data)
+            # print(data)
 
         self.length = data['length']
+        self.start = 0
         # 把屏幕划分成二维的格子
         # 每个格子为40x40px
         # 0 表示什么都没有
