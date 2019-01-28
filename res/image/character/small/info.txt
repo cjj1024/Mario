@@ -1,9 +1,0 @@
-colorkey	(255, 0, 255)
-downl	40x35px
-downr	40x35px
-stand_left	40x40px
-stand_right	40x40px
-walk_left		40x40px
-walk_right		40x40px
-run_left		40x40px
-run_right		40x40px

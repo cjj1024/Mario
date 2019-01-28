@@ -12,12 +12,17 @@ class GameMenu():
 
 
     def show(self):
-        self.screen.blit(background_img['background'], (0, 0))
+        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
         for i in range(0, 800, 40):
-            self.screen.blit(ground_img['brick'], (i, 560))
-        self.screen.blit(background_img['bush1'], (0, 435))
-        self.screen.blit(background_img['bush3'], (300, 515))
-        self.screen.blit(background_img['bush2'], (620, 420))
+            self.screen.blit(ground_img[0], (i, 520))
+        for i in range(0, 800, 40):
+            self.screen.blit(ground_img[0], (i, 560))
+        self.screen.blit(cloud_img[0], (600, 100))
+        self.screen.blit(brushwood[0], (0, 480))
+        self.screen.blit(brushwood[0], (40, 480))
+        self.screen.blit(brushwood[0], (200, 480))
+        self.screen.blit(brushwood[0], (600, 480))
+
 
         write_word(screen, '开始游戏', 36, (255, 255, 255), (350, 250))
         write_word(screen, '退出游戏', 36, (255, 255, 255), (350, 300))

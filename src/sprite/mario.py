@@ -5,7 +5,7 @@ from src.tool.globaldata import *
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = mario_small_right_img['stand']
+        self.image = mario_small_right_img[0][6]
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.shape = SMALL
@@ -19,7 +19,7 @@ class Mario(pygame.sprite.Sprite):
 
         self.move_scene = False
 
-        self.init_animation()
+        self.init_image()
         self.set_shape(SMALL)
 
 
@@ -77,7 +77,7 @@ class Mario(pygame.sprite.Sprite):
     def death(self):
         if self.rect.y > 600:
             self.kill()
-        self.image = self.small_dead
+        self.image = self.small_dead_img
         self.rect.y += self.jump_vert_speed
         self.jump_vert_speed += self.gravity
 
@@ -179,50 +179,53 @@ class Mario(pygame.sprite.Sprite):
     def set_shape(self, shape):
         self.shape = shape
         if self.shape == SMALL:
-            self.stand_left = self.small_stand_left
-            self.stand_right = self.small_stand_right
-            self.walk_left = self.small_walk_left
-            self.walk_right = self.small_walk_right
-            self.jump_left = self.small_jump_left
-            self.jump_right = self.small_jump_right
+            self.stand_left = self.small_stand_left_img
+            self.stand_right = self.small_stand_right_img
+            self.walk_left = self.small_walk_left_img
+            self.walk_right = self.small_walk_right_img
+            self.jump_left = self.small_jump_left_img
+            self.jump_right = self.small_jump_right_img
             self.rect.width = self.stand_left.get_rect().width
             self.rect.height = self.stand_left.get_rect().height
             self.rect.y = 520
         elif self.shape == BIG:
-            self.stand_left = self.big_stand_left
-            self.stand_right = self.big_stand_right
-            self.walk_left = self.big_walk_left
-            self.walk_right = self.big_walk_right
-            self.jump_left = self.big_jump_left
-            self.jump_right = self.big_jump_right
+            self.stand_left = self.big_stand_left_img
+            self.stand_right = self.big_stand_right_img
+            self.walk_left = self.big_walk_left_img
+            self.walk_right = self.big_walk_right_img
+            self.jump_left = self.big_jump_left_img
+            self.jump_right = self.big_jump_right_img
             self.rect.width = self.stand_left.get_rect().width
             self.rect.height = self.stand_left.get_rect().height
             self.rect.y = 480
 
 
-    def init_animation(self):
-        self.big_stand_left = mario_big_left_img['stand']
-        self.big_stand_right = mario_big_right_img['stand']
+    def init_image(self):
+        self.big_stand_right_img = mario_big_right_img_img[0][6]
+        self.big_stand_left_img = mario_big_left[0][6]
 
-        self.big_walk_left = [mario_big_left_img['walk1'], mario_big_left_img['walk2'],
-                              mario_big_left_img['walk3']]
-        self.big_walk_right = [mario_big_right_img['walk1'], mario_big_right_img['walk2'],
-                               mario_big_right_img['walk3']]
+        self.big_walk_right_img = [mario_big_right_img_img[0][0], mario_big_right_img_img[0][1],
+                                   mario_big_right_img_img[0][2]]
+        self.big_walk_left_img = [mario_big_left[0][0], mario_big_left[0][1],
+                                  mario_big_left[0][2]]
 
-        self.big_jump_left = mario_big_left_img['jump']
-        self.big_jump_right = mario_big_right_img['jump']
+        self.big_jump_right_img = mario_big_right_img_img[0][4]
+        self.big_jump_left_img = mario_big_left[0][4]
 
-        self.small_stand_left = mario_small_left_img['stand']
-        self.small_stand_right = mario_small_right_img['stand']
+        self.small_dead_img = mario_small_right_img[0][5]
 
-        self.small_walk_left = [mario_small_left_img['walk1'], mario_small_left_img['walk2'],
-                                mario_small_left_img['walk3']]
-        self.small_walk_right = [mario_small_right_img['walk1'], mario_small_right_img['walk2'],
-                                 mario_small_right_img['walk3']]
+        self.small_stand_right_img = mario_small_right_img[0][6]
+        self.small_stand_left_img = mario_small_left_img[0][6]
 
-        self.small_jump_left = mario_small_left_img['jump']
-        self.small_jump_right = mario_small_right_img['jump']
+        self.small_walk_right_img = [mario_small_right_img[0][0], mario_small_right_img[0][1],
+                                     mario_small_right_img[0][2]]
+        self.small_walk_left_img = [mario_small_left_img[0][0], mario_small_left_img[0][1],
+                                    mario_small_left_img[0][2]]
 
-        self.small_dead = mario_small_right_img['dead']
+        self.small_jump_right_img = mario_small_right_img[0][4]
+        self.small_jump_left_img = mario_small_left_img[0][4]
+
+        self.small_dead_img = mario_small_right_img[0][5]
+
 
 

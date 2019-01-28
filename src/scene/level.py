@@ -21,9 +21,12 @@ class Level():
         # 5 表示硬币
         # 6 表示有变大蘑菇的箱子
         self.map = []
-        for i in range(14):
+        for i in range(15):
             self.map.append([0] * int(self.length / 40))
-        self.map.append([1] * int(self.length / 40))
+
+        self.ground = data['object']['ground']
+        for x, y in self.ground:
+            self.map[int(y / 40)][int(x / 40)] = 1
 
         self.brick = data['object']['brick']
         for x, y in self.brick:

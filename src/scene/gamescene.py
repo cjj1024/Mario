@@ -45,7 +45,7 @@ class GameScene():
 
 
     def draw_background(self):
-        self.screen.blit(background_img['background'], (0, 0))
+        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
         if self.mario.check_move_scene() and level.start + 840 <= level.length:
             level.start += 10
         x = level.start
@@ -54,7 +54,7 @@ class GameScene():
             j = int(x / 40)
             for i in range(15):
                 if level.map[i][j] == 1:
-                    self.screen.blit(ground_img['brick'], (j * 40 - level.start, i * 40))
+                    self.screen.blit(ground_img[0], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 2:
                     self.screen.blit(bonus_img['crackstone'], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 3:

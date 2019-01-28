@@ -1,3 +1,0 @@
-life	40x40px
-crackstone	40x40px
-craked	40x40px
