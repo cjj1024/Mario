@@ -54,18 +54,18 @@ class GameScene():
             j = int(x / 40)
             for i in range(15):
                 if level.map[i][j] == 1:
-                    self.screen.blit(ground_img[0], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[0], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 2:
-                    self.screen.blit(bonus_img['crackstone'], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[1], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 3:
-                    self.screen.blit(bonus_img['box'], (j * 40 - level.start, i * 40))
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 4:
-                    self.screen.blit(bonus_img['boxempty'], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[3], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 5:
                     self.bonus.add(Coin(j * 40 - level.start, i * 40))
                     level.map[i][j] = 0
                 elif level.map[i][j] == 6:
-                    self.screen.blit(bonus_img['box'], (j * 40 - level.start, i * 40))
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
                 elif level.map[i][j] == 7:
                     self.bonus.add(Mushroom(j * 40 - level.start, i * 40))
                     level.map[i][j] = 0

@@ -49,21 +49,38 @@ for i in range(3):
 background_img = load_image('./res/image/background.png')
 
 # 40x40px
-ground_img = []
-ground_img.append(get_image(background_img, 0, 0, 16, 16))
+brick_img = []
+for i in range(4):
+    brick_img.append(get_image(background_img, i * 16, 0, 16, 16))
 
 # 80x45px
 cloud_img = []
 cloud_img.append(get_image(background_img, 8, 320, 32, 18))
 
 # 80x40px
-brushwood = []
-brushwood.append(get_image(background_img, 184, 144, 32, 16))
+brushwood_img = []
+brushwood_img.append(get_image(background_img, 184, 144, 32, 16))
 
 
-turtle_img =                load_images('./res/image/character/turtle')
-bonus_img =                 load_images('./res/image/bonus')
-fire_img =                  load_images('./res/image/fire')
+item_img = load_image('./res/image/item.png')
+
+# 40x40px
+mushroom_img = []
+for i in range(3):
+    mushroom_img.append(get_image(item_img, i * 16, 0, 16, 16))
+    mushroom_img.append(get_image(item_img, i * 16, 16, 16, 16))
+
+# 40x40px
+bonus_brick_img = []
+for i in range(4):
+    bonus_brick_img.append(get_image(item_img, i * 16, 80, 16, 16))
+
+# 16x15px
+coin_img = []
+for i in range(4):
+    coin_img.append(get_image(item_img, i * 16, 96, 16, 16))
+
+
 music =                     load_musics('./res/music')
 sound =                     load_sounds('./res/sound')
 

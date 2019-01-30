@@ -7,7 +7,7 @@ from src.tool.init import *
 class Coin(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = bonus_img['coin1']
+        self.image = coin_img[1]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -33,4 +33,4 @@ class Coin(pygame.sprite.Sprite):
 
 
     def init_animation(self):
-        self.coin_rotate = [bonus_img['coin1'], bonus_img['coin2'], bonus_img['coin3'], bonus_img['coin4']]
+        self.coin_rotate = [coin_img[0], coin_img[1], coin_img[2], coin_img[3]]
