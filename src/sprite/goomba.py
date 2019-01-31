@@ -16,6 +16,33 @@ class Goomba(pygame.sprite.Sprite):
         self.init_image()
 
 
+    @property
+    def X(self):
+        return self.rect.x
+
+
+    @X.setter
+    def X(self, x):
+        self.rect.x = x
+
+
+    @property
+    def Y(self):
+        return self.rect.y
+
+
+    @Y.setter
+    def Y(self, y):
+        self.rect.y = y
+
+
+    def get_grid(self):
+        i = int((self.Y + self.rect.height / 2) / 40)
+        j = int((level.start + self.X + self.rect.width / 2) / 40)
+
+        return i, j
+
+
     def update(self):
         if self.status == DEATH:
             self.death()
@@ -24,48 +51,37 @@ class Goomba(pygame.sprite.Sprite):
 
 
     def death(self):
-        if self.rect.x < 0:
+        if self.X < 0:
             self.kill()
         self.image = self.death_img
-        self.rect.x -= self.speed
+        self.X -= self.speed
+
 
     # 向左走, 碰到障碍掉头
     # 向右走, 碰到障碍掉头
     # 走出屏幕边界则消失
     def walk(self):
-        if self.rect.x < 0 or self.rect.x > 800:
+        i, j = self.get_grid()
+        level.map[i][j] = 0
+        if self.X < 0 or self.X > 800:
             self.kill()
 
-        i = int(self.rect.y / 40)
+        i = int(self.Y / 40)
         if self.direction == LEFT:
-            j = int((self.rect.x - self.speed) / 40)
-            if self.rect.x - self.speed > 0 and level.map[i][j] != 0:
+            j = int((self.X - self.speed) / 40)
+            if self.X - self.speed > 0 and level.map[i][j] != 0:
                 self.direction = RIGHT
             else:
-                self.rect.x -= self.speed
+                self.X -= self.speed
         else:
-            j = int((self.rect.x + self.speed + self.rect.width) / 40)
-            if self.rect.x + self.speed < 800 and level.map[i][j] != 0:
+            j = int((self.X + self.speed + self.rect.width) / 40)
+            if self.X + self.speed < 800 and level.map[i][j] != 0:
                 self.direction = LEFT
             else:
-                self.rect.x += self.speed
+                self.X += self.speed
 
-        # # 向左走
-        # if self.direction == LEFT and self.rect.x > 0:
-        #     self.rect.x -= self.speed
-        # # 向右走
-        # elif self.direction == RIGHT and self.rect.x < 760:
-        #     self.rect.x += self.speed
-        # # 掉头
-        # else:
-        #     if self.rect.x <= 10:
-        #         self.image = self.walk_left_img
-        #         self.direction = RIGHT
-        #         self.rect.x += self.speed
-        #     elif self.rect.x >= 750:
-        #         self.image = self.walk_left_img
-        #         self.direction = LEFT
-        #         self.rect.x -= self.speed
+        i, j = self.get_grid()
+        level.map[i][j] = 31
 
 
     def set_status(self, status):

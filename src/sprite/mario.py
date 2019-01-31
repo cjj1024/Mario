@@ -11,7 +11,7 @@ class Mario(pygame.sprite.Sprite):
         self.rect.y = 300
         self.shape = SMALL
         self.status = STAND
-        self.direction = RIGHT
+        self.direction = NODIRECTION
         self.animationNum = 0
         self.speed_x = 0
         self.speed_y = 0
@@ -34,20 +34,21 @@ class Mario(pygame.sprite.Sprite):
 
     # 处理与group中的敌人发生碰撞
     def process_enemy_collision(self, group):
-        if self.status == DEATH:
-            return (0, 0)
-        for enemy in group:
-            if enemy.get_status() == DEATH:
-                continue
-            if pygame.Rect.colliderect(self.rect, enemy.rect):
-                # 踩在敌人的头上, 杀死敌人
-                # print(self.rect)
-                # print(enemy.rect)
-                if self.rect.y + 30 > enemy.rect.y:
-                    self.set_status(DEATH)
-                # 其他位置碰到敌人, 死亡
-                else:
-                    enemy.set_status(DEATH)
+        pass
+        
+        # if self.status == DEATH:
+        #     return (0, 0)
+        # for enemy in group:
+        #     if enemy.get_status() == DEATH:
+        #         continue
+        #     if pygame.Rect.colliderect(self.rect, enemy.rect):
+        #         # 踩在敌人的头上, 杀死敌人
+        #         print(self.Y, enemy.Y)
+        #         if self.Y + self.rect.height - 20 < enemy.Y:
+        #             enemy.set_status(DEATH)
+        #         # 其他位置碰到敌人, 死亡
+        #         else:
+        #             self.set_status(DEATH)
 
 
     def check_move_scene(self):
@@ -55,8 +56,8 @@ class Mario(pygame.sprite.Sprite):
 
 
     def update(self):
-        if self.status != JUMP and self.is_fall():
-            return
+        if self.is_sky():
+            self.move_y()
 
         if self.status == DEATH:
             self.death()
@@ -68,48 +69,70 @@ class Mario(pygame.sprite.Sprite):
             self.jump()
 
 
-        if self.rect.x > 400 and level.start + 840 < level.length:
-            self.rect.x -= 10
+        if self.X > 400 and level.start + 840 < level.length:
+            self.X -= 10
             self.move_scene = True
         else:
             self.move_scene = False
+            
+
+    def is_sky(self):
+        i, j = self.get_foot_grid()
+        if level.map[i][j] == 0:
+            return True
+        else:
+            return False
+
 
     def death(self):
-        if self.rect.y > 600:
-            self.kill()
+        # if self.Y > 600:
+        #     self.kill()
         self.image = self.small_dead_img
-        self.rect.y += self.speed_y
-        self.speed_y -= GRAVITY_Y
+        self.kill()
+        # self.Y += self.speed_y
+        # self.speed_y -= GRAVITY_Y
 
 
     def jump(self):
+        self.move_y()
+
         if self.direction == LEFT:
-            self.move_left()
+            self.speed_x = -15
+            self.move_x()
             self.image = self.jump_left
-        else:
-            self.move_right()
+        elif self.direction == RIGHT:
+            self.speed_x = 15
+            self.move_x()
             self.image = self.jump_right
 
-        if self.speed_y - GRAVITY_Y >=  0:
-            self.speed_y -= GRAVITY_Y
-        else:
-            self.status = FALL
-            return
-
-        self.is_fall()
 
 
-    def is_fall(self):
+    def move_y(self):
+        # 在速度小于最大速度之前, 速度不断增加
         if self.speed_y < MAX_SPEED_Y:
             self.speed_y += GRAVITY_Y
 
-        j = int(self.rect.x / 40)
-        i = int((self.rect.y + self.speed_y + self.rect.height) / 40)
-        if level.map[i][j] != 0 or self.rect.y + self.speed_y >= 560:
-            self.rect.y = (i - 1) * 40
+        i, j = self.get_next_grid_vert()
+
+        # 向下落会遇到障碍换或超出屏幕边界
+        if self.Y + self.speed_y < 0 or self.Y + self.speed_y >= 560 or level.map[i][j] != 0:
+            self.Y = (i - 1) * 40
             self.speed_y = 0
+            if self.status == JUMP:
+                self.status = STAND
         else:
-            self.rect.y += self.speed_y
+            self.Y += self.speed_y
+
+
+    def move_x(self):
+        i, j = self.get_next_grid_vert()
+        # 向左走会遇到障碍换或超出屏幕边界
+        if self.X + self.speed_x >= 760 or self.X + self.speed_x <= 0 or level.map[i][j] != 0 :
+            self.speed_x = 0
+            self.status = STAND
+        else:
+            self.X += self.speed_x
+
 
 
     def walk(self):
@@ -117,16 +140,16 @@ class Mario(pygame.sprite.Sprite):
         self.animationNum = (self.animationNum + 1) % (len(self.walk_left) - 1)
 
         if self.direction == LEFT:
-            self.move_left()
+            self.speed_x = -15
+            self.move_x()
             self.image = self.walk_left[self.animationNum]
         else:
-            self.move_right()
+            self.speed_x = 15
+            self.move_x()
             self.image = self.walk_right[self.animationNum]
 
 
     def stand(self):
-        self.speed_x = 0
-        self.speed_y = 0
         if self.direction == LEFT:
             self.image = self.stand_left
         else:
@@ -134,8 +157,8 @@ class Mario(pygame.sprite.Sprite):
 
 
     def set_status(self, status):
-        # 当前状态已经是死亡
-        if self.status == DEATH:
+        # 当前状态已经是死亡, 跳跃
+        if self.status == DEATH or self.status == JUMP:
             return
         # 要变成死亡状态
         if status == DEATH:
@@ -147,41 +170,70 @@ class Mario(pygame.sprite.Sprite):
             self.status = status
 
         if status == JUMP:
-            self.speed_y = -50
+            self.speed_y = -40
             pygame.mixer.Sound.play(sound['small_jump'])
-
-
-    def move_left(self):
-        if self.speed_x < MAX_SPEED_X:
-            self.speed_x += GRAVITY_X
-
-        j = int((self.rect.x - self.speed_x) / 40)
-        i = int(self.rect.y / 40)
-        if level.map[i][j] != 0 or self.rect.x + self.speed_x <= 0:
-            self.rect.x = j * 40
+        elif status == STAND:
             self.speed_x = 0
-            self.status = STAND
-        else:
-            self.rect.x -= self.speed_x
-
-
-    def move_right(self):
-        if self.speed_x < MAX_SPEED_X:
-            self.speed_x += MAX_SPEED_X
-
-        j = int((self.rect.x + self.speed_x + self.rect.width) / 40)
-        i = int(self.rect.y / 40)
-        if level.map[i][j] != 0 or self.rect.x + self.speed_x >= 760:
-            self.rect.x = (j - 1) * 40
-            self.speed_x = 0
-            self.status = STAND
-        else:
-            self.rect.x += self.speed_x
+            self.speed_y = 0
 
 
     def set_direction(self, direction):
         if self.status != JUMP:
             self.direction = direction
+
+
+    # 获得坐标在地图中的映射, x, y 为偏移量
+    def get_grid(self, x=0, y=0):
+        i = int((self.Y + y) / 40)
+        j = int((level.start + self.X + x) / 40)
+
+        return i, j
+
+
+    def get_next_grid_hori(self):
+        i, j = self.get_grid(x=self.speed_x)
+
+        # 速度大于0, 向右移动, j加1时因为i,j为左上角
+        if self.speed_x > 0:
+            return i, j + 1
+        else:
+            return i, j
+
+
+    def get_next_grid_vert(self):
+        i, j = self.get_grid(y=self.speed_y)
+
+        # 速度大于0, 向下移动, i加1时因为i,j为左上角
+        if self.speed_y > 0:
+            return i + 1, j
+        else:
+            return i, j
+
+
+    def get_foot_grid(self):
+        i, j = self.get_grid(x=self.rect.width / 2)
+
+        return i + 1, j
+
+
+    @property
+    def X(self):
+        return self.rect.x
+
+
+    @X.setter
+    def X(self, x):
+        self.rect.x = x
+
+
+    @property
+    def Y(self):
+        return self.rect.y
+
+
+    @Y.setter
+    def Y(self, y):
+        self.rect.y = y
 
 
     def set_shape(self, shape):
@@ -196,7 +248,7 @@ class Mario(pygame.sprite.Sprite):
 
             self.rect.width = self.stand_left.get_rect().width
             self.rect.height = self.stand_left.get_rect().height
-            self.rect.y += 40
+            self.Y += 40
         elif self.shape == BIG:
             self.stand_left = self.big_stand_left_img
             self.stand_right = self.big_stand_right_img
@@ -207,7 +259,7 @@ class Mario(pygame.sprite.Sprite):
 
             self.rect.width = self.stand_left.get_rect().width
             self.rect.height = self.stand_left.get_rect().height
-            self.rect.y -= 40
+            self.Y -= 40
 
 
     def init_image(self):

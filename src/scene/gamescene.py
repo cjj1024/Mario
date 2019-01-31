@@ -22,17 +22,10 @@ class GameScene():
 
     def show(self):
         clock = pygame.time.Clock()
-        while True:
+        while self.mario.alive():
             self.draw_background()
 
             self.check_event()
-
-            # 处理与敌人发生碰撞
-            self.mario.process_enemy_collision(self.enemy)
-
-            # 处理与奖励蘑菇发生碰撞
-            self.mario.process_bonus_collision(self.bonus)
-
 
             self.palyer.update()
             self.palyer.draw(self.screen)
@@ -41,6 +34,13 @@ class GameScene():
             self.bonus.update()
             self.bonus.draw(self.screen)
             pygame.display.update()
+
+            # 处理与敌人发生碰撞
+            self.mario.process_enemy_collision(self.enemy)
+
+            # 处理与奖励蘑菇发生碰撞
+            self.mario.process_bonus_collision(self.bonus)
+
             clock.tick(30)
 
 
@@ -55,18 +55,18 @@ class GameScene():
             for i in range(15):
                 if level.map[i][j] == 1:
                     self.screen.blit(brick_img[0], (j * 40 - level.start, i * 40))
-                elif level.map[i][j] == 2:
-                    self.screen.blit(brick_img[1], (j * 40 - level.start, i * 40))
-                elif level.map[i][j] == 3:
-                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
-                elif level.map[i][j] == 4:
+                elif level.map[i][j] == 10:
                     self.screen.blit(brick_img[3], (j * 40 - level.start, i * 40))
-                elif level.map[i][j] == 5:
+                elif level.map[i][j] == 11:
+                    self.screen.blit(brick_img[1], (j * 40 - level.start, i * 40))
+                elif level.map[i][j] == 12:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
+                elif level.map[i][j] == 13:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
+                elif level.map[i][j] == 21:
                     self.bonus.add(Coin(j * 40 - level.start, i * 40))
                     level.map[i][j] = 0
-                elif level.map[i][j] == 6:
-                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
-                elif level.map[i][j] == 7:
+                elif level.map[i][j] == 22:
                     self.bonus.add(Mushroom(j * 40 - level.start, i * 40))
                     level.map[i][j] = 0
             x += 40
@@ -89,5 +89,7 @@ class GameScene():
                     self.mario.set_status(JUMP)
                 else:
                     self.mario.set_status(STAND)
+                    self.mario.set_direction(NODIRECTION)
             else:
+                self.mario.set_direction(NODIRECTION)
                 self.mario.set_status(STAND)

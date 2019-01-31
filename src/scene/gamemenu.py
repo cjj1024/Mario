@@ -12,6 +12,42 @@ class GameMenu():
 
 
     def show(self):
+        pygame.mixer.music.load(music['main_theme'])
+        pygame.mixer.music.play()
+
+        while True:
+            self.draw_background()
+
+            self.check_event()
+
+            pygame.display.update()
+
+
+    def check_event(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                sys.exit(0)
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit(0)
+                elif event.key == K_DOWN:
+                    if self.selected == 1:
+                        self.screen.fill((100, 150, 250), (300, 250, 40, 40))
+                        self.screen.blit(mushroom_img[0], (300, 300))
+                        self.selected = 2
+                elif event.key == K_UP:
+                    self.screen.fill((100, 150, 250), (300, 300, 40, 40))
+                    self.screen.blit(mushroom_img[0], (300, 250))
+                    self.selected = 1
+                elif event.key == K_RETURN:
+                    if self.selected == 1:
+                        gamescene = GameScene(self.screen)
+                        gamescene.show()
+                    elif self.selected == 2:
+                        sys.exit(0)
+
+
+    def draw_background(self):
         self.screen.fill((100, 150, 250), (0, 0, 800, 600))
         for i in range(0, 800, 40):
             self.screen.blit(brick_img[0], (i, 520))
@@ -27,31 +63,3 @@ class GameMenu():
         write_word(screen, '开始游戏', 36, (255, 255, 255), (350, 250))
         write_word(screen, '退出游戏', 36, (255, 255, 255), (350, 300))
         self.screen.blit(mushroom_img[0], (300, 250))
-
-        pygame.mixer.music.load(music['main_theme'])
-        pygame.mixer.music.play()
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    sys.exit(0)
-                elif event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        sys.exit(0)
-                    elif event.key == K_DOWN:
-                        if self.selected == 1:
-                            self.screen.fill((100, 150, 250), (300, 250, 40, 40))
-                            self.screen.blit(mushroom_img[0], (300, 300))
-                            self.selected = 2
-                    elif event.key == K_UP:
-                            self.screen.fill((100, 150, 250), (300, 300, 40, 40))
-                            self.screen.blit(mushroom_img[0], (300, 250))
-                            self.selected = 1
-                    elif event.key == K_RETURN:
-                        if self.selected == 1:
-                            gamescene = GameScene(self.screen)
-                            gamescene.show()
-                        elif self.selected == 2:
-                            sys.exit(0)
-
-            pygame.display.update()
