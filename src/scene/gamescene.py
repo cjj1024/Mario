@@ -17,7 +17,7 @@ class GameScene():
         self.palyer.add(self.mario)
         self.toomba = Goomba()
         self.enemy.add(self.toomba)
-        level.start = 0
+        level.start_x = 0
 
 
     def show(self):
@@ -41,33 +41,33 @@ class GameScene():
             # 处理与奖励蘑菇发生碰撞
             self.mario.process_bonus_collision(self.bonus)
 
-            clock.tick(30)
+            clock.tick(60)
 
 
     def draw_background(self):
         self.screen.fill((100, 150, 250), (0, 0, 800, 600))
-        if self.mario.check_move_scene() and level.start + 840 <= level.length:
-            level.start += 10
-        x = level.start
-        end = level.start + 800
+        if self.mario.check_move_scene() and level.start_x + 840 <= level.length:
+            level.start_x += 10
+        x = level.start_x
+        end = level.start_x + 800
         while x <= end:
             j = int(x / 40)
             for i in range(15):
                 if level.map[i][j] == 1:
-                    self.screen.blit(brick_img[0], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[0], (j * 40 - level.start_x, i * 40))
                 elif level.map[i][j] == 10:
-                    self.screen.blit(brick_img[3], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[3], (j * 40 - level.start_x, i * 40))
                 elif level.map[i][j] == 11:
-                    self.screen.blit(brick_img[1], (j * 40 - level.start, i * 40))
+                    self.screen.blit(brick_img[1], (j * 40 - level.start_x, i * 40))
                 elif level.map[i][j] == 12:
-                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
                 elif level.map[i][j] == 13:
-                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start, i * 40))
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
                 elif level.map[i][j] == 21:
-                    self.bonus.add(Coin(j * 40 - level.start, i * 40))
+                    self.bonus.add(Coin(j * 40 - level.start_x, i * 40))
                     level.map[i][j] = 0
                 elif level.map[i][j] == 22:
-                    self.bonus.add(Mushroom(j * 40 - level.start, i * 40))
+                    self.bonus.add(Mushroom(j * 40 - level.start_x, i * 40))
                     level.map[i][j] = 0
             x += 40
 

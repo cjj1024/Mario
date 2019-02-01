@@ -1,5 +1,6 @@
 
 from src.scene.gamescene import *
+from src.scene.mapeditor import *
 from src.tool.init import *
 
 class GameMenu():
@@ -32,19 +33,21 @@ class GameMenu():
                     sys.exit(0)
                 elif event.key == K_DOWN:
                     if self.selected == 1:
-                        self.screen.fill((100, 150, 250), (300, 250, 40, 40))
-                        self.screen.blit(mushroom_img[0], (300, 300))
+                        # self.screen.fill((100, 150, 250), (300, 250, 40, 40))
+                        # self.screen.blit(mushroom_img[0], (300, 300))
                         self.selected = 2
                 elif event.key == K_UP:
-                    self.screen.fill((100, 150, 250), (300, 300, 40, 40))
-                    self.screen.blit(mushroom_img[0], (300, 250))
-                    self.selected = 1
+                    if self.selected == 2:
+                        # self.screen.fill((100, 150, 250), (300, 300, 40, 40))
+                        # self.screen.blit(mushroom_img[0], (300, 250))
+                        self.selected = 1
                 elif event.key == K_RETURN:
                     if self.selected == 1:
                         gamescene = GameScene(self.screen)
                         gamescene.show()
                     elif self.selected == 2:
-                        sys.exit(0)
+                        mapeditor = MapEditor(self.screen)
+                        mapeditor.show()
 
 
     def draw_background(self):
@@ -62,4 +65,8 @@ class GameMenu():
 
         write_word(screen, '开始游戏', 36, (255, 255, 255), (350, 250))
         write_word(screen, '退出游戏', 36, (255, 255, 255), (350, 300))
-        self.screen.blit(mushroom_img[0], (300, 250))
+        # self.screen.blit(mushroom_img[0], (300, 250))
+        if self.selected == 1:
+            self.screen.blit(mushroom_img[0], (300, 250))
+        elif self.selected == 2:
+            self.screen.blit(mushroom_img[0], (300, 300))

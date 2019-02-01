@@ -10,7 +10,7 @@ class Goomba(pygame.sprite.Sprite):
         self.rect.x = 800
         self.rect.y = 480
         self.direction = LEFT
-        self.speed = 5
+        self.speed = 2
         self.status = WALK
 
         self.init_image()
@@ -38,7 +38,7 @@ class Goomba(pygame.sprite.Sprite):
 
     def get_grid(self):
         i = int((self.Y + self.rect.height / 2) / 40)
-        j = int((level.start + self.X + self.rect.width / 2) / 40)
+        j = int((level.start_x + self.X + self.rect.width / 2) / 40)
 
         return i, j
 
@@ -62,7 +62,7 @@ class Goomba(pygame.sprite.Sprite):
     # 走出屏幕边界则消失
     def walk(self):
         i, j = self.get_grid()
-        level.map[i][j] = 0
+        # level.map[i][j] = 0
         if self.X < 0 or self.X > 800:
             self.kill()
 
@@ -81,7 +81,7 @@ class Goomba(pygame.sprite.Sprite):
                 self.X += self.speed
 
         i, j = self.get_grid()
-        level.map[i][j] = 31
+        # level.map[i][j] = 31
 
 
     def set_status(self, status):

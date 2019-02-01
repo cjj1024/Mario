@@ -56,8 +56,8 @@ class Mario(pygame.sprite.Sprite):
 
 
     def update(self):
-        if self.is_sky():
-            self.move_y()
+        if self.is_sky() and self.status != JUMP:
+            self.status = FALL
 
         if self.status == DEATH:
             self.death()
@@ -67,9 +67,10 @@ class Mario(pygame.sprite.Sprite):
             self.walk()
         elif self.status == JUMP:
             self.jump()
+        elif self.status == FALL:
+            self.fall()
 
-
-        if self.X > 400 and level.start + 840 < level.length:
+        if self.X > 400 and level.start_x + 840 < level.length:
             self.X -= 10
             self.move_scene = True
         else:
@@ -77,7 +78,8 @@ class Mario(pygame.sprite.Sprite):
             
 
     def is_sky(self):
-        i, j = self.get_foot_grid()
+        x, y = self.get_world_point()
+        i, j = self.get_grid(x + self.rect.width / 2, y + self.rect.height + 5)
         if level.map[i][j] == 0:
             return True
         else:
@@ -94,45 +96,99 @@ class Mario(pygame.sprite.Sprite):
 
 
     def jump(self):
-        self.move_y()
-
         if self.direction == LEFT:
-            self.speed_x = -15
-            self.move_x()
+            self.speed_x = -10
+            self.move_left()
             self.image = self.jump_left
         elif self.direction == RIGHT:
-            self.speed_x = 15
-            self.move_x()
+            self.speed_x = 10
+            self.move_right()
             self.image = self.jump_right
 
+        if self.speed_y < 0:
+            self.move_up()
+        else:
+            self.status = FALL
 
 
-    def move_y(self):
-        # 在速度小于最大速度之前, 速度不断增加
-        if self.speed_y < MAX_SPEED_Y:
+
+
+    def fall(self):
+        self.move_down()
+
+
+    def move_up(self):
+        if abs(self.speed_y) < MAX_SPEED_Y:
             self.speed_y += GRAVITY_Y
 
-        i, j = self.get_next_grid_vert()
+        x, y = self.get_world_point()
 
-        # 向下落会遇到障碍换或超出屏幕边界
-        if self.Y + self.speed_y < 0 or self.Y + self.speed_y >= 560 or level.map[i][j] != 0:
-            self.Y = (i - 1) * 40
-            self.speed_y = 0
-            if self.status == JUMP:
-                self.status = STAND
-        else:
+        i, j = self.get_grid(x + self.rect.width / 2, y + self.speed_y)
+        if level.map[i][j] == 0:
             self.Y += self.speed_y
-
-
-    def move_x(self):
-        i, j = self.get_next_grid_vert()
-        # 向左走会遇到障碍换或超出屏幕边界
-        if self.X + self.speed_x >= 760 or self.X + self.speed_x <= 0 or level.map[i][j] != 0 :
-            self.speed_x = 0
-            self.status = STAND
         else:
-            self.X += self.speed_x
+            brick_manager.bump(i, j)
+            self.Y = (i + 1) * 40
+            self.speed_y = 0
+            self.status = STAND
 
+        if self.Y < 0:
+            self.Y = 0
+        if self.Y > 560:
+            self.Y = 560
+
+
+    def move_down(self):
+        if abs(self.speed_y) < MAX_SPEED_Y:
+            self.speed_y += GRAVITY_Y
+
+        x, y = self.get_world_point()
+
+        i, j = self.get_grid(x + self.rect.width / 2, y + self.rect.height + self.speed_y)
+        if level.map[i][j] == 0:
+            self.Y += self.speed_y
+        else:
+            self.Y = i * 40 - self.rect.height
+            self.speed_y = 0
+            self.status = STAND
+
+        if self.Y < 0:
+            self.Y = 0
+        if self.Y > 560:
+            self.Y = 560
+
+
+
+    def move_left(self):
+        x, y = self.get_world_point()
+
+        i, j = self.get_grid(x + self.speed_x, y)
+        if level.map[i][j] == 0:
+            self.X += self.speed_x
+        else:
+            self.speed_x = 0
+
+
+        if self.X < 0:
+            self.X = 0
+        if self.X > 760:
+            self.X = 760
+
+
+    def move_right(self):
+        x, y = self.get_world_point()
+
+        i, j = self.get_grid(x + self.rect.width + self.speed_x, y)
+        if level.map[i][j] == 0:
+            self.X += self.speed_x
+        else:
+            self.speed_x = 0
+
+
+        if self.X < 0:
+            self.X = 0
+        if self.X > 760:
+            self.X = 760
 
 
     def walk(self):
@@ -140,13 +196,14 @@ class Mario(pygame.sprite.Sprite):
         self.animationNum = (self.animationNum + 1) % (len(self.walk_left) - 1)
 
         if self.direction == LEFT:
-            self.speed_x = -15
-            self.move_x()
+            self.speed_x = -10
+            self.move_left()
             self.image = self.walk_left[self.animationNum]
         else:
-            self.speed_x = 15
-            self.move_x()
+            self.speed_x = 10
+            self.move_right()
             self.image = self.walk_right[self.animationNum]
+
 
 
     def stand(self):
@@ -170,7 +227,7 @@ class Mario(pygame.sprite.Sprite):
             self.status = status
 
         if status == JUMP:
-            self.speed_y = -40
+            self.speed_y = -39
             pygame.mixer.Sound.play(sound['small_jump'])
         elif status == STAND:
             self.speed_x = 0
@@ -182,38 +239,13 @@ class Mario(pygame.sprite.Sprite):
             self.direction = direction
 
 
-    # 获得坐标在地图中的映射, x, y 为偏移量
-    def get_grid(self, x=0, y=0):
-        i = int((self.Y + y) / 40)
-        j = int((level.start + self.X + x) / 40)
-
-        return i, j
+    # 把屏幕坐标转换为世界坐标
+    def get_world_point(self):
+        return level.start_x + self.X, self.Y
 
 
-    def get_next_grid_hori(self):
-        i, j = self.get_grid(x=self.speed_x)
-
-        # 速度大于0, 向右移动, j加1时因为i,j为左上角
-        if self.speed_x > 0:
-            return i, j + 1
-        else:
-            return i, j
-
-
-    def get_next_grid_vert(self):
-        i, j = self.get_grid(y=self.speed_y)
-
-        # 速度大于0, 向下移动, i加1时因为i,j为左上角
-        if self.speed_y > 0:
-            return i + 1, j
-        else:
-            return i, j
-
-
-    def get_foot_grid(self):
-        i, j = self.get_grid(x=self.rect.width / 2)
-
-        return i + 1, j
+    def get_grid(self, x, y):
+        return int(y / 40), int(x / 40)
 
 
     @property

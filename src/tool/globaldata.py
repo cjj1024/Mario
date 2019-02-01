@@ -3,6 +3,8 @@
 NODIRECTION =   0
 LEFT =          1
 RIGHT =         2
+UP =            3
+DOWN =          4
 
 
 # 标记Mario的状态
@@ -10,6 +12,7 @@ STAND =     1
 WALK =      2
 RUN =       3
 JUMP =      4
+FALL =      5
 DEATH =     6
 
 
@@ -24,7 +27,7 @@ GRAVITY_Y =     5
 
 # 最大速度
 MAX_SPEED_X =   15
-MAX_SPEED_Y =   30
+MAX_SPEED_Y =   40
 
 
 # 蘑菇的类型
