@@ -9,7 +9,7 @@ class GameMenu():
         # 记录用户的选择
         # 1 为开始游戏
         # 2 为退出游戏
-        self.selected = 1
+        self.selected = 2
 
 
     def show(self):
