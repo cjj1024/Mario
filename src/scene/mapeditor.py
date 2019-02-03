@@ -10,12 +10,12 @@ from src.sprite.coin import *
 
 
 class MapEditor():
-    def __init__(self, screen):
-        self.screen = screen
+    def __init__(self):
+        self.screen = pygame.display.set_mode((1200, 600))
         self.row = 0
         self.column = 0
         self.image = brick_img[0]
-        self.imageId = 1
+        self.imageId = 1000
 
         self.start_x = 0
         self.length = 0
@@ -25,9 +25,13 @@ class MapEditor():
         for i in range(15):
             self.map.append([0] * int(self.length / 40))
 
+        self.completed = False
+
+        self.filename = ""
+
 
     def show(self):
-        while True:
+        while not self.completed:
             self.check_event()
 
             self.draw_background()
@@ -38,7 +42,8 @@ class MapEditor():
     def check_event(self):
         for event in pygame.event.get():
             if event.type == QUIT:
-                sys.exit(0)
+                self.store()
+                self.completed = True
             elif event.type == KEYDOWN:
                 if event.key == K_UP:
                     pass
@@ -50,21 +55,6 @@ class MapEditor():
                 elif event.key == K_RIGHT:
                     if self.start_x + 800<= self.length - 40:
                         self.start_x += 40
-                elif event.key == K_g:
-                    self.image = brick_img[0]
-                    self.imageId = 1
-                elif event.key == K_c:
-                    self.image = coin_img[0]
-                    self.imageId = 2
-                elif event.key == K_b:
-                    self.image = brick_img[1]
-                    self.imageId = 11
-                elif event.key == K_c:
-                    self.image = coin_img[0]
-                    self.imageId = 21
-                elif event.key == K_m:
-                    self.image = mushroom_img[0]
-                    self.imageId = 22
             elif event.type == MOUSEMOTION:
                 x, y = event.pos
                 self.row, self.column = self.get_grid(x, y)
@@ -72,8 +62,45 @@ class MapEditor():
                 # 鼠标左键
                 if event.button == 1:
                     x, y = event.pos
-                    self.row, self.column = self.get_grid(x, y)
-                    self.map[self.row][self.column] = self.imageId
+                    if x > 840 and x < 880 and y > 0 and y < 40:
+                        self.image = brick_img[0]
+                        self.imageId = 1000
+                    elif x > 880 and x < 920 and y > 0 and y < 40:
+                        self.image = brick_img[1]
+                        self.imageId = 1001
+                    elif x > 920 and x < 960 and y > 0 and y < 40:
+                        self.image = brick_img[2]
+                        self.imageId = 1002
+                    elif x > 960 and x < 1000 and y > 0 and y < 40:
+                        self.image = coin_img[0]
+                        self.imageId = 2100
+                    elif x > 1000 and x < 1040 and y > 0 and y < 40:
+                        self.image = mushroom_img[0]
+                        self.imageId = 2200
+                    elif x > 1040 and x < 1080 and y > 0 and y < 40:
+                        self.image = mushroom_img[1]
+                        self.imageId = 2201
+                    elif x > 1080 and x < 1140 and y > 0 and y < 40:
+                        self.image = mushroom_img[2]
+                        self.imageId = 2202
+                    elif x > 840 and x < 920 and y > 40 and y < 80:
+                        self.image = brushwood_img[0]
+                        self.imageId = 100
+                    elif x > 920 and x < 1000 and y > 40 and y < 100:
+                        self.image = cloud_img[0]
+                        self.imageId = 200
+                    elif x > 1000 and x < 1200 and y > 40 and y < 80:
+                        self.image = cloud_img[1]
+                        self.imageId = 201
+                    elif x > 840 and x < 960 and y > 120 and y < 200:
+                        self.image = brushwood_img[1]
+                        self.imageId = 101
+                    elif x > 960 and x < 1040 and y > 120 and y < 200:
+                        self.image = pipe_img[0]
+                        self.imageId = 1200
+                    else:
+                        self.row, self.column = self.get_grid(x, y)
+                        self.map[self.row][self.column] = self.imageId
                 # 鼠标右键
                 elif event.button == 3:
                     x, y = event.pos
@@ -87,10 +114,11 @@ class MapEditor():
 
 
     def draw_background(self):
-        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
+        self.screen.fill((100, 150, 250), (0, 0, 1200, 600))
+        self.show_item()
         for i in range(15):
             pygame.draw.line(self.screen, (255, 0, 0), (0, i * 40), (800, i * 40))
-        for i in range(20):
+        for i in range(21):
             pygame.draw.line(self.screen, (255, 0, 0), (i * 40, 0), (i * 40, 600))
 
         self.screen.blit(self.image, (self.column * 40 - self.start_x, self.row * 40))
@@ -100,19 +128,49 @@ class MapEditor():
         while x < end:
             j = int(x / 40)
             for i in range(15):
-                if self.map[i][j] == 1:
+                if self.map[i][j] == 1000:
                     self.screen.blit(brick_img[0], (j * 40 - self.start_x, i * 40))
-                elif self.map[i][j] == 10:
-                    self.screen.blit(brick_img[3], (j * 40 - self.start_x, i * 40))
-                elif self.map[i][j] == 11:
+                elif self.map[i][j] == 1001:
                     self.screen.blit(brick_img[1], (j * 40 - self.start_x, i * 40))
-                elif self.map[i][j] == 21:
+                elif self.map[i][j] == 1002:
+                    self.screen.blit(brick_img[2], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 100:
+                    self.screen.blit(brushwood_img[0], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 101:
+                    self.screen.blit(brushwood_img[1], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 200:
+                    self.screen.blit(cloud_img[0], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 201:
+                    self.screen.blit(cloud_img[1], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 1200:
+                    self.screen.blit(pipe_img[0], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 2100:
                     self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
-                elif self.map[i][j] == 22:
+                elif self.map[i][j] == 2200:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 2201:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 2202:
                     self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
 
 
             x += 40
+
+
+    def show_item(self):
+        self.screen.fill((255, 255, 255), (800, 0, 40, 600))
+        self.screen.blit(brick_img[0], (840, 0))
+        self.screen.blit(brick_img[1], (880, 0))
+        self.screen.blit(brick_img[2], (920, 0))
+        self.screen.blit(coin_img[0], (960, 0))
+        self.screen.blit(mushroom_img[0], (1000, 0))
+        self.screen.blit(mushroom_img[2], (1040, 0))
+        self.screen.blit(mushroom_img[4], (1080, 0))
+        self.screen.blit(brushwood_img[0], (840, 40))
+        self.screen.blit(cloud_img[0], (920, 40))
+        self.screen.blit(cloud_img[1], (1000, 40))
+        self.screen.blit(brushwood_img[1], (840, 120))
+        self.screen.blit(pipe_img[0], (960, 120))
 
 
     def get_length(self):
@@ -121,12 +179,78 @@ class MapEditor():
         text = tkinter.StringVar()
         text.set("1600")
         b = tkinter.Entry(win, textvariable=text)
-        tkinter.Button(win, text='退出', command=win.destroy).pack(side=tkinter.RIGHT)
-        tkinter.Button(win, text='确定', command=lambda: self._ok(text)).pack(side=tkinter.RIGHT)
+        tkinter.Button(win, text='确定', command=lambda :self.save_length(text)).pack(side=tkinter.RIGHT)
         b.pack(side=tkinter.TOP)
         b.focus()
         win.mainloop()
 
 
-    def _ok(self, text):
+    def save_length(self, text):
         self.length = int(str(text.get()))
+
+
+    def save_filename(self, text):
+        self.filename = str(text.get())
+
+
+    def store(self):
+        win = tkinter.Tk()
+        frame = tkinter.Frame()
+        tkinter.Label(frame, text="输入关卡名: ").pack(side=tkinter.LEFT)
+        filename = tkinter.StringVar()
+        filename.set('default')
+        tkinter.Entry(frame, textvariable=filename).pack(side=tkinter.RIGHT)
+        frame.pack(side=tkinter.TOP)
+        tkinter.Button(win, text='确认', command=lambda :self.save_filename(filename)).pack(side=tkinter.BOTTOM)
+        tkinter.mainloop()
+
+
+        data = {}
+        data["id"] = 2
+        data['length']  = self.length
+        data['object'] = {}
+        data['object']['brick1'] = []
+        data['object']['brick2'] = []
+        data['object']['brick3'] = []
+        data['object']['cloud1'] = []
+        data['object']['cloud2'] = []
+        data['object']['brushwood1'] = []
+        data['object']['brushwood2'] = []
+        data['object']['coin'] = []
+        data['object']['mushroom_grow'] = []
+        data['object']['mushroom_life'] = []
+        data['object']['mushroom_death'] = []
+        data['object']['pipe'] = []
+
+
+        for i in range(len(self.map)):
+            for j in range(len(self.map[i])):
+                if self.map[i][j] == 1000:
+                    data['object']['brick1'].append([j * 40, i * 40])
+                elif self.map[i][j] == 1001:
+                    data['object']['brick2'].append([j * 40, i * 40])
+                elif self.map[i][j] == 1002:
+                    data['object']['brick3'].append([j * 40, i * 40])
+                elif self.map[i][j] == 1200:
+                    data['object']['pipe'].append([j * 40, i * 40])
+                elif self.map[i][j] == 100:
+                    data['object']['brushwood1'].append([j * 40, i * 40])
+                elif self.map[i][j] == 101:
+                    data['object']['brushwood2'].append([j * 40, i * 40])
+                elif self.map[i][j] == 200:
+                    data['object']['cloud1'].append([j * 40, i * 40])
+                elif self.map[i][j] == 201:
+                    data['object']['cloud2'].append([j * 40, i * 40])
+                elif self.map[i][j] == 2100:
+                    data['object']['coin'].append([j * 40, i * 40])
+                elif self.map[i][j] == 2200:
+                    data['object']['mushroom_grow'].append([j * 40, i * 40])
+                elif self.map[i][j] == 2201:
+                    data['object']['mushroom_life'].append([j * 40, i * 40])
+                elif self.map[i][j] == 2202:
+                    data['object']['mushroom_death'].append([j * 40, i * 40])
+
+        with open('./res/level/'+self.filename+'.json', 'w') as fp:
+            fp.write(json.dumps(data))
+
+

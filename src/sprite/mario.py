@@ -34,21 +34,19 @@ class Mario(pygame.sprite.Sprite):
 
     # 处理与group中的敌人发生碰撞
     def process_enemy_collision(self, group):
-        pass
-        
-        # if self.status == DEATH:
-        #     return (0, 0)
-        # for enemy in group:
-        #     if enemy.get_status() == DEATH:
-        #         continue
-        #     if pygame.Rect.colliderect(self.rect, enemy.rect):
-        #         # 踩在敌人的头上, 杀死敌人
-        #         print(self.Y, enemy.Y)
-        #         if self.Y + self.rect.height - 20 < enemy.Y:
-        #             enemy.set_status(DEATH)
-        #         # 其他位置碰到敌人, 死亡
-        #         else:
-        #             self.set_status(DEATH)
+        if self.status == DEATH:
+            return (0, 0)
+        for enemy in group:
+            if enemy.get_status() == DEATH:
+                continue
+            if pygame.Rect.colliderect(self.rect, enemy.rect):
+                # 踩在敌人的头上, 杀死敌人
+                print(self.Y, enemy.Y)
+                if self.Y + self.rect.height - 20 < enemy.Y:
+                    enemy.set_status(DEATH)
+                # 其他位置碰到敌人, 死亡
+                else:
+                    self.set_status(DEATH)
 
 
     def check_move_scene(self):
@@ -70,7 +68,7 @@ class Mario(pygame.sprite.Sprite):
         elif self.status == FALL:
             self.fall()
 
-        if self.X > 400 and level.start_x + 840 < level.length:
+        if self.X > 400 and level.start_x + 800 < level.length:
             self.X -= 10
             self.move_scene = True
         else:
@@ -245,6 +243,14 @@ class Mario(pygame.sprite.Sprite):
 
 
     def get_grid(self, x, y):
+        if y < 0:
+            y = 0
+        elif y > 560:
+            y = 560
+        elif x < 0:
+            x = 0
+        elif x >= level.length:
+            x = level.length - 10
         return int(y / 40), int(x / 40)
 
 

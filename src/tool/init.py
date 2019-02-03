@@ -52,14 +52,28 @@ background_img = load_image('./res/image/background.png')
 brick_img = []
 for i in range(4):
     brick_img.append(get_image(background_img, i * 16, 0, 16, 16))
+    brick_img.append(get_image(background_img, i * 16, 16, 16, 16))
 
-# 80x45px
+
 cloud_img = []
-cloud_img.append(get_image(background_img, 8, 320, 32, 18))
+# 80x60px
+cloud_img.append(get_image(background_img, 8, 320, 32, 24))
+# 120x40px
+cloud_img.append(get_image(background_img, 126, 320, 48, 16))
+cloud_img[1] = pygame.transform.flip(cloud_img[1], False, True)
 
-# 80x40px
+
+
 brushwood_img = []
+# 80x40px
 brushwood_img.append(get_image(background_img, 184, 144, 32, 16))
+# 120x80px
+brushwood_img.append(get_image(background_img, 352, 128, 48, 32))
+
+
+# 80x80
+pipe_img = []
+pipe_img.append(get_image(background_img, 0, 160, 32, 32))
 
 
 item_img = load_image('./res/image/item.png')
@@ -91,7 +105,7 @@ icon = load_image('./res/image/icon.png')
 pygame.display.set_icon(icon)
 
 
-level = Level(1)
+level = Level(2)
 
 # 防止循环import
 # 必须放在sound的声明后

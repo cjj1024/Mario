@@ -19,7 +19,6 @@ class GameScene():
         self.enemy.add(self.toomba)
         level.start_x = 0
 
-
     def show(self):
         clock = pygame.time.Clock()
         while self.mario.alive():
@@ -43,34 +42,50 @@ class GameScene():
 
             clock.tick(60)
 
-
     def draw_background(self):
         self.screen.fill((100, 150, 250), (0, 0, 800, 600))
-        if self.mario.check_move_scene() and level.start_x + 840 <= level.length:
+        if self.mario.check_move_scene() and level.start_x + 10 + 800 <= level.length:
             level.start_x += 10
         x = level.start_x
         end = level.start_x + 800
+        if end == level.length:
+            end -= 40
+        if end + 40 < level.length:
+            end += 40
         while x <= end:
             j = int(x / 40)
             for i in range(15):
-                if level.map[i][j] == 1:
+                if level.map[i][j] == 1000:
                     self.screen.blit(brick_img[0], (j * 40 - level.start_x, i * 40))
-                elif level.map[i][j] == 10:
-                    self.screen.blit(brick_img[3], (j * 40 - level.start_x, i * 40))
-                elif level.map[i][j] == 11:
+                elif level.map[i][j] == 1001:
                     self.screen.blit(brick_img[1], (j * 40 - level.start_x, i * 40))
-                elif level.map[i][j] == 12:
+                elif level.map[i][j] == 1002:
+                    self.screen.blit(brick_img[2], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 100:
+                    self.screen.blit(brushwood_img[0], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 101:
+                    self.screen.blit(brushwood_img[1], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 200:
+                    self.screen.blit(cloud_img[0], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 201:
+                    self.screen.blit(cloud_img[1], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 1200:
+                    self.screen.blit(pipe_img[0], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 2100:
                     self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
-                elif level.map[i][j] == 13:
+                elif level.map[i][j] == 2200:
                     self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
-                elif level.map[i][j] == 21:
+                elif level.map[i][j] == 2201:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 2202:
+                    self.screen.blit(bonus_brick_img[1], (j * 40 - level.start_x, i * 40))
+                elif level.map[i][j] == 2100:
                     self.bonus.add(Coin(j * 40 - level.start_x, i * 40))
                     level.map[i][j] = 0
-                elif level.map[i][j] == 22:
+                elif level.map[i][j] == 2201:
                     self.bonus.add(Mushroom(j * 40 - level.start_x, i * 40))
                     level.map[i][j] = 0
             x += 40
-
 
     def check_event(self):
         for event in pygame.event.get():

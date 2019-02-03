@@ -46,8 +46,9 @@ class GameMenu():
                         gamescene = GameScene(self.screen)
                         gamescene.show()
                     elif self.selected == 2:
-                        mapeditor = MapEditor(self.screen)
+                        mapeditor = MapEditor()
                         mapeditor.show()
+                        self.screen = pygame.display.set_mode((800, 600))
 
 
     def draw_background(self):
@@ -70,3 +71,5 @@ class GameMenu():
             self.screen.blit(mushroom_img[0], (300, 250))
         elif self.selected == 2:
             self.screen.blit(mushroom_img[0], (300, 300))
+
+
