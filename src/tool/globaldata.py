@@ -34,3 +34,16 @@ MAX_SPEED_Y =   40
 GROW_BIGGER =   1
 PLUS_LIFE =     2
 
+
+# 字符初始大小
+FONT_SIZE =     16
+
+
+# 颜色
+RED =       (255, 0, 0)
+YELLOW =    (0, 255, 0)
+BLUE =      (0, 0, 255)
+WHITE =     (255, 255, 255)
+BLACK =     (0, 0, 0)
+SKYBLUE =   (135, 206, 235)
+MAGENTA =   (255, 0, 255)

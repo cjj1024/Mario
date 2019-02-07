@@ -114,12 +114,12 @@ class MapEditor():
 
 
     def draw_background(self):
-        self.screen.fill((100, 150, 250), (0, 0, 1200, 600))
+        self.screen.fill(SKYBLUE, (0, 0, 1200, 600))
         self.show_item()
         for i in range(15):
-            pygame.draw.line(self.screen, (255, 0, 0), (0, i * 40), (800, i * 40))
+            pygame.draw.line(self.screen, RED, (0, i * 40), (800, i * 40))
         for i in range(21):
-            pygame.draw.line(self.screen, (255, 0, 0), (i * 40, 0), (i * 40, 600))
+            pygame.draw.line(self.screen, RED, (i * 40, 0), (i * 40, 600))
 
         self.screen.blit(self.image, (self.column * 40 - self.start_x, self.row * 40))
 
@@ -158,7 +158,7 @@ class MapEditor():
 
 
     def show_item(self):
-        self.screen.fill((255, 255, 255), (800, 0, 40, 600))
+        self.screen.fill(WHITE, (800, 0, 40, 600))
         self.screen.blit(brick_img[0], (840, 0))
         self.screen.blit(brick_img[1], (880, 0))
         self.screen.blit(brick_img[2], (920, 0))

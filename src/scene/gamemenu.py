@@ -2,6 +2,7 @@
 from src.scene.gamescene import *
 from src.scene.mapeditor import *
 from src.tool.init import *
+from src.tool.character import *
 
 class GameMenu():
     def __init__(self, screen):
@@ -52,7 +53,7 @@ class GameMenu():
 
 
     def draw_background(self):
-        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
+        self.screen.fill(SKYBLUE, (0, 0, 800, 600))
         for i in range(0, 800, 40):
             self.screen.blit(brick_img[0], (i, 520))
         for i in range(0, 800, 40):
@@ -64,8 +65,9 @@ class GameMenu():
         self.screen.blit(brushwood_img[0], (600, 480))
 
 
-        write_word(screen, '开始游戏', 36, (255, 255, 255), (350, 250))
-        write_word(screen, '退出游戏', 36, (255, 255, 255), (350, 300))
+        # write_word(screen, '开始游戏', 36, WHITE, (350, 250))
+        write_chars(screen, '开始游戏', 42, WHITE, (350, 250))
+        write_chars(screen, '退出游戏', 42, WHITE, (350, 300))
         # self.screen.blit(mushroom_img[0], (300, 250))
         if self.selected == 1:
             self.screen.blit(mushroom_img[0], (300, 250))

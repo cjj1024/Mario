@@ -43,7 +43,7 @@ class GameScene():
             clock.tick(60)
 
     def draw_background(self):
-        self.screen.fill((100, 150, 250), (0, 0, 800, 600))
+        self.screen.fill(SKYBLUE, (0, 0, 800, 600))
         if self.mario.check_move_scene() and level.start_x + 10 + 800 <= level.length:
             level.start_x += 10
         x = level.start_x

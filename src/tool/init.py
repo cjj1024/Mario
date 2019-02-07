@@ -2,6 +2,7 @@
 
 from src.tool.tool import *
 from src.scene.level import *
+from .globaldata import *
 
 
 
@@ -95,8 +96,10 @@ for i in range(4):
     coin_img.append(get_image(item_img, i * 16, 96, 16, 16))
 
 
-music =                     load_musics('./res/music')
-sound =                     load_sounds('./res/sound')
+music =     load_musics('./res/music')
+sound =     load_sounds('./res/sound')
+
+font =      pygame.font.Font('./res/font/geteshi.ttf', FONT_SIZE)
 
 
 
