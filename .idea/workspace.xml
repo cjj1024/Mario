@@ -2,32 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ba39ea-ab7d-45be-b936-858657571a44" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Mario.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/font/mario.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/level/level3.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sprite/pipe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/font/geteshi.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/level/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/level/default.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/level/level1.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/level/level1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/level/level2.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/level/level2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/gamemenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/gamemenu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/gamescene.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/gamescene.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/mapeditor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/mapeditor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sprite/brick.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sprite/brick.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sprite/goomba.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sprite/goomba.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sprite/mario.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sprite/mario.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/character.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/globaldata.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/globaldata.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/init.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/init.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +37,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/scene/level.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
+            <state relative-caret-position="411">
               <caret line="83" column="43" selection-start-line="83" selection-start-column="43" selection-end-line="83" selection-end-column="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -120,7 +96,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -238,14 +214,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17038691" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3276923" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3276923" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -352,7 +327,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scene/level.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
+        <state relative-caret-position="411">
           <caret line="83" column="43" selection-start-line="83" selection-start-column="43" selection-end-line="83" selection-end-column="43" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
