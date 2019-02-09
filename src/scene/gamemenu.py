@@ -8,9 +8,9 @@ class GameMenu():
     def __init__(self, screen):
         self.screen = screen
         # 记录用户的选择
-        # 1 为开始游戏
-        # 2 为退出游戏
-        self.selected = 2
+        # 1 开始游戏
+        # 2 退出游戏
+        self.selected = 1
 
 
     def show(self):
@@ -65,9 +65,9 @@ class GameMenu():
         self.screen.blit(brushwood_img[0], (600, 480))
 
 
-        # write_word(screen, '开始游戏', 36, WHITE, (350, 250))
-        write_chars(screen, '开始游戏', 42, WHITE, (350, 250))
-        write_chars(screen, '退出游戏', 42, WHITE, (350, 300))
+        # write_word(screen, '开始游戏:', 36, WHITE, (350, 300))
+        write_chars(screen, '开始游戏', 48, WHITE, (350, 250))
+        write_chars(screen, '退出游戏', 48, WHITE, (350, 300))
         # self.screen.blit(mushroom_img[0], (300, 250))
         if self.selected == 1:
             self.screen.blit(mushroom_img[0], (300, 250))

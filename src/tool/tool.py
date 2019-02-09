@@ -2,6 +2,7 @@ import pygame
 import os
 from .globaldata import *
 
+
 def load_images(directory, colorkey=MAGENTA, accept=('.jpg', '.bmp', '.png')):
     images = {}
     for filename in os.listdir(directory):
@@ -61,7 +62,7 @@ def load_sounds(directory, accept=('.mp3', '.wav', '.ogg')):
 # # 把文字转化为图片, 显示在屏幕上
 # def write_word(screen, word, size, color, position):
 #     # 加载字体并设置字体大小
-#     font = pygame.font.Font('./res/font/geteshi.ttf', size)
+#     font = pygame.font.Font('./res/font/font.ttf', size)
 #     # 把文字画在一个Surface上
 #     word_image = font.render(word, False, color)
 #     # 把得到的文字Surface画在屏幕Surface上

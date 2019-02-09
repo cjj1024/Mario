@@ -98,6 +98,9 @@ class MapEditor():
                     elif x > 960 and x < 1040 and y > 120 and y < 200:
                         self.image = pipe_img[0]
                         self.imageId = 1200
+                    elif x > 840 and x < 880 and y > 200 and y < 240:
+                        self.image = goomba_img[0]
+                        self.imageId = 4000
                     else:
                         self.row, self.column = self.get_grid(x, y)
                         self.map[self.row][self.column] = self.imageId
@@ -152,6 +155,8 @@ class MapEditor():
                     self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
                 elif self.map[i][j] == 2202:
                     self.screen.blit(bonus_brick_img[1], (j * 40 - self.start_x, i * 40))
+                elif self.map[i][j] == 4000:
+                    self.screen.blit(goomba_img[0], (j * 40 - self.start_x, i * 40))
 
 
             x += 40
@@ -171,6 +176,7 @@ class MapEditor():
         self.screen.blit(cloud_img[1], (1000, 40))
         self.screen.blit(brushwood_img[1], (840, 120))
         self.screen.blit(pipe_img[0], (960, 120))
+        self.screen.blit(goomba_img[0], (840, 200))
 
 
     def get_length(self):
@@ -208,49 +214,52 @@ class MapEditor():
         data = {}
         data["id"] = 2
         data['length']  = self.length
-        data['object'] = {}
-        data['object']['brick1'] = []
-        data['object']['brick2'] = []
-        data['object']['brick3'] = []
-        data['object']['cloud1'] = []
-        data['object']['cloud2'] = []
-        data['object']['brushwood1'] = []
-        data['object']['brushwood2'] = []
-        data['object']['coin'] = []
-        data['object']['mushroom_grow'] = []
-        data['object']['mushroom_life'] = []
-        data['object']['mushroom_death'] = []
-        data['object']['pipe'] = []
+        data['brick1'] = []
+        data['brick2'] = []
+        data['brick3'] = []
+        data['cloud1'] = []
+        data['cloud2'] = []
+        data['brushwood1'] = []
+        data['brushwood2'] = []
+        data['coin'] = []
+        data['mushroom_grow'] = []
+        data['mushroom_life'] = []
+        data['mushroom_death'] = []
+        data['pipe'] = []
+        data['goomba'] = []
 
 
         for i in range(len(self.map)):
             for j in range(len(self.map[i])):
                 if self.map[i][j] == 1000:
-                    data['object']['brick1'].append([j * 40, i * 40])
+                    data['brick1'].append([j * 40, i * 40])
                 elif self.map[i][j] == 1001:
-                    data['object']['brick2'].append([j * 40, i * 40])
+                    data['brick2'].append([j * 40, i * 40])
                 elif self.map[i][j] == 1002:
-                    data['object']['brick3'].append([j * 40, i * 40])
+                    data['brick3'].append([j * 40, i * 40])
                 elif self.map[i][j] == 1200:
-                    data['object']['pipe'].append([j * 40, i * 40])
+                    data['pipe'].append([j * 40, i * 40])
                 elif self.map[i][j] == 100:
-                    data['object']['brushwood1'].append([j * 40, i * 40])
+                    data['brushwood1'].append([j * 40, i * 40])
                 elif self.map[i][j] == 101:
-                    data['object']['brushwood2'].append([j * 40, i * 40])
+                    data['brushwood2'].append([j * 40, i * 40])
                 elif self.map[i][j] == 200:
-                    data['object']['cloud1'].append([j * 40, i * 40])
+                    data['cloud1'].append([j * 40, i * 40])
                 elif self.map[i][j] == 201:
-                    data['object']['cloud2'].append([j * 40, i * 40])
+                    data['cloud2'].append([j * 40, i * 40])
                 elif self.map[i][j] == 2100:
-                    data['object']['coin'].append([j * 40, i * 40])
+                    data['coin'].append([j * 40, i * 40])
                 elif self.map[i][j] == 2200:
-                    data['object']['mushroom_grow'].append([j * 40, i * 40])
+                    data['mushroom_grow'].append([j * 40, i * 40])
                 elif self.map[i][j] == 2201:
-                    data['object']['mushroom_life'].append([j * 40, i * 40])
+                    data['mushroom_life'].append([j * 40, i * 40])
                 elif self.map[i][j] == 2202:
-                    data['object']['mushroom_death'].append([j * 40, i * 40])
+                    data['mushroom_death'].append([j * 40, i * 40])
+                elif self.map[i][j] == 4000:
+                    data['goomba'].append([j * 40, i * 40])
+
 
         with open('./res/level/'+self.filename+'.json', 'w') as fp:
-            fp.write(json.dumps(data))
+            fp.write(json.dumps(data, indent=4))
 
 

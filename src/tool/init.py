@@ -1,13 +1,10 @@
-
-
 from src.tool.tool import *
-from src.scene.level import *
 from .globaldata import *
-
 
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
+
 
 mario_img = load_image('./res/image/mario.png')
 
@@ -55,7 +52,6 @@ for i in range(4):
     brick_img.append(get_image(background_img, i * 16, 0, 16, 16))
     brick_img.append(get_image(background_img, i * 16, 16, 16, 16))
 
-
 cloud_img = []
 # 80x60px
 cloud_img.append(get_image(background_img, 8, 320, 32, 24))
@@ -63,14 +59,11 @@ cloud_img.append(get_image(background_img, 8, 320, 32, 24))
 cloud_img.append(get_image(background_img, 126, 320, 48, 16))
 cloud_img[1] = pygame.transform.flip(cloud_img[1], False, True)
 
-
-
 brushwood_img = []
 # 80x40px
 brushwood_img.append(get_image(background_img, 184, 144, 32, 16))
 # 120x80px
 brushwood_img.append(get_image(background_img, 352, 128, 48, 32))
-
 
 # 80x80
 pipe_img = []
@@ -99,18 +92,9 @@ for i in range(4):
 music =     load_musics('./res/music')
 sound =     load_sounds('./res/sound')
 
-font =      pygame.font.Font('./res/font/geteshi.ttf', FONT_SIZE)
-
+font =      pygame.font.Font('./res/font/mario.ttf', FONT_SIZE)
 
 
 pygame.display.set_caption('超级玛丽')
 icon = load_image('./res/image/icon.png')
 pygame.display.set_icon(icon)
-
-
-level = Level(2)
-
-# 防止循环import
-# 必须放在sound的声明后
-from src.sprite.brick import *
-brick_manager = BrickManager()

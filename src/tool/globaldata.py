@@ -3,8 +3,8 @@
 NODIRECTION =   0
 LEFT =          1
 RIGHT =         2
-UP =            3
-DOWN =          4
+TOP =           3
+BOTTOM =        4
 
 
 # 标记Mario的状态
@@ -22,12 +22,15 @@ BIG =       2
 
 
 # 加速度
-GRAVITY_X =     5
-GRAVITY_Y =     5
+GRAVITY_X =     3
+GRAVITY_Y =     3
 
 # 最大速度
 MAX_SPEED_X =   15
 MAX_SPEED_Y =   40
+
+# 初始跳跃速度
+INIT_JUMP_SPEED_Y =     -50
 
 
 # 蘑菇的类型
@@ -36,7 +39,7 @@ PLUS_LIFE =     2
 
 
 # 字符初始大小
-FONT_SIZE =     16
+FONT_SIZE =     48
 
 
 # 颜色

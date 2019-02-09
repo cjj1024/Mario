@@ -1,16 +1,22 @@
 import json
+import pygame
+from src.sprite.brick import *
+from src.sprite.goomba import *
+from src.sprite.pipe import *
 
 class Level():
     def __init__(self, level):
-
-
         filename = './res/level/level' + str(level) + '.json'
         with open(filename) as fp:
             data = json.load(fp)
-            # print(data)
 
         self.length = data['length']
         self.start_x = 0
+
+        self.brick_group = pygame.sprite.Group()
+        self.pipe_group = pygame.sprite.Group()
+        self.enemy_group = pygame.sprite.Group()
+
         # 把屏幕划分成二维的格子
         # 每个格子为40x40px
         # 0 什么都没有
@@ -38,42 +44,42 @@ class Level():
         # 3202 死亡蘑菇
         #
         # 4000 Goomba
+        for x, y in data['pipe']:
+            self.pipe_group.add(Pipe(x, y))
 
-        self.map = []
-        for i in range(15):
-            self.map.append([0] * int(self.length / 40))
+        for x, y in data['brick1']:
+            self.brick_group.add(Brick(1000, x, y))
 
-        self.pipe = data['object']['pipe']
-        for x, y in self.pipe:
-            self.map[int(y / 40)][int(x / 40)] = 1200
-            self.map[int(y / 40) + 1][int(x / 40)] = 1201
-            self.map[int(y / 40)][int(x / 40) + 1] = 1201
-            self.map[int(y / 40) + 1][int(x / 40) + 1] = 1201
+        for x, y in data['brick2']:
+            self.brick_group.add(Brick(1001, x, y))
 
-        self.ground = data['object']['brick1']
-        for x, y in self.ground:
-            self.map[int(y / 40)][int(x / 40)] = 1000
+        for x, y in data['brick3']:
+            self.brick_group.add(Brick(1002, x, y))
 
-        self.ground = data['object']['brick2']
-        for x, y in self.ground:
-            self.map[int(y / 40)][int(x / 40)] = 1001
+        for x, y in data['coin']:
+            self.brick_group.add(Brick(2100, x, y))
 
-        self.ground = data['object']['brick3']
-        for x, y in self.ground:
-            self.map[int(y / 40)][int(x / 40)] = 1002
+        for x, y in data['mushroom_grow']:
+            self.brick_group.add(Brick(2200, x, y))
 
-        self.brick_coin = data['object']['coin']
-        for x, y in self.brick_coin:
-            self.map[int(y / 40)][int(x / 40)] = 2100
-
-        self.brick_mushroom_grow = data['object']['mushroom_grow']
-        for x, y in self.brick_mushroom_grow:
-            self.map[int(y / 40)][int(x / 40)] = 2200
-
-        self.brick_mushroom_grow = data['object']['mushroom_life']
-        for x, y in self.brick_mushroom_grow:
+        for x, y in data['mushroom_life']:
+            self.brick_group.add(Brick(2201, x, y))
             self.map[int(y / 40)][int(x / 40)] = 2201
 
-        self.brick_mushroom_grow = data['object']['mushroom_death']
-        for x, y in self.brick_mushroom_grow:
-            self.map[int(y / 40)][int(x / 40)] = 2202
+        for x, y in data['mushroom_death']:
+            self.brick_group.add(Brick(2202, x, y))
+
+        for x, y in data['goomba']:
+            self.enemy_group.add(Goomba(x, y))
+
+
+
+    def update(self, screen):
+        self.brick_group.update(self.start_x)
+        self.brick_group.draw(screen)
+
+        self.enemy_group.update()
+        self.enemy_group.draw(screen)
+
+        self.pipe_group.update(self.start_x)
+        self.pipe_group.draw(screen)

@@ -1,5 +1,44 @@
+import pygame
 
 from src.tool.init import *
+
+
+class Brick(pygame.sprite.Sprite):
+    def __init__(self, type, x, y):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.type = type
+
+        self.init_image()
+
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.start_x = x
+
+
+    def init_image(self):
+        if self.type == 1001:
+            self.image = brick_img[1]
+        elif self.type == 1000:
+            self.image = brick_img[0]
+        elif self.type == 1002:
+            self.image = brick_img[2]
+        elif self.type == 2100:
+            self.image = bonus_brick_img[1]
+        elif self.type == 2200:
+            self.image = bonus_brick_img[1]
+        elif self.type == 2201:
+            self.image = bonus_brick_img[1]
+        elif self.type == 2202:
+            self.image = bonus_brick_img[1]
+        else:
+            self.image = brick_img[0]
+
+
+    def update(self, offset):
+        self.rect.x = self.start_x - offset
+
 
 # 砖块管理类
 # 当Mario撞击扎砖块时, 根据砖块的类型做出相应的操作

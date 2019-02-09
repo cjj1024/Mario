@@ -3,44 +3,18 @@ from src.tool.init import *
 from src.tool.globaldata import *
 
 class Goomba(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = goomba_img[1]
         self.rect = self.image.get_rect()
-        self.rect.x = 800
-        self.rect.y = 480
+        self.rect.x = x
+        self.rect.y = y
         self.direction = LEFT
-        self.speed = 2
+        self.speed_x = -2
+        self.speed_y = 0
         self.status = WALK
 
         self.init_image()
-
-
-    @property
-    def X(self):
-        return self.rect.x
-
-
-    @X.setter
-    def X(self, x):
-        self.rect.x = x
-
-
-    @property
-    def Y(self):
-        return self.rect.y
-
-
-    @Y.setter
-    def Y(self, y):
-        self.rect.y = y
-
-
-    def get_grid(self):
-        i = int((self.Y + self.rect.height / 2) / 40)
-        j = int((level.start_x + self.X + self.rect.width / 2) / 40)
-
-        return i, j
 
 
     def update(self):
@@ -51,46 +25,33 @@ class Goomba(pygame.sprite.Sprite):
 
 
     def death(self):
-        if self.X < 0:
+        if self.rect.x < 0:
             self.kill()
         self.image = self.death_img
-        self.X -= self.speed
+        self.rect.x -= self.speed
 
 
     # 向左走, 碰到障碍掉头
     # 向右走, 碰到障碍掉头
-    # 走出屏幕边界则消失
     def walk(self):
-        i, j = self.get_grid()
-        # level.map[i][j] = 0
-        if self.X < 0 or self.X > 800:
-            self.kill()
-
-        i = int(self.Y / 40)
         if self.direction == LEFT:
-            j = int((self.X - self.speed) / 40)
-            if self.X - self.speed > 0 and level.map[i][j] != 0:
-                self.direction = RIGHT
-            else:
-                self.X -= self.speed
-        else:
-            j = int((self.X + self.speed + self.rect.width) / 40)
-            if self.X + self.speed < 800 and level.map[i][j] != 0:
-                self.direction = LEFT
-            else:
-                self.X += self.speed
+            self.image = self.walk_left_img
+        elif self.direction == RIGHT:
+            self.image = self.walk_right_img
 
-        i, j = self.get_grid()
-        # level.map[i][j] = 31
+
+    def rotate_direction(self):
+        if self.direction == LEFT:
+            self.direction = RIGHT
+        elif self.direction == RIGHT:
+            self.direction = LEFT
+
+        self.speed_x = -self.speed_x
 
 
     def set_status(self, status):
         if self.status != DEATH:
             self.status = status
-
-
-    def get_status(self):
-        return self.status
 
 
     def init_image(self):

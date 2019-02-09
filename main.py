@@ -1,5 +1,6 @@
 
 from src.scene.gamemenu import *
+from src.tool.init import *
 
 
 def main():
