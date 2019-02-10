@@ -31,8 +31,6 @@ class Goomba(pygame.sprite.Sprite):
         self.rect.x -= self.speed
 
 
-    # 向左走, 碰到障碍掉头
-    # 向右走, 碰到障碍掉头
     def walk(self):
         if self.direction == LEFT:
             self.image = self.walk_left_img
@@ -40,6 +38,7 @@ class Goomba(pygame.sprite.Sprite):
             self.image = self.walk_right_img
 
 
+    # 掉头
     def rotate_direction(self):
         if self.direction == LEFT:
             self.direction = RIGHT

@@ -46,12 +46,18 @@ for i in range(3):
 
 background_img = load_image('./res/image/background.png')
 
-# 40x40px
+# 0 地面
+# 1 不可摧毁的砖块
+# 2 可摧毁的砖块
+# 6 奖励出现后的砖块
 brick_img = []
+# 40x40px
 for i in range(4):
     brick_img.append(get_image(background_img, i * 16, 0, 16, 16))
     brick_img.append(get_image(background_img, i * 16, 16, 16, 16))
 
+# 0 小云
+# 1 大云
 cloud_img = []
 # 80x60px
 cloud_img.append(get_image(background_img, 8, 320, 32, 24))
@@ -59,32 +65,40 @@ cloud_img.append(get_image(background_img, 8, 320, 32, 24))
 cloud_img.append(get_image(background_img, 126, 320, 48, 16))
 cloud_img[1] = pygame.transform.flip(cloud_img[1], False, True)
 
+# 0 小灌木
+# 1 大灌木
 brushwood_img = []
 # 80x40px
 brushwood_img.append(get_image(background_img, 184, 144, 32, 16))
 # 120x80px
 brushwood_img.append(get_image(background_img, 352, 128, 48, 32))
 
-# 80x80
+# 管道
 pipe_img = []
+# 80x80
 pipe_img.append(get_image(background_img, 0, 160, 32, 32))
 
 
 item_img = load_image('./res/image/item.png')
 
-# 40x40px
+# 0 变大蘑菇
+# 2 生命蘑菇
+# 4 死亡蘑菇
 mushroom_img = []
+# 40x40px
 for i in range(3):
     mushroom_img.append(get_image(item_img, i * 16, 0, 16, 16))
     mushroom_img.append(get_image(item_img, i * 16, 16, 16, 16))
 
-# 40x40px
+# 有奖励的砖块
 bonus_brick_img = []
+# 40x40px
 for i in range(4):
     bonus_brick_img.append(get_image(item_img, i * 16, 80, 16, 16))
 
-# 16x15px
+# 硬币
 coin_img = []
+# 40x40px
 for i in range(4):
     coin_img.append(get_image(item_img, i * 16, 96, 16, 16))
 

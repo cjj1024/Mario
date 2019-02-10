@@ -24,7 +24,8 @@ class Mario(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.speed_y += GRAVITY_Y
+        if abs(self.speed_y + GRAVITY_Y) < MAX_SPEED_Y:
+            self.speed_y += GRAVITY_Y
 
         if self.status == DEATH:
             self.death()
@@ -36,10 +37,6 @@ class Mario(pygame.sprite.Sprite):
             self.jump()
         elif self.status == FALL:
             self.fall()
-            
-
-    def is_sky(self):
-        return False
 
 
     def death(self):
@@ -55,12 +52,7 @@ class Mario(pygame.sprite.Sprite):
             self.speed_x = 10
             self.image = self.jump_right
 
-        self.speed_y += GRAVITY_Y
-
-        if abs(self.speed_y) > abs(INIT_JUMP_SPEED_Y):
-            self.speed_y = 0
-            self.speed_x = 0
-            self.status = STAND
+        self.status = FALL
 
 
     def fall(self):
@@ -73,11 +65,9 @@ class Mario(pygame.sprite.Sprite):
 
         if self.direction == LEFT:
             self.speed_x = -10
-            # self.move_left()
             self.image = self.walk_left[self.animationNum]
         else:
             self.speed_x = 10
-            # self.move_right()
             self.image = self.walk_right[self.animationNum]
 
 
@@ -89,9 +79,13 @@ class Mario(pygame.sprite.Sprite):
 
 
     def set_status(self, status):
-        # 当前状态已经是死亡, 跳跃
-        if self.status == DEATH or self.status == JUMP:
+        # 当前状态已经是死亡
+        if self.status == DEATH:
             return
+
+        if self.status == FALL and status == JUMP:
+            return
+
         # 要变成死亡状态
         if status == DEATH:
             self.status = DEATH

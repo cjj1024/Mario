@@ -11,6 +11,7 @@ class Coin(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.rect.y -= self.rect.height
         # 表示硬币剩余的时间, 为0时消失
         self.life = 9
         self.animationNum = 0

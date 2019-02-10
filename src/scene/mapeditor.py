@@ -9,6 +9,13 @@ from src.sprite.mushroom import *
 from src.sprite.coin import *
 
 
+# 分为游戏编辑区域和物品选择区域
+# 游戏编辑区域划分为40x40px的方格, 与一个二维数组对应
+# 点击物品选择区域的物品即可选择该物品
+# 在游戏编辑区域点击鼠标左键为放置物品
+# 在游戏编辑区域点击鼠标右键为取消放置
+# 进入游戏编辑器之前要设置游戏场景的长度, 大小要是40px的整数倍
+# 退出游戏编辑器时要输入关卡名称
 class MapEditor():
     def __init__(self):
         self.screen = pygame.display.set_mode((1200, 600))
@@ -25,6 +32,7 @@ class MapEditor():
         for i in range(15):
             self.map.append([0] * int(self.length / 40))
 
+        # 标记用户是否编辑完成
         self.completed = False
 
         self.filename = ""
@@ -55,6 +63,7 @@ class MapEditor():
                 elif event.key == K_RIGHT:
                     if self.start_x + 800<= self.length - 40:
                         self.start_x += 40
+            # 鼠标移动, 跟踪鼠标位置
             elif event.type == MOUSEMOTION:
                 x, y = event.pos
                 self.row, self.column = self.get_grid(x, y)
@@ -110,6 +119,7 @@ class MapEditor():
                     self.row, self.column = self.get_grid(x, y)
                     self.map[self.row][self.column] = 0
 
+
     def get_grid(self, x, y):
         x += self.start_x
 
@@ -119,13 +129,16 @@ class MapEditor():
     def draw_background(self):
         self.screen.fill(SKYBLUE, (0, 0, 1200, 600))
         self.show_item()
+        # 画40x40的方格
         for i in range(15):
             pygame.draw.line(self.screen, RED, (0, i * 40), (800, i * 40))
         for i in range(21):
             pygame.draw.line(self.screen, RED, (i * 40, 0), (i * 40, 600))
 
+        # 用户当前选择的物品, 随鼠标的位置移动
         self.screen.blit(self.image, (self.column * 40 - self.start_x, self.row * 40))
 
+        # 在游戏编辑区画出用户已放置的物品
         x = self.start_x
         end = self.start_x + 800
         while x < end:
@@ -162,6 +175,7 @@ class MapEditor():
             x += 40
 
 
+    # 物品选择区的物品
     def show_item(self):
         self.screen.fill(WHITE, (800, 0, 40, 600))
         self.screen.blit(brick_img[0], (840, 0))
@@ -179,6 +193,7 @@ class MapEditor():
         self.screen.blit(goomba_img[0], (840, 200))
 
 
+    # 获得用户输入的场景的长度
     def get_length(self):
         win = tkinter.Tk()
         tkinter.Label(win, text='请输入长度(单位为px, 要求为40的整数倍): ').pack()
@@ -195,10 +210,7 @@ class MapEditor():
         self.length = int(str(text.get()))
 
 
-    def save_filename(self, text):
-        self.filename = str(text.get())
-
-
+    # 用json格式保存关卡信息
     def store(self):
         win = tkinter.Tk()
         frame = tkinter.Frame()
@@ -263,3 +275,5 @@ class MapEditor():
             fp.write(json.dumps(data, indent=4))
 
 
+    def save_filename(self, text):
+        self.filename = str(text.get())

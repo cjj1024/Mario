@@ -9,8 +9,10 @@ class GameMenu():
         self.screen = screen
         # 记录用户的选择
         # 1 开始游戏
-        # 2 退出游戏
-        self.selected = 1
+        # 2 编辑地图
+        # 3 退出游戏
+        self.selected = 0
+        self.num = 3
 
 
     def show(self):
@@ -33,23 +35,21 @@ class GameMenu():
                 if event.key == K_ESCAPE:
                     sys.exit(0)
                 elif event.key == K_DOWN:
-                    if self.selected == 1:
-                        # self.screen.fill((100, 150, 250), (300, 250, 40, 40))
-                        # self.screen.blit(mushroom_img[0], (300, 300))
-                        self.selected = 2
+                    self.selected += 1
+                    self.selected %= self.num
                 elif event.key == K_UP:
-                    if self.selected == 2:
-                        # self.screen.fill((100, 150, 250), (300, 300, 40, 40))
-                        # self.screen.blit(mushroom_img[0], (300, 250))
-                        self.selected = 1
+                    self.selected -= 1
+                    self.selected %= self.num
                 elif event.key == K_RETURN:
-                    if self.selected == 1:
+                    if self.selected == 0:
                         gamescene = GameScene(self.screen)
                         gamescene.show()
-                    elif self.selected == 2:
+                    elif self.selected == 1:
                         mapeditor = MapEditor()
                         mapeditor.show()
                         self.screen = pygame.display.set_mode((800, 600))
+                    elif self.selected == 2:
+                        sys.exit(0)
 
 
     def draw_background(self):
@@ -64,14 +64,10 @@ class GameMenu():
         self.screen.blit(brushwood_img[0], (200, 480))
         self.screen.blit(brushwood_img[0], (600, 480))
 
-
-        # write_word(screen, '开始游戏:', 36, WHITE, (350, 300))
-        write_chars(screen, '开始游戏', 48, WHITE, (350, 250))
+        write_chars(screen, '开始游戏', 48, WHITE, (350, 200))
+        write_chars(screen, '编辑游戏', 48, WHITE, (350, 250))
         write_chars(screen, '退出游戏', 48, WHITE, (350, 300))
-        # self.screen.blit(mushroom_img[0], (300, 250))
-        if self.selected == 1:
-            self.screen.blit(mushroom_img[0], (300, 250))
-        elif self.selected == 2:
-            self.screen.blit(mushroom_img[0], (300, 300))
+
+        self.screen.blit(mushroom_img[0], (300, 200 + self.selected * 50))
 
 

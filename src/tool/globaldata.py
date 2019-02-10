@@ -23,14 +23,14 @@ BIG =       2
 
 # 加速度
 GRAVITY_X =     3
-GRAVITY_Y =     3
+GRAVITY_Y =     1
 
 # 最大速度
 MAX_SPEED_X =   15
-MAX_SPEED_Y =   40
+MAX_SPEED_Y =   30
 
 # 初始跳跃速度
-INIT_JUMP_SPEED_Y =     -50
+INIT_JUMP_SPEED_Y =     -30
 
 
 # 蘑菇的类型
