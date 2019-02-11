@@ -12,7 +12,8 @@ class GameScene():
         self.level = Level(1)
         
         self.player_group = pygame.sprite.Group()
-        self.bonus_group = pygame.sprite.Group()
+        self.coin_group = pygame.sprite.Group()
+        self.mushroom_group = pygame.sprite.Group()
 
         self.mario = Mario()
         self.player_group.add(self.mario)
@@ -22,19 +23,23 @@ class GameScene():
     def show(self):
         clock = pygame.time.Clock()
         while self.mario.alive():
-            self.show_info()
+            self.screen.fill(SKYBLUE, (0, 0, 800, 600))
 
             self.check_event()
 
             self.level.update(self.screen)
-            self.bonus_group.update()
-            self.bonus_group.draw(self.screen)
+            self.coin_group.update()
+            self.coin_group.draw(self.screen)
+            self.mushroom_group.update()
+            self.mushroom_group.draw(self.screen)
             self.player_group.update()
             self.player_group.draw(self.screen)
 
             self.move_mario()
-            self.move_enemy()
+            self.move_item(self.level.enemy_group)
+            self.move_item(self.mushroom_group)
 
+            self.show_info()
             pygame.display.update()
 
             clock.tick(60)
@@ -67,20 +72,31 @@ class GameScene():
             for enemy in self.level.enemy_group:
                 enemy.rect.x -= self.mario.speed_x
 
-            for bonus in self.bonus_group:
-                bonus.rect.x -= self.mario.speed_x
+            for coin in self.coin_group:
+                coin.rect.x -= self.mario.speed_x
+
+            for mushroom in self.mushroom_group:
+                mushroom.rect.x -= self.mario.speed_x
 
 
     # 检测mario在x轴上的碰撞
     def check_mario_collision_x(self):
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
+        mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
 
         if brick:
             self.process_mario_collision_x(brick)
 
         if pipe:
             self.process_mario_collision_x(pipe)
+
+        if mushroom:
+            self.process_mario_mushroom_collision(mushroom)
+
+
+    def process_mario_mushroom_collision(self, mushroom):
+        mushroom.bump(self.mario)
 
 
     # 处理Mario在x轴上的碰撞
@@ -98,12 +114,16 @@ class GameScene():
     def check_mario_collision_y(self):
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
+        mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
 
         if brick:
             self.process_mario_collision_y(brick)
 
         if pipe:
             self.process_mario_collision_y(pipe)
+
+        if mushroom:
+            self.process_mario_mushroom_collision(mushroom)
 
 
     # 处理mario在y轴上的碰撞
@@ -113,7 +133,10 @@ class GameScene():
         else:
             self.mario.rect.top = collider.rect.bottom
             # 当mario用头撞击物体时, 处理奖励
-            collider.bump(self.bonus_group)
+            if collider.type == 2100:
+                collider.bump(self.coin_group, self.mario)
+            else:
+                collider.bump(self.mushroom_group, self.mario)
 
         # mairo在y轴方向遇到碰撞, 垂直速度置为0
         self.mario.speed_y = 0
@@ -125,52 +148,55 @@ class GameScene():
             self.mario.set_shape(STAND)
 
 
-    # 移动敌人
+    # 移动物体
     # 移动后检测碰撞并处理碰撞
-    def move_enemy(self):
-        for enemy in self.level.enemy_group:
-            enemy.rect.x += enemy.speed_x
-            self.check_enemy_collision_x(enemy)
+    def move_item(self, item_group):
+        for item in item_group:
+            item.rect.x += item.speed_x
+            self.check_item_collision_x(item)
 
-            enemy.rect.y += enemy.speed_y
-            self.check_enemy_collision_y(enemy)
+            if item.speed_y != 0:
+                item.rect.y += item.speed_y
+                self.check_item_collision_y(item)
+            # item.rect.y += item.speed_y
+            # self.check_item_collision_y(item)
 
-            self.check_enemy_border(enemy)
+            self.check_item_border(item)
 
 
-    # 检测敌人在x轴方向的碰撞
+    # 检测物体在x轴方向的碰撞
     # 碰到砖块, 水管则调转方向
-    def check_enemy_collision_x(self, enemy):
-        brick = pygame.sprite.spritecollideany(enemy, self.level.brick_group)
-        pipe = pygame.sprite.spritecollideany(enemy, self.level.pipe_group)
-        # other_enemy = pygame.sprite.spritecollideany(enemy, self.level.enemy_group)
+    def check_item_collision_x(self, item):
+        brick = pygame.sprite.spritecollideany(item, self.level.brick_group)
+        pipe = pygame.sprite.spritecollideany(item, self.level.pipe_group)
 
         if brick:
-            enemy.rotate_direction()
+            item.rotate_direction()
 
         if pipe:
-            enemy.rotate_direction()
-
-        # if other_enemy:
-        #     enemy.rotate_direction()
+            item.rotate_direction()
 
 
-    # 检测敌人在y轴方向的碰撞
-    def check_enemy_collision_y(self, enemy):
-        brick = pygame.sprite.spritecollideany(enemy, self.level.enemy_group)
-        pipe = pygame.sprite.spritecollideany(enemy, self.level.pipe_group)
+    # 检测物体在y轴方向的碰撞
+    def check_item_collision_y(self, item):
+        brick = pygame.sprite.spritecollideany(item, self.level.brick_group)
+        pipe = pygame.sprite.spritecollideany(item, self.level.pipe_group)
 
         if brick:
-            enemy.speed_y = 0
+            if item.rect.y < brick.rect.y:
+                item.rect.bottom = brick.rect.top
+            item.speed_y = 0
 
         if pipe:
-            enemy.speed_y = 0
+            if item.rect.y < pipe.rect.y:
+                item.rect.bottom = pipe.rect.top
+            item.speed_y = 0
 
 
-    # 检测敌人边界, 超出边界则死亡
-    def check_enemy_border(self, enemy):
-        if enemy.rect.x < 0 or enemy.rect.x > self.level.length:
-            enemy.kill()
+    # 检测物体边界, 超出边界则消失
+    def check_item_border(self, item):
+        if item.rect.x < 0 or item.rect.x > self.level.length:
+            item.kill()
 
 
     def check_mario_border(self):
@@ -189,8 +215,9 @@ class GameScene():
 
     # 展示信息
     def show_info(self):
-        self.screen.fill(SKYBLUE, (0, 0, 800, 600))
         write_chars(self.screen, "分数: " + str(self.mario.score), 32, WHITE, (0, 0))
+        write_chars(self.screen, "硬币: " + str(self.mario.coin_num), 32, WHITE, (0, 32))
+        write_chars(self.screen, "生命: " + str(self.mario.life), 32, WHITE, (0, 64))
 
 
     def check_event(self):

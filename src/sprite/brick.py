@@ -2,6 +2,7 @@ import pygame
 
 from src.tool.init import *
 from .coin import *
+from .mushroom import *
 
 
 # 1000 砖块1  地面
@@ -59,22 +60,29 @@ class Brick(pygame.sprite.Sprite):
     # 2201 生命蘑菇箱子
     # 2202 死亡蘑菇箱子
     # 处理mario用头撞击砖块时应给的奖励
-    def bump(self, group):
+    def bump(self, group, player):
         if self.type == 1002:
             self.kill()
+            player.score += 5
         elif self.type == 2100:
             self.type = 1003
             self.image = brick_img[6]
             group.add(Coin(self.rect.x, self.rect.y))
+            player.coin_num += 1
+            player.score += 10
         elif self.type == 2200:
             self.type = 1003
             self.image = brick_img[6]
+            group.add(Mushroom(self.rect.x, self.rect.y, 3200))
         elif self.type == 2201:
             self.type = 1003
             self.image = brick_img[6]
+            group.add(Mushroom(self.rect.x, self.rect.y, 3201))
         elif self.type == 2202:
             self.type = 1003
             self.image = brick_img[6]
+            group.add(Mushroom(self.rect.x, self.rect.y, 3202))
+
 
 
     # offset为世界坐标与屏幕坐标在x轴上的偏移

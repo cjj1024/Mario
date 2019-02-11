@@ -17,6 +17,7 @@ class Mario(pygame.sprite.Sprite):
         self.speed_y = 0
 
         self.score = 0
+        self.coin_num = 0
         self.life = 3
 
         self.init_image()
@@ -106,20 +107,6 @@ class Mario(pygame.sprite.Sprite):
     def set_direction(self, direction):
         if self.status != JUMP:
             self.direction = direction
-
-
-
-
-    def get_grid(self, x, y):
-        if y < 0:
-            y = 0
-        elif y > 560:
-            y = 560
-        elif x < 0:
-            x = 0
-        elif x >= level.length:
-            x = level.length - 10
-        return int(y / 40), int(x / 40)
 
 
     def set_shape(self, shape):

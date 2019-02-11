@@ -106,7 +106,7 @@ for i in range(4):
 music =     load_musics('./res/music')
 sound =     load_sounds('./res/sound')
 
-font =      pygame.font.Font('./res/font/mario.ttf', FONT_SIZE)
+font =      pygame.font.Font('./res/font/minicanton.TTF', FONT_SIZE)
 
 
 pygame.display.set_caption('超级玛丽')
