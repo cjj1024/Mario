@@ -2,6 +2,11 @@
 from src.tool.init import *
 from src.tool.globaldata import *
 
+# ddddddddddddddddddddddddddddddddddd
+# ddddddddddddddddddddddddddddddddddd
+# ddddddddddddddddddddddddddddddddddd
+# ddddddddddddddddddddddddddddddddddd
+# ddddddddddddddddddddddddddddddddddd
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
