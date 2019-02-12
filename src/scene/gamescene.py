@@ -10,14 +10,14 @@ class GameScene():
         self.screen = screen
         
         self.level = Level(1)
-        
+
+
         self.player_group = pygame.sprite.Group()
         self.coin_group = pygame.sprite.Group()
         self.mushroom_group = pygame.sprite.Group()
 
         self.mario = Mario()
         self.player_group.add(self.mario)
-
 
 
     def show(self):
@@ -52,12 +52,14 @@ class GameScene():
             self.mario.rect.x += self.mario.speed_x
             self.check_move_scene()
             self.check_mario_border()
-            self.check_mario_collision_x()
+            if self.mario.is_collider:
+                self.check_mario_collision_x()
 
         if self.mario.speed_y != 0:
             self.mario.rect.y += self.mario.speed_y
             self.check_mario_border()
-            self.check_mario_collision_y()
+            if self.mario.is_collider:
+                self.check_mario_collision_y()
 
 
     # 检测是否移动场景
@@ -84,6 +86,7 @@ class GameScene():
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
+        enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
 
         if brick:
             self.process_mario_collision_x(brick)
@@ -93,6 +96,13 @@ class GameScene():
 
         if mushroom:
             self.process_mario_mushroom_collision(mushroom)
+
+        if enemy:
+            self.process_mario_enemy_collision_x()
+
+
+    def process_mario_enemy_collision_x(self):
+        self.mario.set_status(DEATH)
 
 
     def process_mario_mushroom_collision(self, mushroom):
@@ -115,6 +125,7 @@ class GameScene():
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
+        enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
 
         if brick:
             self.process_mario_collision_y(brick)
@@ -125,12 +136,20 @@ class GameScene():
         if mushroom:
             self.process_mario_mushroom_collision(mushroom)
 
+        if enemy:
+            self.process_mario_enemy_collision_y(enemy)
+
+
+    def process_mario_enemy_collision_y(self, enemy):
+        if self.mario.rect.y < enemy.rect.y:
+            enemy.set_status(DEATH)
+
 
     # 处理mario在y轴上的碰撞
     def process_mario_collision_y(self, collider):
         if self.mario.rect.y < collider.rect.y:
             self.mario.rect.bottom = collider.rect.top
-        else:
+        elif self.mario.rect.y > collider.rect.y:
             self.mario.rect.top = collider.rect.bottom
             # 当mario用头撞击物体时, 处理奖励
             if collider.type == 2100:
@@ -145,7 +164,7 @@ class GameScene():
         # 水平速度置为0
         if self.mario.status == JUMP:
             self.mario.speed_x = 0
-            self.mario.set_shape(STAND)
+            self.mario.status = STAND
 
 
     # 移动物体
@@ -158,10 +177,6 @@ class GameScene():
             if item.speed_y != 0:
                 item.rect.y += item.speed_y
                 self.check_item_collision_y(item)
-            # item.rect.y += item.speed_y
-            # self.check_item_collision_y(item)
-
-            self.check_item_border(item)
 
 
     # 检测物体在x轴方向的碰撞
@@ -193,12 +208,6 @@ class GameScene():
             item.speed_y = 0
 
 
-    # 检测物体边界, 超出边界则消失
-    def check_item_border(self, item):
-        if item.rect.x < 0 or item.rect.x > self.level.length:
-            item.kill()
-
-
     def check_mario_border(self):
         if self.mario.rect.left < 0:
             self.mario.rect.left = 0
@@ -209,8 +218,8 @@ class GameScene():
         if self.mario.rect.top < 0:
             self.mario.rect.top = 0
 
-        if self.mario.rect.bottom > 560:
-            self.mario.rect.bottom = 560
+        if self.mario.rect.bottom > 600:
+            self.mario.rect.bottom = 600
 
 
     # 展示信息
@@ -235,9 +244,5 @@ class GameScene():
                     self.mario.set_direction(RIGHT)
                 elif event.key == K_a:
                     self.mario.set_status(JUMP)
-                else:
-                    self.mario.set_status(STAND)
-                    self.mario.set_direction(NODIRECTION)
-            else:
-                self.mario.set_direction(NODIRECTION)
-                self.mario.set_status(STAND)
+
+

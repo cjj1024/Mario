@@ -12,9 +12,11 @@ class Mario(pygame.sprite.Sprite):
         self.shape = SMALL
         self.status = STAND
         self.direction = NODIRECTION
-        self.animationNum = 0
+        self.animation_num = 0
         self.speed_x = 0
         self.speed_y = 0
+
+        self.is_collider = True
 
         self.score = 0
         self.coin_num = 0
@@ -36,40 +38,40 @@ class Mario(pygame.sprite.Sprite):
             self.walk()
         elif self.status == JUMP:
             self.jump()
-        elif self.status == FALL:
-            self.fall()
 
 
     def death(self):
+        if self.rect.y >= 560:
+            self.kill()
         self.image = self.small_dead_img
-        self.kill()
 
 
     def jump(self):
-        if self.direction == LEFT:
-            self.speed_x = -10
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT]:
+            self.speed_x = -3
             self.image = self.jump_left
-        elif self.direction == RIGHT:
-            self.speed_x = 10
+        elif key[pygame.K_RIGHT]:
+            self.speed_x = 3
             self.image = self.jump_right
-
-        self.status = FALL
-
-
-    def fall(self):
-        self.speed_y += GRAVITY_Y
 
 
     def walk(self):
         # 循环播放动画
-        self.animationNum = (self.animationNum + 1) % (len(self.walk_left) - 1)
+        self.animation_num = (self.animation_num + 1) % (len(self.walk_left) - 1)
 
-        if self.direction == LEFT:
-            self.speed_x = -10
-            self.image = self.walk_left[self.animationNum]
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT]:
+            if abs(self.speed_x) < MAX_SPEED_X:
+                self.speed_x -= GRAVITY_X
+            self.image = self.walk_left[self.animation_num]
+        elif key[pygame.K_RIGHT]:
+            if abs(self.speed_y) < MAX_SPEED_X:
+                self.speed_x += GRAVITY_X
+            self.image = self.walk_right[self.animation_num]
         else:
-            self.speed_x = 10
-            self.image = self.walk_right[self.animationNum]
+            self.speed_x = 0
+            self.status = STAND
 
 
     def stand(self):
@@ -80,23 +82,22 @@ class Mario(pygame.sprite.Sprite):
 
 
     def set_status(self, status):
-        # 当前状态已经是死亡
-        if self.status == DEATH:
+        if self.status == DEATH or self.status == JUMP:
             return
 
-        if self.status == FALL and status == JUMP:
-            return
+        self.status = status
 
         # 要变成死亡状态
         if status == DEATH:
-            self.status = DEATH
-            pygame.mixer.Sound.play(sound['death'])
-            return
-
-        if self.status != JUMP:
-            self.status = status
-
-        if status == JUMP:
+            if self.shape == BIG:
+                self.shape = SMALL
+            elif self.shape == SMALL:
+                self.status = DEATH
+                self.is_collider = False
+                self.speed_y = INIT_JUMP_SPEED_Y
+                self.speed_x = 0
+                pygame.mixer.Sound.play(sound['death'])
+        elif status == JUMP:
             self.speed_y = INIT_JUMP_SPEED_Y
             pygame.mixer.Sound.play(sound['small_jump'])
         elif status == STAND:

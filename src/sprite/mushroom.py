@@ -34,6 +34,8 @@ class Mushroom(pygame.sprite.Sprite):
 
 
     def update(self):
+        if self.rect.right < 0:
+            self.kill()
         if abs(self.speed_y + GRAVITY_Y) < MAX_SPEED_Y:
             self.speed_y += GRAVITY_Y
 
