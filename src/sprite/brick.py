@@ -3,6 +3,7 @@ import pygame
 from src.tool.init import *
 from .coin import *
 from .mushroom import *
+from .stillobject import *
 
 
 # 1000 砖块1  地面
@@ -14,18 +15,20 @@ from .mushroom import *
 # 2200 长大蘑菇箱子
 # 2201 生命蘑菇箱子
 # 2202 死亡蘑菇箱子
-class Brick(pygame.sprite.Sprite):
+class Brick(StillObject):
     def __init__(self, type, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        StillObject.__init__(self, type, x, y)
 
-        self.type = type
+        self.animation_num = 0
 
-        self.init_image()
 
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.start_x = x
+    # offset为世界坐标与屏幕坐标在x轴上的偏移
+    def update(self, offset):
+        self.rect.x = self.start_x - offset
+
+        if self.type == 2100 or self.type == 2200 or self.type == 2201 or self.type == 2202:
+            self.animation_num = (self.animation_num + 0.2) % (len(self.flash_brick_img) - 1)
+            self.image = self.flash_brick_img[int(self.animation_num)]
 
 
     # 0 地面
@@ -39,16 +42,13 @@ class Brick(pygame.sprite.Sprite):
             self.image = brick_img[0]
         elif self.type == 1002:
             self.image = brick_img[2]
-        elif self.type == 2100:
-            self.image = bonus_brick_img[1]
-        elif self.type == 2200:
-            self.image = bonus_brick_img[1]
-        elif self.type == 2201:
-            self.image = bonus_brick_img[1]
-        elif self.type == 2202:
-            self.image = bonus_brick_img[1]
+        elif self.type == 2100 or self.type == 2200 or self.type == 2201 or self.type == 2202:
+            self.flash_brick_img = [bonus_brick_img[0], bonus_brick_img[1], bonus_brick_img[2],
+                                    bonus_brick_img[3]]
+            self.image = bonus_brick_img[0]
         else:
             self.image = brick_img[0]
+
 
     # 1000 砖块1  地面
     # 1001 砖块2  不可摧毁的砖块
@@ -85,6 +85,4 @@ class Brick(pygame.sprite.Sprite):
 
 
 
-    # offset为世界坐标与屏幕坐标在x轴上的偏移
-    def update(self, offset):
-        self.rect.x = self.start_x - offset
+

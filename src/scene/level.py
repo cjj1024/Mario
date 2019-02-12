@@ -3,7 +3,8 @@ import pygame
 from src.sprite.brick import *
 from src.sprite.goomba import *
 from src.sprite.pipe import *
-from src.sprite.background import *
+from src.sprite.cloud import *
+from src.sprite.brushwood import *
 
 
 # 关卡信息保存在json文件中
@@ -73,19 +74,19 @@ class Level():
             self.brick_group.add(Brick(2202, x, y))
 
         for x, y in data['goomba']:
-            self.enemy_group.add(Goomba(x, y))
+            self.enemy_group.add(Goomba(4000, x, y))
 
         for x, y in data['cloud1']:
-            self.background_group.add(Background(cloud_img[0], x, y))
+            self.background_group.add(Cloud(200, x, y))
 
         for x, y in data['cloud2']:
-            self.background_group.add(Background(cloud_img[1], x, y))
+            self.background_group.add(Cloud(201, x, y))
 
         for x, y in data['brushwood1']:
-            self.background_group.add(Background(brushwood_img[0], x, y))
+            self.background_group.add(Brushwood(100, x, y))
 
         for x, y in data['brushwood2']:
-            self.background_group.add(Background(brushwood_img[1], x, y))
+            self.background_group.add(Brushwood(101, x, y))
 
 
     def update(self, screen):
