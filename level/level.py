@@ -1,17 +1,16 @@
 import json
-import pygame
-from src.sprite.brick import *
-from src.sprite.goomba import *
-from src.sprite.pipe import *
-from src.sprite.cloud import *
-from src.sprite.brushwood import *
+from sprite.brick import *
+from sprite.goomba import *
+from sprite.pipe import *
+from sprite.cloud import *
+from sprite.brushwood import *
 
 
 # 关卡信息保存在json文件中
 # 读取关卡信息, 初始化精灵, 并加入相应的精灵组
 class Level():
     def __init__(self, level):
-        filename = './res/level/level' + str(level) + '.json'
+        filename = './level/level' + str(level) + '.json'
         with open(filename) as fp:
             data = json.load(fp)
 

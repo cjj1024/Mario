@@ -1,12 +1,7 @@
-import pygame
-from pygame.locals import *
 import json
 import tkinter
-import sys, os
 
-from src.tool.init import *
-from src.sprite.mushroom import *
-from src.sprite.coin import *
+from sprite.coin import *
 
 
 # 分为游戏编辑区域和物品选择区域
@@ -49,25 +44,25 @@ class MapEditor():
 
     def check_event(self):
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 self.store()
                 self.completed = True
-            elif event.type == KEYDOWN:
-                if event.key == K_UP:
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
                     pass
-                elif event.key == K_DOWN:
+                elif event.key == pygame.K_DOWN:
                     pass
-                elif event.key == K_LEFT:
+                elif event.key == pygame.K_LEFT:
                     if self.start_x >= 40:
                         self.start_x -= 40
-                elif event.key == K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     if self.start_x + 800<= self.length - 40:
                         self.start_x += 40
             # 鼠标移动, 跟踪鼠标位置
-            elif event.type == MOUSEMOTION:
+            elif event.type == pygame.MOUSEMOTION:
                 x, y = event.pos
                 self.row, self.column = self.get_grid(x, y)
-            elif event.type == MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 # 鼠标左键
                 if event.button == 1:
                     x, y = event.pos
@@ -271,7 +266,7 @@ class MapEditor():
                     data['goomba'].append([j * 40, i * 40])
 
 
-        with open('./res/level/'+self.filename+'.json', 'w') as fp:
+        with open('./level/'+self.filename+'.json', 'w') as fp:
             fp.write(json.dumps(data, indent=4))
 
 

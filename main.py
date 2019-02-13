@@ -1,10 +1,9 @@
 
-from src.scene.gamemenu import *
-from src.tool.init import *
+from scene.gamemenu import *
 
 
 def main():
-    gamemenu = GameMenu(screen)
+    gamemenu = GameMenu()
     gamemenu.show()
 
 

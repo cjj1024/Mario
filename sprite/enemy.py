@@ -1,6 +1,6 @@
 import pygame
 
-from src.tool.globaldata import *
+from tool.globaldata import *
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, type, x, y):

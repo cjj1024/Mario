@@ -1,5 +1,5 @@
 from .stillobject import *
-from src.tool.init import *
+from tool.init import *
 
 
 # 100 小灌木

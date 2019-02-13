@@ -1,12 +1,7 @@
+import pygame
 
-from src.tool.init import *
-from src.tool.globaldata import *
+from tool.init import *
 
-# ddddddddddddddddddddddddddddddddddd
-# ddddddddddddddddddddddddddddddddddd
-# ddddddddddddddddddddddddddddddddddd
-# ddddddddddddddddddddddddddddddddddd
-# ddddddddddddddddddddddddddddddddddd
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -47,7 +42,11 @@ class Mario(pygame.sprite.Sprite):
 
     def death(self):
         if self.rect.y >= 560:
-            self.kill()
+            if self.life < 0:
+                self.kill()
+            else:
+                self.status = STAND
+
         self.image = self.small_dead_img
 
 
@@ -97,6 +96,7 @@ class Mario(pygame.sprite.Sprite):
             if self.shape == BIG:
                 self.shape = SMALL
             elif self.shape == SMALL:
+                self.life -= 1
                 self.status = DEATH
                 self.is_collider = False
                 self.speed_y = INIT_JUMP_SPEED_Y

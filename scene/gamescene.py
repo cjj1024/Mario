@@ -1,16 +1,16 @@
 import sys
 
-from src.sprite.mario import *
-from src.tool.character import *
-from src.scene.level import *
+from sprite.mario import *
+from level.level import *
+from tool.character import *
+from .scene import *
 
 
-class GameScene():
-    def __init__(self, screen):
-        self.screen = screen
-        
+class GameScene(Scene):
+    def __init__(self):
+        Scene.__init__(self)
+
         self.level = Level(1)
-
 
         self.player_group = pygame.sprite.Group()
         self.coin_group = pygame.sprite.Group()
@@ -42,7 +42,7 @@ class GameScene():
             self.show_info()
             pygame.display.update()
 
-            clock.tick(60)
+            clock.tick(self.fps)
 
 
     # 根据mario的x, y轴的速度移动mario
@@ -141,7 +141,7 @@ class GameScene():
 
 
     def process_mario_enemy_collision_y(self, enemy):
-        if self.mario.rect.y < enemy.rect.y:
+        if self.mario.rect.y + self.mario.rect.height * 0.75 < enemy.rect.y:
             enemy.set_status(DEATH)
 
 
@@ -231,18 +231,18 @@ class GameScene():
 
     def check_event(self):
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 sys.exit(0)
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     sys.exit(0)
-                elif event.key == K_LEFT:
+                elif event.key == pygame.K_LEFT:
                     self.mario.set_status(WALK)
                     self.mario.set_direction(LEFT)
-                elif event.key == K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     self.mario.set_status(WALK)
                     self.mario.set_direction(RIGHT)
-                elif event.key == K_a:
+                elif event.key == pygame.K_a:
                     self.mario.set_status(JUMP)
 
 

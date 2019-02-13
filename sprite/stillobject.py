@@ -1,8 +1,7 @@
 import pygame
 
 
-# 背景
-# 如云, 灌木之类无需检测碰撞的精灵
+# 静止物体
 class StillObject(pygame.sprite.Sprite):
     def __init__(self, type, x, y):
         pygame.sprite.Sprite.__init__(self)

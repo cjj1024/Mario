@@ -1,5 +1,6 @@
 from .enemy import *
-from src.tool.init import *
+from tool.init import *
+
 
 class Goomba(Enemy):
     def __init__(self, type, x, y):

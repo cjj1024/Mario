@@ -1,9 +1,12 @@
-from src.tool.tool import *
+import pygame
+
+from .tool import *
 from .globaldata import *
 
 
+
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+pygame.display.set_mode((800, 600))
 
 
 mario_img = load_image('./res/image/mario.png')
@@ -112,3 +115,5 @@ font =      pygame.font.Font('./res/font/minicanton.TTF', FONT_SIZE)
 pygame.display.set_caption('超级玛丽')
 icon = load_image('./res/image/icon.png')
 pygame.display.set_icon(icon)
+
+print('init completed')

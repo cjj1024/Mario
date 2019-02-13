@@ -1,4 +1,13 @@
 
+# 场景
+# NOWSCENE 当前场景
+NOWSCENE =      0
+GAMEMENU =      1
+GAMESCENE =     2
+DEATHSCENE =    3
+
+
+
 # 标记Mario的方向
 NODIRECTION =   0
 LEFT =          1
@@ -29,6 +38,7 @@ GRAVITY_Y =         0.4
 # 最大速度
 MAX_SPEED_X =   4
 MAX_SPEED_Y =   13
+
 
 # 初始跳跃速度
 INIT_JUMP_SPEED_Y =     -13

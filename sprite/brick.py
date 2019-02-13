@@ -1,6 +1,3 @@
-import pygame
-
-from src.tool.init import *
 from .coin import *
 from .mushroom import *
 from .stillobject import *

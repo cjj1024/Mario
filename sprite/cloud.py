@@ -1,5 +1,6 @@
 from .stillobject import *
-from src.tool.init import *
+
+from tool.init import *
 
 
 # 200 小云

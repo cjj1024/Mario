@@ -1,5 +1,6 @@
+import pygame
 
-from src.tool.init import *
+from tool.init import *
 
 # 硬币类
 # 当Mario撞击有硬币的砖块时, 出现在砖块的上方

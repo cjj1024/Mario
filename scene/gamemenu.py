@@ -1,17 +1,20 @@
 
-from src.scene.gamescene import *
-from src.scene.mapeditor import *
-from src.tool.init import *
-from src.tool.character import *
+from scene.gamescene import *
+from level.leveleditor import *
+from tool.character import *
+from .scene import *
 
-class GameMenu():
-    def __init__(self, screen):
-        self.screen = screen
+
+class GameMenu(Scene):
+    def __init__(self):
+        Scene.__init__(self)
+
         # 记录用户的选择
         # 1 开始游戏
         # 2 编辑地图
         # 3 退出游戏
         self.selected = 0
+
         self.num = 3
 
 
@@ -19,6 +22,7 @@ class GameMenu():
         pygame.mixer.music.load(music['main_theme'])
         pygame.mixer.music.play()
 
+        clock = pygame.time.Clock()
         while True:
             self.draw_background()
 
@@ -26,23 +30,25 @@ class GameMenu():
 
             pygame.display.update()
 
+            clock.tick(self.fps)
+
 
     def check_event(self):
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 sys.exit(0)
-            elif event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     sys.exit(0)
-                elif event.key == K_DOWN:
+                elif event.key == pygame.K_DOWN:
                     self.selected += 1
                     self.selected %= self.num
-                elif event.key == K_UP:
+                elif event.key == pygame.K_UP:
                     self.selected -= 1
                     self.selected %= self.num
-                elif event.key == K_RETURN:
+                elif event.key == pygame.K_RETURN:
                     if self.selected == 0:
-                        gamescene = GameScene(self.screen)
+                        gamescene = GameScene()
                         gamescene.show()
                     elif self.selected == 1:
                         mapeditor = MapEditor()
@@ -64,9 +70,9 @@ class GameMenu():
         self.screen.blit(brushwood_img[0], (200, 480))
         self.screen.blit(brushwood_img[0], (600, 480))
 
-        write_chars(screen, '开始游戏', 48, WHITE, (350, 200))
-        write_chars(screen, '编辑游戏', 48, WHITE, (350, 250))
-        write_chars(screen, '退出游戏', 48, WHITE, (350, 300))
+        write_chars(self.screen, '开始游戏', 48, WHITE, (350, 200))
+        write_chars(self.screen, '编辑游戏', 48, WHITE, (350, 250))
+        write_chars(self.screen, '退出游戏', 48, WHITE, (350, 300))
 
         self.screen.blit(mushroom_img[0], (300, 200 + self.selected * 50))
 

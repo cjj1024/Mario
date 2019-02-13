@@ -1,6 +1,7 @@
+import pygame
 
-from src.tool.init import *
-from src.tool.globaldata import *
+from tool.init import *
+
 
 
 # 3200 长大蘑菇

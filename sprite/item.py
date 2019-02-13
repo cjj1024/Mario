@@ -1,7 +1,5 @@
 import pygame
 
-from src.tool.init import *
-
 
 class Item(pygame.sprite.Sprite):
     def __init__(self, type, x, y):
