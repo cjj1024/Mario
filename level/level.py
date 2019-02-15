@@ -20,6 +20,7 @@ class Level():
         self.brick_group = pygame.sprite.Group()
         self.pipe_group = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
+        self.death_enemy_group = pygame.sprite.Group()
         self.background_group = pygame.sprite.Group()
 
         # 把屏幕划分成二维的格子
@@ -96,7 +97,10 @@ class Level():
         self.brick_group.draw(screen)
 
         self.enemy_group.update()
+        self.death_enemy_group.update()
         self.enemy_group.draw(screen)
+        self.death_enemy_group.draw(screen)
+
 
         self.pipe_group.update(self.start_x)
         self.pipe_group.draw(screen)

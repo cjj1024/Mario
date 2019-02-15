@@ -1,10 +1,11 @@
 
-from scene.gamemenu import *
+from scene.scenecontrol import *
 
 
 def main():
     gamemenu = GameMenu()
-    gamemenu.show()
+    scene_control = SceneControl(gamemenu)
+    scene_control.show_scene()
 
 
 if __name__ == '__main__':

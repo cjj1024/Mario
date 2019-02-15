@@ -21,6 +21,7 @@ class Mario(pygame.sprite.Sprite):
         self.score = 0
         self.coin_num = 0
         self.life = 3
+        self.level_num = 1
 
         self.init_image()
         self.set_shape(SMALL)
@@ -42,10 +43,11 @@ class Mario(pygame.sprite.Sprite):
 
     def death(self):
         if self.rect.y >= 560:
-            if self.life < 0:
-                self.kill()
-            else:
-                self.status = STAND
+            self.kill()
+            self.rect.x = 0
+            self.rect.y = 300
+            self.status = STAND
+            self.is_collider = True
 
         self.image = self.small_dead_img
 
@@ -70,7 +72,7 @@ class Mario(pygame.sprite.Sprite):
                 self.speed_x -= GRAVITY_X
             self.image = self.walk_left[self.animation_num]
         elif key[pygame.K_RIGHT]:
-            if abs(self.speed_y) < MAX_SPEED_X:
+            if abs(self.speed_x) < MAX_SPEED_X:
                 self.speed_x += GRAVITY_X
             self.image = self.walk_right[self.animation_num]
         else:

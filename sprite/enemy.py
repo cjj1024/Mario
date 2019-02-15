@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def death(self):
         self.image = self.death_img
-        self.speed_x = -5
+        self.rect.x -= 5
 
 
     def walk(self):

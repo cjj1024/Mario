@@ -5,6 +5,7 @@ from tool.character import *
 from .scene import *
 
 
+@Singleton
 class GameMenu(Scene):
     def __init__(self):
         Scene.__init__(self)
@@ -17,20 +18,18 @@ class GameMenu(Scene):
 
         self.num = 3
 
-
-    def show(self):
         pygame.mixer.music.load(music['main_theme'])
         pygame.mixer.music.play()
 
-        clock = pygame.time.Clock()
-        while True:
-            self.draw_background()
 
-            self.check_event()
+    def show(self):
+        self.next_scene = NOW_SCENE
 
-            pygame.display.update()
+        self.draw_background()
 
-            clock.tick(self.fps)
+        self.check_event()
+
+        pygame.display.update()
 
 
     def check_event(self):
@@ -48,8 +47,9 @@ class GameMenu(Scene):
                     self.selected %= self.num
                 elif event.key == pygame.K_RETURN:
                     if self.selected == 0:
-                        gamescene = GameScene()
-                        gamescene.show()
+                        # gamescene = GameScene()
+                        # gamescene.show()
+                        self.next_scene = GAME_SCENE
                     elif self.selected == 1:
                         mapeditor = MapEditor()
                         mapeditor.show()

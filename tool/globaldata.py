@@ -1,11 +1,14 @@
 
 # 场景
 # NOWSCENE 当前场景
-NOWSCENE =      0
-GAMEMENU =      1
-GAMESCENE =     2
-DEATHSCENE =    3
+NOW_SCENE =      0
+GAME_MENU =      1
+GAME_SCENE =     2
+DEATH_SCENE =    3
 
+
+# 死亡场景时间
+DEATH_SCENE_TIME =    180
 
 
 # 标记Mario的方向
@@ -36,7 +39,7 @@ GRAVITY_Y =         0.4
 
 
 # 最大速度
-MAX_SPEED_X =   4
+MAX_SPEED_X =   9
 MAX_SPEED_Y =   13
 
 

@@ -6,6 +6,7 @@ from tool.character import *
 from .scene import *
 
 
+@Singleton
 class GameScene(Scene):
     def __init__(self):
         Scene.__init__(self)
@@ -21,39 +22,41 @@ class GameScene(Scene):
 
 
     def show(self):
-        clock = pygame.time.Clock()
-        while self.mario.alive():
-            self.screen.fill(SKYBLUE, (0, 0, 800, 600))
+        self.screen.fill(SKYBLUE, (0, 0, 800, 600))
 
-            self.check_event()
+        self.check_event()
 
-            self.level.update(self.screen)
-            self.coin_group.update()
-            self.coin_group.draw(self.screen)
-            self.mushroom_group.update()
-            self.mushroom_group.draw(self.screen)
-            self.player_group.update()
-            self.player_group.draw(self.screen)
+        self.level.update(self.screen)
+        self.coin_group.update()
+        self.coin_group.draw(self.screen)
+        self.mushroom_group.update()
+        self.mushroom_group.draw(self.screen)
+        self.player_group.update()
+        self.player_group.draw(self.screen)
 
-            self.move_mario()
-            self.move_item(self.level.enemy_group)
-            self.move_item(self.mushroom_group)
+        self.move_mario()
+        self.move_item(self.level.enemy_group)
+        self.move_item(self.mushroom_group)
 
-            self.show_info()
-            pygame.display.update()
+        self.show_info()
+        pygame.display.update()
 
-            clock.tick(self.fps)
+        if not self.player_group.has(self.mario):
+            self.next_scene = DEATH_SCENE
+            self.player_group.add(self.mario)
+        else:
+            self.next_scene = NOW_SCENE
 
 
     # 根据mario的x, y轴的速度移动mario
     # 在x轴, y轴移动后, 检测碰撞, 处理碰撞
     def move_mario(self):
-        if self.mario.speed_x != 0:
-            self.mario.rect.x += self.mario.speed_x
-            self.check_move_scene()
-            self.check_mario_border()
-            if self.mario.is_collider:
-                self.check_mario_collision_x()
+
+        self.mario.rect.x += self.mario.speed_x
+        self.check_move_scene()
+        self.check_mario_border()
+        if self.mario.is_collider:
+            self.check_mario_collision_x()
 
         if self.mario.speed_y != 0:
             self.mario.rect.y += self.mario.speed_y
@@ -141,8 +144,10 @@ class GameScene(Scene):
 
 
     def process_mario_enemy_collision_y(self, enemy):
-        if self.mario.rect.y + self.mario.rect.height * 0.75 < enemy.rect.y:
+        if self.mario.rect.y + self.mario.rect.height * 0.5 < enemy.rect.y:
             enemy.set_status(DEATH)
+            self.level.death_enemy_group.add(enemy)
+            self.level.enemy_group.remove(enemy)
 
 
     # 处理mario在y轴上的碰撞
