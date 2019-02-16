@@ -8,8 +8,8 @@ class Goomba(Enemy):
 
 
     def init_image(self):
-        self.walk_left_img = goomba_img[0]
-        self.walk_right_img = goomba_img[1]
+        self.walk_left_img = goomba_img[1]
+        self.walk_right_img = goomba_img[0]
         self.death_img = goomba_img[2]
 
         self.image = self.walk_left_img

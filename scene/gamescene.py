@@ -55,14 +55,12 @@ class GameScene(Scene):
         self.mario.rect.x += self.mario.speed_x
         self.check_move_scene()
         self.check_mario_border()
-        if self.mario.is_collider:
-            self.check_mario_collision_x()
+        self.check_mario_collision_x()
 
         if self.mario.speed_y != 0:
             self.mario.rect.y += self.mario.speed_y
             self.check_mario_border()
-            if self.mario.is_collider:
-                self.check_mario_collision_y()
+            self.check_mario_collision_y()
 
 
     # 检测是否移动场景
@@ -86,6 +84,8 @@ class GameScene(Scene):
 
     # 检测mario在x轴上的碰撞
     def check_mario_collision_x(self):
+        if not self.mario.is_collider:
+            return
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
@@ -125,6 +125,8 @@ class GameScene(Scene):
 
     # 检测mario在y轴上的碰撞
     def check_mario_collision_y(self):
+        if not self.mario.is_collider:
+            return
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)

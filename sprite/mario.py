@@ -17,6 +17,8 @@ class Mario(pygame.sprite.Sprite):
         self.speed_y = 0
 
         self.is_collider = True
+        self.is_new_life = False
+        self.flash_time = 0
 
         self.score = 0
         self.coin_num = 0
@@ -39,6 +41,29 @@ class Mario(pygame.sprite.Sprite):
             self.walk()
         elif self.status == JUMP:
             self.jump()
+
+        if self.is_new_life:
+            self.flash()
+
+
+    def flash(self):
+        if self.flash_time > 60:
+            self.is_new_life = False
+            self.flash_time = 0
+            self.stand_left.set_alpha(255)
+            self.stand_right.set_alpha(255)
+            for img in self.walk_left: img.set_alpha(255)
+            for img in self.walk_right: img.set_alpha(255)
+            self.jump_left.set_alpha(255)
+            self.jump_right.set_alpha(255)
+            return
+
+        if self.flash_time % 3 == 0:
+            self.image.set_alpha(0)
+        else:
+            self.image.set_alpha(255)
+
+        self.flash_time += 1
 
 
     def death(self):
@@ -91,12 +116,13 @@ class Mario(pygame.sprite.Sprite):
         if self.status == DEATH or self.status == JUMP:
             return
 
-        self.status = status
-
         # 要变成死亡状态
         if status == DEATH:
+            if self.is_new_life:
+                return
             if self.shape == BIG:
-                self.shape = SMALL
+                self.set_shape(SMALL)
+                self.is_new_life = True
             elif self.shape == SMALL:
                 self.life -= 1
                 self.status = DEATH
@@ -107,9 +133,13 @@ class Mario(pygame.sprite.Sprite):
         elif status == JUMP:
             self.speed_y = INIT_JUMP_SPEED_Y
             pygame.mixer.Sound.play(sound['small_jump'])
+            self.status = JUMP
         elif status == STAND:
             self.speed_x = 0
             self.speed_y = 0
+            self.status = STAND
+        else:
+            self.status = status
 
 
     def set_direction(self, direction):
