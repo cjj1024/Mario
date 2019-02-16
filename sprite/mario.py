@@ -89,7 +89,7 @@ class Mario(pygame.sprite.Sprite):
 
     def walk(self):
         # 循环播放动画
-        self.animation_num = (self.animation_num + 1) % (len(self.walk_left) - 1)
+        self.animation_num = (self.animation_num + 1) % (len(self.walk_left))
 
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:

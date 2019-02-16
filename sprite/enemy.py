@@ -2,6 +2,7 @@ import pygame
 
 from tool.globaldata import *
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, type, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -13,12 +14,29 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+
+
+    def set_status(self, status):
+        if self.status != DEATH:
+            self.status = status
+
+
+    def init_image(self):
+        pass
+
+
+
+class WalkEnemy(Enemy):
+    def __init__(self, type, x, y):
+        Enemy.__init__(self, type, x, y)
+
         self.direction = LEFT
 
         self.speed_x = -2
         self.speed_y = 0
 
         self.status = WALK
+        self.animation_num = 0
 
 
     def update(self):
@@ -38,10 +56,13 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def walk(self):
+        # 循环播放动画
+        self.animation_num = (self.animation_num + 0.1) % (len(self.walk_left_img))
+
         if self.direction == LEFT:
-            self.image = self.walk_left_img
+            self.image = self.walk_left_img[int(self.animation_num)]
         elif self.direction == RIGHT:
-            self.image = self.walk_right_img
+            self.image = self.walk_right_img[int(self.animation_num)]
 
 
     # 掉头
@@ -54,10 +75,3 @@ class Enemy(pygame.sprite.Sprite):
         self.speed_x = -self.speed_x
 
 
-    def set_status(self, status):
-        if self.status != DEATH:
-            self.status = status
-
-
-    def init_image(self):
-        pass

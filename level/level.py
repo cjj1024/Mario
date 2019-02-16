@@ -4,6 +4,7 @@ from sprite.goomba import *
 from sprite.pipe import *
 from sprite.cloud import *
 from sprite.brushwood import *
+from sprite.koopa import *
 
 
 # 关卡信息保存在json文件中
@@ -74,7 +75,7 @@ class Level():
             self.brick_group.add(Brick(2202, x, y))
 
         for x, y in data['goomba']:
-            self.enemy_group.add(Goomba(4000, x, y))
+            self.enemy_group.add(Koopa(4000, x, y))
 
         for x, y in data['cloud1']:
             self.background_group.add(Cloud(200, x, y))

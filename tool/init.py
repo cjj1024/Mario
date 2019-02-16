@@ -41,10 +41,23 @@ for j in range(19):
 
 enemy_img = load_image('./res/image/enemy.png')
 
-# 40x40px
 goomba_img = []
+# 40x40px
 for i in range(3):
     goomba_img.append(get_image(enemy_img, i * 16, 16, 16, 16))
+
+koopa_left_img = []
+koopa_right_img = []
+# 60x40px
+for i in range(6):
+    img = get_image(enemy_img, i * 16 + 96, 8, 16, 24)
+    koopa_left_img.append(img)
+    koopa_right_img.append(pygame.transform.flip(img, True, False))
+
+piranha_img = []
+# 40x40px
+for i in range(2):
+    piranha_img.append(get_image(enemy_img, i * 16 + 192, 8, 16, 16))
 
 
 background_img = load_image('./res/image/background.png')
