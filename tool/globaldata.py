@@ -7,6 +7,11 @@ GAME_SCENE =     2
 DEATH_SCENE =    3
 
 
+# 剪刀花的状态
+PIRANHA_CLOSE =     1
+PIRANHA_OPEN =      2
+
+
 # 死亡场景时间
 DEATH_SCENE_TIME =    180
 

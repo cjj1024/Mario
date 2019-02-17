@@ -48,16 +48,16 @@ for i in range(3):
 
 koopa_left_img = []
 koopa_right_img = []
-# 60x40px
+# 40x60px
 for i in range(6):
     img = get_image(enemy_img, i * 16 + 96, 8, 16, 24)
     koopa_left_img.append(img)
     koopa_right_img.append(pygame.transform.flip(img, True, False))
 
 piranha_img = []
-# 40x40px
+# 40x60px
 for i in range(2):
-    piranha_img.append(get_image(enemy_img, i * 16 + 192, 8, 16, 16))
+    piranha_img.append(get_image(enemy_img, i * 16 + 192, 8, 16, 24))
 
 
 background_img = load_image('./res/image/background.png')
@@ -71,6 +71,12 @@ brick_img = []
 for i in range(4):
     brick_img.append(get_image(background_img, i * 16, 0, 16, 16))
     brick_img.append(get_image(background_img, i * 16, 16, 16, 16))
+
+castle_brick_img = []
+# 40x40px
+for i in range(4):
+    castle_brick_img.append(get_image(background_img, i * 16 + 176, 0, 16, 16))
+    castle_brick_img.append(get_image(background_img, i * 16 + 176, 16, 16, 16))
 
 # 0 小云
 # 1 大云

@@ -5,6 +5,7 @@ from sprite.pipe import *
 from sprite.cloud import *
 from sprite.brushwood import *
 from sprite.koopa import *
+from sprite.piranha import *
 
 
 # 关卡信息保存在json文件中
@@ -20,6 +21,7 @@ class Level():
 
         self.brick_group = pygame.sprite.Group()
         self.pipe_group = pygame.sprite.Group()
+        self.plant_enemy = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
         self.death_enemy_group = pygame.sprite.Group()
         self.background_group = pygame.sprite.Group()
@@ -32,6 +34,13 @@ class Level():
         # 101 大灌木
         # 200 小云
         # 201 大云
+        #
+        # 300 城堡砖块1
+        # 301 城堡砖块2
+        # 302 城堡砖块3
+        # 303 城堡砖块4
+        # 304 城堡砖块5
+        # 305 城堡砖块6
         #
         # 1000 砖块1  地面
         # 1001 砖块2  不可摧毁的砖块
@@ -50,8 +59,11 @@ class Level():
         # 3202 死亡蘑菇
         #
         # 4000 Goomba
+        # 4100 Koopa
+        # 4200 Piranha
         for x, y in data['pipe']:
             self.pipe_group.add(Pipe(1200, x, y))
+            self.plant_enemy.add(Piranha(4200, x, y))
 
         for x, y in data['brick1']:
             self.brick_group.add(Brick(1000, x, y))
@@ -102,6 +114,9 @@ class Level():
         self.enemy_group.draw(screen)
         self.death_enemy_group.draw(screen)
 
+        self.plant_enemy.update(self.start_x)
+        self.plant_enemy.draw(screen)
 
-        self.pipe_group.update(self.start_x)
-        self.pipe_group.draw(screen)
+
+        # self.pipe_group.update(self.start_x)
+        # self.pipe_group.draw(screen)

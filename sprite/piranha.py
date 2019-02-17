@@ -8,10 +8,21 @@ class Piranha(Enemy):
     def __init__(self, type, x, y):
         Enemy.__init__(self, type, x, y)
 
+        self.start_x = x
+        self.status = PIRANHA_CLOSE
+
+        self.animation_num = 0
+
 
 
     def init_image(self):
-        self.open_img = piranha_img[0]
-        self.close_img = piranha_img[1]
+        self.cut_img = [piranha_img[0], piranha_img[1]]
 
-        self.image = self.open_img
+        self.image = self.cut_img[0]
+
+
+    def update(self, offset):
+        self.rect.x = self.start_x - offset
+
+        self.animation_num = (self.animation_num + 0.2) % (len(self.cut_img))
+        self.image = self.cut_img[int(self.animation_num)]
