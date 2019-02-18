@@ -90,6 +90,8 @@ class GameScene(Scene):
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
         enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
+        piranha = pygame.sprite.spritecollideany(self.mario, self.level.plant_enemy)
+        checkpoint = pygame.sprite.spritecollideany(self.mario, self.level.checkpoint_group)
 
         if brick:
             self.process_mario_collision_x(brick)
@@ -102,6 +104,20 @@ class GameScene(Scene):
 
         if enemy:
             self.process_mario_enemy_collision_x()
+
+        if checkpoint:
+            self.process_mario_checkpoint_collision(checkpoint)
+
+        if piranha:
+            self.process_mario_piranha_collision()
+
+    def process_mario_piranha_collision(self):
+        self.mario.set_status(DEATH)
+
+
+    def process_mario_checkpoint_collision(self, checkpoint):
+        self.mario.save_data()
+        checkpoint.kill()
 
 
     def process_mario_enemy_collision_x(self):
@@ -131,6 +147,8 @@ class GameScene(Scene):
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
         enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
+        piranha = pygame.sprite.spritecollideany(self.mario, self.level.plant_enemy)
+        checkpoint = pygame.sprite.spritecollideany(self.mario, self.level.checkpoint_group)
 
         if brick:
             self.process_mario_collision_y(brick)
@@ -143,6 +161,12 @@ class GameScene(Scene):
 
         if enemy:
             self.process_mario_enemy_collision_y(enemy)
+
+        if checkpoint:
+            self.process_mario_checkpoint_collision(checkpoint)
+
+        if piranha:
+            self.process_mario_piranha_collision()
 
 
     def process_mario_enemy_collision_y(self, enemy):

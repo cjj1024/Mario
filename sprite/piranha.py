@@ -12,6 +12,7 @@ class Piranha(Enemy):
         self.status = PIRANHA_CLOSE
 
         self.animation_num = 0
+        self.attack_time = 90
 
 
 
@@ -24,5 +25,12 @@ class Piranha(Enemy):
     def update(self, offset):
         self.rect.x = self.start_x - offset
 
-        self.animation_num = (self.animation_num + 0.2) % (len(self.cut_img))
+        self.animation_num = (self.animation_num + 0.1) % (len(self.cut_img))
         self.image = self.cut_img[int(self.animation_num)]
+
+        self.attack_time -= 1
+        if self.attack_time == 20:
+            self.rect.y -= 50
+        elif self.attack_time < 0:
+            self.attack_time = 90
+            self.rect.y += 50

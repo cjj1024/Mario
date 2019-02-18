@@ -8,7 +8,6 @@ from .globaldata import *
 pygame.init()
 pygame.display.set_mode((800, 600))
 
-
 mario_img = load_image('./res/image/mario.png')
 
 # big 40x80px

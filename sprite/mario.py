@@ -1,4 +1,5 @@
 import pygame
+import json
 
 from tool.init import *
 
@@ -15,6 +16,9 @@ class Mario(pygame.sprite.Sprite):
         self.animation_num = 0
         self.speed_x = 0
         self.speed_y = 0
+
+        self.jump_time = 0
+        self.jump_num = 0
 
         self.is_collider = True
         self.is_new_life = False
@@ -85,6 +89,12 @@ class Mario(pygame.sprite.Sprite):
         elif key[pygame.K_RIGHT]:
             self.speed_x = 3
             self.image = self.jump_right
+        elif key[pygame.K_a]:
+            if self.jump_time > 10 and self.jump_num == 1:
+                self.speed_y = INIT_JUMP_SPEED_Y
+                self.jump_num = 0
+
+        self.jump_time += 1
 
 
     def walk(self):
@@ -134,6 +144,8 @@ class Mario(pygame.sprite.Sprite):
             self.speed_y = INIT_JUMP_SPEED_Y
             pygame.mixer.Sound.play(sound['small_jump'])
             self.status = JUMP
+            self.jump_time = 0
+            self.jump_num = 1
         elif status == STAND:
             self.speed_x = 0
             self.speed_y = 0
@@ -145,6 +157,17 @@ class Mario(pygame.sprite.Sprite):
     def set_direction(self, direction):
         if self.status != JUMP:
             self.direction = direction
+
+
+    def save_data(self):
+        data = {}
+        data['level'] = self.level_num
+        data['score'] = self.score
+        data['coin_num'] = self.coin_num
+        with open('./savedata/default.json', 'w') as fp:
+            fp.write(json.dumps(data, indent=4))
+
+        print('save data')
 
 
     def set_shape(self, shape):

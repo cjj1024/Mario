@@ -7,6 +7,12 @@ GAME_SCENE =     2
 DEATH_SCENE =    3
 
 
+# 按钮状态
+BUTTON_NORMAL =     1
+BUTTON_HOVER =      2
+BUTTON_ACTIVE =     3
+
+
 # 剪刀花的状态
 PIRANHA_CLOSE =     1
 PIRANHA_OPEN =      2
@@ -40,12 +46,15 @@ BIG =       2
 
 # 加速度
 GRAVITY_X =         0.5
-GRAVITY_Y =         0.4
+GRAVITY_Y =         0.9
 
 
 # 最大速度
 MAX_SPEED_X =   9
-MAX_SPEED_Y =   13
+MAX_SPEED_Y =   20
+
+
+MAX_JUMP_HEIGHT = 120
 
 
 # 初始跳跃速度
@@ -69,3 +78,4 @@ WHITE =     (255, 255, 255)
 BLACK =     (0, 0, 0)
 SKYBLUE =   (135, 206, 235)
 MAGENTA =   (255, 0, 255)
+LIGHTBLUE = (173, 216, 230)

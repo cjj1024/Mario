@@ -6,6 +6,7 @@ from sprite.cloud import *
 from sprite.brushwood import *
 from sprite.koopa import *
 from sprite.piranha import *
+from sprite.checkpoint import *
 
 
 # 关卡信息保存在json文件中
@@ -25,6 +26,7 @@ class Level():
         self.enemy_group = pygame.sprite.Group()
         self.death_enemy_group = pygame.sprite.Group()
         self.background_group = pygame.sprite.Group()
+        self.checkpoint_group = pygame.sprite.Group()
 
         # 把屏幕划分成二维的格子
         # 每个格子为40x40px
@@ -63,7 +65,7 @@ class Level():
         # 4200 Piranha
         for x, y in data['pipe']:
             self.pipe_group.add(Pipe(1200, x, y))
-            self.plant_enemy.add(Piranha(4200, x, y))
+            self.plant_enemy.add(Piranha(4200, x + 20, y + 20))
 
         for x, y in data['brick1']:
             self.brick_group.add(Brick(1000, x, y))
@@ -117,6 +119,8 @@ class Level():
         self.plant_enemy.update(self.start_x)
         self.plant_enemy.draw(screen)
 
+        self.checkpoint_group.update(self.start_x)
 
-        # self.pipe_group.update(self.start_x)
-        # self.pipe_group.draw(screen)
+
+        self.pipe_group.update(self.start_x)
+        self.pipe_group.draw(screen)
