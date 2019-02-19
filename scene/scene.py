@@ -12,7 +12,7 @@ class Scene():
 
 
     def show(self):
-        pass
+        pygame.display.update()
 
 
 def Singleton(cls):

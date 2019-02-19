@@ -1,10 +1,15 @@
 
 # 场景
 # NOWSCENE 当前场景
-NOW_SCENE =      0
-GAME_MENU =      1
-GAME_SCENE =     2
-DEATH_SCENE =    3
+NOW_SCENE =             0
+GAME_MENU =             1
+GAME_SCENE =            2
+DEATH_SCENE =           3
+SELECT_LEVEL_SCENE =    4
+
+
+# 场景宽高
+SCREEN_SIZE =       (800, 600)
 
 
 # 按钮状态

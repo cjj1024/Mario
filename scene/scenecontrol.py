@@ -4,6 +4,7 @@ from tool.globaldata import *
 from .gamemenu import *
 from .gamescene import *
 from .deathscene import *
+from .selectlevelscene import *
 
 
 class SceneControl():
@@ -23,5 +24,7 @@ class SceneControl():
                     self.scene = GameScene()
                 elif self.scene.next_scene == DEATH_SCENE:
                     self.scene = DeathScene(self.scene.mario)
+                elif self.scene.next_scene == SELECT_LEVEL_SCENE:
+                    self.scene = SelectLevelScene()
 
             clock.tick(self.scene.fps)

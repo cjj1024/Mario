@@ -49,7 +49,7 @@ class GameMenu(Scene):
                     if self.selected == 0:
                         # gamescene = GameScene()
                         # gamescene.show()
-                        self.next_scene = GAME_SCENE
+                        self.next_scene = SELECT_LEVEL_SCENE
                     elif self.selected == 1:
                         mapeditor = MapEditor()
                         mapeditor.show()
