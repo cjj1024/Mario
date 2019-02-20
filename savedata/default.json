@@ -1,5 +1,7 @@
 {
     "level": 1,
-    "score": 80,
-    "coin_num": 6
+    "score": 60,
+    "coin_num": 5,
+    "x": 382,
+    "y": 400
 }

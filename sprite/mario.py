@@ -89,10 +89,10 @@ class Mario(pygame.sprite.Sprite):
         elif key[pygame.K_RIGHT]:
             self.speed_x = 3
             self.image = self.jump_right
-        elif key[pygame.K_a]:
-            if self.jump_time > 10 and self.jump_num == 1:
-                self.speed_y = INIT_JUMP_SPEED_Y
-                self.jump_num = 0
+        # elif key[pygame.K_a]:
+        #     if self.jump_time > 3 and self.jump_num == 1:
+        #         self.speed_y = BIG_JUMP_SPEED_Y
+        #         self.jump_num = 0
 
         self.jump_time += 1
 
@@ -137,11 +137,15 @@ class Mario(pygame.sprite.Sprite):
                 self.life -= 1
                 self.status = DEATH
                 self.is_collider = False
-                self.speed_y = INIT_JUMP_SPEED_Y
+                self.speed_y = BIG_JUMP_SPEED_Y
                 self.speed_x = 0
                 pygame.mixer.Sound.play(sound['death'])
         elif status == JUMP:
-            self.speed_y = INIT_JUMP_SPEED_Y
+            key = pygame.key.get_pressed()
+            if key[pygame.K_a]:
+                self.speed_y = BIG_JUMP_SPEED_Y
+            else:
+                self.speed_y = SMALL_JUMP_SPEED_Y
             pygame.mixer.Sound.play(sound['small_jump'])
             self.status = JUMP
             self.jump_time = 0
@@ -164,6 +168,8 @@ class Mario(pygame.sprite.Sprite):
         data['level'] = self.level_num
         data['score'] = self.score
         data['coin_num'] = self.coin_num
+        data['x'] = self.rect.x
+        data['y'] = self.rect.y
         with open('./savedata/default.json', 'w') as fp:
             fp.write(json.dumps(data, indent=4))
 

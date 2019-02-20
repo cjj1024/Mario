@@ -19,7 +19,7 @@ class GameMenu(Scene):
         self.num = 3
 
         pygame.mixer.music.load(music['main_theme'])
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(loops=100)
 
 
     def show(self):

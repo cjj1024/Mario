@@ -8,10 +8,11 @@ from .scene import *
 
 @Singleton
 class GameScene(Scene):
-    def __init__(self):
+    def __init__(self, level=-1):
         Scene.__init__(self)
 
-        self.level = Level(1)
+        if not level == -1:
+            self.level = Level(level)
 
         self.player_group = pygame.sprite.Group()
         self.coin_group = pygame.sprite.Group()

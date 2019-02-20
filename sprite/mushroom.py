@@ -3,7 +3,6 @@ import pygame
 from tool.init import *
 
 
-
 # 3200 长大蘑菇
 # 3201 加命蘑菇
 # 3202 死亡蘑菇
@@ -23,13 +22,12 @@ class Mushroom(pygame.sprite.Sprite):
 
 
     def bump(self, player):
-        print('mushroom bump')
         if self.type == 3200:
             player.set_shape(BIG)
         elif self.type == 3201:
             player.life += 1
         elif self.type == 3202:
-            player.lief -= 1
+            player.life -= 1
 
         self.kill()
 

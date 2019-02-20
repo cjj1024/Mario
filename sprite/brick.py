@@ -33,7 +33,23 @@ class Brick(StillObject):
     # 2 可崔摧毁的砖块
     # 6 奖励出现后的砖块
     def init_image(self):
-        if self.type == 1001:
+        if self.type == 300:
+            self.image = castle_brick_img[0]
+        elif self.type == 301:
+            self.image = castle_brick_img[1]
+        elif self.type == 302:
+            self.image = castle_brick_img[2]
+        elif self.type == 303:
+            self.image = castle_brick_img[3]
+        elif self.type == 304:
+            self.image = castle_brick_img[4]
+        elif self.type == 305:
+            self.image = castle_brick_img[5]
+        elif self.type == 306:
+            self.image = castle_brick_img[6]
+        elif self.type == 307:
+            self.image = castle_brick_img[7]
+        elif self.type == 1001:
             self.image = brick_img[1]
         elif self.type == 1000:
             self.image = brick_img[0]

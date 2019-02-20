@@ -48,10 +48,9 @@ class MapEditor():
                 self.store()
                 self.completed = True
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    pass
-                elif event.key == pygame.K_DOWN:
-                    pass
+                if event.key == pygame.K_ESCAPE:
+                    self.store()
+                    self.completed = True
                 elif event.key == pygame.K_LEFT:
                     if self.start_x >= 40:
                         self.start_x -= 40
@@ -129,6 +128,12 @@ class MapEditor():
                     elif x > 1040 and x < 1080 and y > 200 and y < 240:
                         self.image = castle_brick_img[5]
                         self.imageId = 305
+                    elif x > 1080 and x < 1120 and y > 200 and y < 240:
+                        self.image = castle_brick_img[6]
+                        self.imageId = 306
+                    elif x > 1120 and x < 1160 and y > 200 and y < 240:
+                        self.image = castle_brick_img[7]
+                        self.imageId = 307
                     else:
                         self.row, self.column = self.get_grid(x, y)
                         self.map[self.row][self.column] = self.imageId
@@ -164,6 +169,8 @@ class MapEditor():
         self.screen.blit(castle_brick_img[3], (960, 200))
         self.screen.blit(castle_brick_img[4], (1000, 200))
         self.screen.blit(castle_brick_img[5], (1040, 200))
+        self.screen.blit(castle_brick_img[6], (1080, 200))
+        self.screen.blit(castle_brick_img[7], (1120, 200))
 
 
     def draw_background(self):
@@ -226,6 +233,10 @@ class MapEditor():
                     self.screen.blit(castle_brick_img[4], self.get_world_pos(i, j))
                 elif self.map[i][j] == 305:
                     self.screen.blit(castle_brick_img[5], self.get_world_pos(i, j))
+                elif self.map[i][j] == 306:
+                    self.screen.blit(castle_brick_img[6], self.get_world_pos(i, j))
+                elif self.map[i][j] == 307:
+                    self.screen.blit(castle_brick_img[7], self.get_world_pos(i, j))
 
             x += 20
 
@@ -298,6 +309,8 @@ class MapEditor():
         data['castle_brick3'] = []
         data['castle_brick4'] = []
         data['castle_brick5'] = []
+        data['castle_brick6'] = []
+        data['castle_brick7'] = []
 
         for i in range(len(self.map)):
             for j in range(len(self.map[i])):
@@ -343,6 +356,10 @@ class MapEditor():
                     data['castle_brick4'].append(self.get_pos(i, j))
                 elif self.map[i][j] == 305:
                     data['castle_brick5'].append(self.get_pos(i, j))
+                elif self.map[i][j] == 306:
+                    data['castle_brick5'].append(self.get_pos(i, j))
+                elif self.map[i][j] == 307:
+                    data['castle_brick6'].append(self.get_pos(i, j))
 
 
 

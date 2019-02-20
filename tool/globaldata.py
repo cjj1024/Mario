@@ -2,7 +2,7 @@
 # 场景
 # NOWSCENE 当前场景
 NOW_SCENE =             0
-GAME_MENU =             1
+GAME_MENU_SCENE =       1
 GAME_SCENE =            2
 DEATH_SCENE =           3
 SELECT_LEVEL_SCENE =    4
@@ -63,7 +63,8 @@ MAX_JUMP_HEIGHT = 120
 
 
 # 初始跳跃速度
-INIT_JUMP_SPEED_Y =     -13
+SMALL_JUMP_SPEED_Y =    -13
+BIG_JUMP_SPEED_Y =      -18
 
 
 # 蘑菇的类型

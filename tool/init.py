@@ -133,5 +133,3 @@ font =      pygame.font.Font('./res/font/minicanton.TTF', FONT_SIZE)
 pygame.display.set_caption('超级玛丽')
 icon = load_image('./res/image/icon.png')
 pygame.display.set_icon(icon)
-
-print('init completed')
