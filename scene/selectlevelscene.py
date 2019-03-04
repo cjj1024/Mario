@@ -22,8 +22,6 @@ class SelectLevelScene(Scene):
 
         self.draw_level()
 
-        self.check_event()
-
         pygame.display.update()
 
 
@@ -38,20 +36,19 @@ class SelectLevelScene(Scene):
         write_chars(self.screen, '第五关', 48, WHITE, (0, 100))
 
 
-    def check_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    def process_event(self, event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 sys.exit(0)
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit(0)
-                elif event.key == pygame.K_DOWN:
-                    self.level = (self.level + self.column) % self.num
-                elif event.key == pygame.K_UP:
-                    self.level = (self.level - self.column) % self.num
-                elif event.key == pygame.K_LEFT:
-                    self.level = (self.level - 1) % self.num
-                elif event.key == pygame.K_RIGHT:
-                    self.level = (self.level + 1) % self.num
-                elif event.key == pygame.K_RETURN:
-                    self.next_scene = GAME_SCENE
+            elif event.key == pygame.K_DOWN:
+                self.level = (self.level + self.column) % self.num
+            elif event.key == pygame.K_UP:
+                self.level = (self.level - self.column) % self.num
+            elif event.key == pygame.K_LEFT:
+                self.level = (self.level - 1) % self.num
+            elif event.key == pygame.K_RIGHT:
+                self.level = (self.level + 1) % self.num
+            elif event.key == pygame.K_RETURN:
+                self.next_scene = GAME_SCENE

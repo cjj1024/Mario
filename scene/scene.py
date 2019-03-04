@@ -15,6 +15,10 @@ class Scene():
         pygame.display.update()
 
 
+    def process_event(self, event):
+        pass
+
+
 def Singleton(cls):
     _instance = {}
 

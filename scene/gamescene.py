@@ -4,6 +4,10 @@ from sprite.mario import *
 from level.level import *
 from tool.character import *
 from .scene import *
+from gui.gui import *
+from gui.menuitem import *
+from gui.menu import *
+from gui.menubar import *
 
 
 @Singleton
@@ -21,11 +25,29 @@ class GameScene(Scene):
         self.mario = Mario()
         self.player_group.add(self.mario)
 
+        self.init_gui()
+
+
+    def init_gui(self):
+        self.gui = GUI()
+
+        menubar = MenuBar()
+
+        setting_menu = Menu(text="设置")
+        menubar.add_menu(setting_menu)
+        sound_menuitem = MenuItem(text="声音")
+        setting_menu.add_menuitem(sound_menuitem)
+
+        system_menu = Menu(text="系统")
+        menubar.add_menu(system_menu)
+        exit_menuitem = MenuItem(text="退出")
+        system_menu.add_menuitem(exit_menuitem)
+
+        self.gui.add_menubar(menubar, pos=(0, 0))
+
 
     def show(self):
         self.screen.fill(SKYBLUE, (0, 0, 800, 600))
-
-        self.check_event()
 
         self.level.update(self.screen)
         self.coin_group.update()
@@ -40,6 +62,7 @@ class GameScene(Scene):
         self.move_item(self.mushroom_group)
 
         self.show_info()
+        self.gui.update(self.screen)
         pygame.display.update()
 
         if not self.player_group.has(self.mario):
@@ -261,20 +284,20 @@ class GameScene(Scene):
         write_chars(self.screen, "生命: " + str(self.mario.life), 32, WHITE, (0, 64))
 
 
-    def check_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    def process_event(self, event):
+        self.gui.process_event(event)
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 sys.exit(0)
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit(0)
-                elif event.key == pygame.K_LEFT:
-                    self.mario.set_status(WALK)
-                    self.mario.set_direction(LEFT)
-                elif event.key == pygame.K_RIGHT:
-                    self.mario.set_status(WALK)
-                    self.mario.set_direction(RIGHT)
-                elif event.key == pygame.K_a:
-                    self.mario.set_status(JUMP)
+            elif event.key == pygame.K_LEFT:
+                self.mario.set_status(WALK)
+                self.mario.set_direction(LEFT)
+            elif event.key == pygame.K_RIGHT:
+                self.mario.set_status(WALK)
+                self.mario.set_direction(RIGHT)
+            elif event.key == pygame.K_a:
+                self.mario.set_status(JUMP)
 
 

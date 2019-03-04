@@ -3,6 +3,10 @@ from scene.gamescene import *
 from level.leveleditor import *
 from tool.character import *
 from .scene import *
+from gui.gui import *
+from gui.menuitem import *
+from gui.menu import *
+from gui.menubar import *
 
 
 @Singleton
@@ -21,41 +25,46 @@ class GameMenu(Scene):
         pygame.mixer.music.load(music['main_theme'])
         pygame.mixer.music.play(loops=100)
 
+        self.init_gui()
+
+
+    def init_gui(self):
+        self.gui = GUI()
+
 
     def show(self):
         self.next_scene = NOW_SCENE
 
         self.draw_background()
 
-        self.check_event()
-
+        self.gui.update(self.screen)
         pygame.display.update()
 
 
-    def check_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    def process_event(self, event):
+        self.gui.process_event(event)
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 sys.exit(0)
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            elif event.key == pygame.K_DOWN:
+                self.selected += 1
+                self.selected %= self.num
+            elif event.key == pygame.K_UP:
+                self.selected -= 1
+                self.selected %= self.num
+            elif event.key == pygame.K_RETURN:
+                if self.selected == 0:
+                    # gamescene = GameScene()
+                    # gamescene.show()
+                    self.next_scene = SELECT_LEVEL_SCENE
+                elif self.selected == 1:
+                    mapeditor = MapEditor()
+                    mapeditor.show()
+                    self.screen = pygame.display.set_mode((800, 600))
+                elif self.selected == 2:
                     sys.exit(0)
-                elif event.key == pygame.K_DOWN:
-                    self.selected += 1
-                    self.selected %= self.num
-                elif event.key == pygame.K_UP:
-                    self.selected -= 1
-                    self.selected %= self.num
-                elif event.key == pygame.K_RETURN:
-                    if self.selected == 0:
-                        # gamescene = GameScene()
-                        # gamescene.show()
-                        self.next_scene = SELECT_LEVEL_SCENE
-                    elif self.selected == 1:
-                        mapeditor = MapEditor()
-                        mapeditor.show()
-                        self.screen = pygame.display.set_mode((800, 600))
-                    elif self.selected == 2:
-                        sys.exit(0)
 
 
     def draw_background(self):

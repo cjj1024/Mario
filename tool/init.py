@@ -99,6 +99,11 @@ pipe_img = []
 # 80x80
 pipe_img.append(get_image(background_img, 0, 160, 32, 32))
 
+# 水
+water_img = []
+# 40x80px
+water_img.append(get_image(background_img, 48, 320, 16, 32))
+
 
 item_img = load_image('./res/image/item.png')
 
@@ -110,6 +115,18 @@ mushroom_img = []
 for i in range(3):
     mushroom_img.append(get_image(item_img, i * 16, 0, 16, 16))
     mushroom_img.append(get_image(item_img, i * 16, 16, 16, 16))
+
+# 花
+flower_img = []
+# 40x40px
+for i in range(4):
+    flower_img.append(get_image(item_img, i * 16, 32, 16, 16))
+
+# 星星
+star_img = []
+# 40x40px
+for i in range(4):
+    star_img.append(get_image(item_img, i * 16, 48, 16, 16))
 
 # 有奖励的砖块
 bonus_brick_img = []
