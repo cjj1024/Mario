@@ -1,5 +1,5 @@
-from .button import *
-from .constant import *
+from . button import *
+from . constant import *
 
 
 class MenuItem(Button):

@@ -2,7 +2,7 @@ import pygame
 
 from tool.init import *
 from tool.character import *
-from .scene import *
+from . scene import *
 
 
 @Singleton

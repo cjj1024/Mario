@@ -1,6 +1,6 @@
 import pygame
 import os
-from .globaldata import *
+from . globaldata import *
 
 
 def load_images(directory, colorkey=MAGENTA, accept=('.jpg', '.bmp', '.png')):

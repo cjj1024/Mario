@@ -1,7 +1,7 @@
 import pygame
 
-from tool.globaldata import *
-from tool.init import *
+from . globaldata import *
+from . init import *
 
 
 class Character():

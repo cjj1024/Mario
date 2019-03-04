@@ -1,9 +1,9 @@
 import pygame
 import sys
 
-from .constant import *
-from .gui import *
-from .button import *
+from . constant import *
+from . gui import *
+from . button import *
 
 
 class Widget(GUI, pygame.sprite.Sprite):

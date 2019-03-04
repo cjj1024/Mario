@@ -1,7 +1,7 @@
 import pygame
 
-from .tool import *
-from .globaldata import *
+from . tool import *
+from . globaldata import *
 
 
 

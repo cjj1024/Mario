@@ -3,7 +3,7 @@ import sys
 from sprite.mario import *
 from level.level import *
 from tool.character import *
-from .scene import *
+from . scene import *
 from gui.gui import *
 from gui.menuitem import *
 from gui.menu import *

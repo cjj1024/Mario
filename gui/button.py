@@ -1,7 +1,7 @@
-from .clickableobject import *
-from .statechangeableobject import *
-from .textobject import *
-from .constant import *
+from . clickableobject import *
+from . statechangeableobject import *
+from . textobject import *
+from . constant import *
 
 
 class Button(ClickableObject, StateChangeableObject, TextObject, pygame.sprite.Sprite):

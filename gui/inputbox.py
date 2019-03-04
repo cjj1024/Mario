@@ -1,6 +1,6 @@
-from .clickableobject import *
-from .textobject import *
-from .constant import *
+from . clickableobject import *
+from . textobject import *
+from . constant import *
 
 
 class InputBox(ClickableObject, TextObject, pygame.sprite.Sprite):

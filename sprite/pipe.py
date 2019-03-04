@@ -1,4 +1,4 @@
-from .stillobject import *
+from . stillobject import *
 from tool.init import *
 
 

@@ -1,4 +1,4 @@
-from .menuitem import *
+from . menuitem import *
 
 
 class Menu(Button):
@@ -23,8 +23,7 @@ class Menu(Button):
 
 
     def add_menuitem(self, menuitem):
-        menuitem.rect.x = self.rect.x
-        menuitem.rect.y = self.rect.y + self.total_height
+        menuitem.adjust_pos(self.rect.x - menuitem.rect.x, self.rect.y + self.total_height - menuitem.rect.y)
         self.total_height += menuitem.rect.height
         self.menuitem_group.add(menuitem)
 

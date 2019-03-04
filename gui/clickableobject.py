@@ -1,6 +1,6 @@
 import pygame
 
-from .constant import *
+from . constant import *
 
 
 # 可点击控件

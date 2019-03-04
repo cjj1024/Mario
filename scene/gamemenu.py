@@ -2,7 +2,7 @@
 from scene.gamescene import *
 from level.leveleditor import *
 from tool.character import *
-from .scene import *
+from . scene import *
 from gui.gui import *
 from gui.menuitem import *
 from gui.menu import *

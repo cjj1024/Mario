@@ -1,10 +1,10 @@
 import pygame
 
 from tool.globaldata import *
-from .gamemenu import *
-from .gamescene import *
-from .deathscene import *
-from .selectlevelscene import *
+from . gamemenu import *
+from . gamescene import *
+from . deathscene import *
+from . selectlevelscene import *
 
 
 class SceneControl():

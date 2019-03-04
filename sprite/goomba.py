@@ -1,4 +1,4 @@
-from .enemy import *
+from . enemy import *
 from tool.init import *
 
 

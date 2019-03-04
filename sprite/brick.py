@@ -1,6 +1,6 @@
-from .coin import *
-from .mushroom import *
-from .stillobject import *
+from . coin import *
+from . mushroom import *
+from . stillobject import *
 
 
 # 1000 砖块1  地面

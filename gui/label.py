@@ -1,4 +1,4 @@
-from .textobject import *
+from . textobject import *
 
 
 class Label(TextObject, pygame.sprite.Sprite):

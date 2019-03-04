@@ -1,5 +1,5 @@
-from .menu import *
-from .constant import *
+from . menu import *
+from . constant import *
 
 
 class MenuBar(pygame.sprite.Sprite):
@@ -15,8 +15,7 @@ class MenuBar(pygame.sprite.Sprite):
 
 
     def add_menu(self, menu):
-        menu.rect.x = self.rect.x + self.total_width
-        menu.rect.y = self.rect.y + 5
+        menu.adjust_pos(self.rect.x + self.total_width - menu.rect.x, self.rect.y - menu.rect.y)
         self.total_width += menu.rect.width
         self.menu_group.add(menu)
 

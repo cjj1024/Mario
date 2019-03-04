@@ -1,6 +1,6 @@
 import sys
 
-from .scene import *
+from . scene import *
 from tool.character import *
 from tool.globaldata import *
 
