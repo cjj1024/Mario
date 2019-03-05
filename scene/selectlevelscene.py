@@ -3,6 +3,9 @@ import sys
 from . scene import *
 from tool.character import *
 from tool.globaldata import *
+from gui.gui import *
+from gui.button import *
+
 
 
 @Singleton
@@ -16,33 +19,48 @@ class SelectLevelScene(Scene):
         self.column = 4
         self.num = 5
 
+        self.init_gui()
+
+
+    def init_gui(self):
+        self.gui = GUI()
+        level1_button = Button(id=1, text='第一关', size=(200, 50),
+                               normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                               text_color=WHITE, text_size=48, text_pos=CENTER)
+        self.gui.add_button(level1_button, pos=(0, 0))
+        level2_button = Button(id=2, text='第二关', size=(200, 50),
+                               normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                               text_color=WHITE, text_size=48, text_pos=CENTER)
+        self.gui.add_button(level2_button, pos=(200, 0))
+        level3_button = Button(id=3, text='第三关', size=(200, 50),
+                               normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                               text_color=WHITE, text_size=48, text_pos=CENTER)
+        self.gui.add_button(level3_button, pos=(400, 0))
+        level4_button = Button(id=4, text='第四关', size=(200, 50),
+                               normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                               text_color=WHITE, text_size=48, text_pos=CENTER)
+        self.gui.add_button(level4_button, pos=(600, 0))
+        level5_button = Button(id=5, text='第五关', size=(200, 50),
+                               normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                               text_color=WHITE, text_size=48, text_pos=CENTER)
+        self.gui.add_button(level5_button, pos=(0, 100))
+
+
+    def set_level(self, level):
+        self.level = level
+
 
     def show(self):
         self.screen.fill(SKYBLUE, (0, 0, 800, 600))
 
-        self.draw_level()
-
+        self.gui.update(self.screen)
         pygame.display.update()
 
 
-    def draw_level(self):
-        pygame.draw.rect(self.screen, BLUE,
-                         (int(self.level % self.column) * 200, int(self.level / self.column) * 100, 120, 50))
-
-        write_chars(self.screen, '第一关', 48, WHITE, (0, 0))
-        write_chars(self.screen, '第二关', 48, WHITE, (200, 0))
-        write_chars(self.screen, '第三关', 48, WHITE, (400, 0))
-        write_chars(self.screen, '第四关', 48, WHITE, (600, 0))
-        write_chars(self.screen, '第五关', 48, WHITE, (0, 100))
-
-
     def process_event(self, event):
-        if event.type == pygame.QUIT:
-            sys.exit(0)
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                sys.exit(0)
-            elif event.key == pygame.K_DOWN:
+        self.gui.process_event(event)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
                 self.level = (self.level + self.column) % self.num
             elif event.key == pygame.K_UP:
                 self.level = (self.level - self.column) % self.num

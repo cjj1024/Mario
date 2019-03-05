@@ -4,9 +4,7 @@ from level.leveleditor import *
 from tool.character import *
 from . scene import *
 from gui.gui import *
-from gui.menuitem import *
-from gui.menu import *
-from gui.menubar import *
+from gui.button import *
 
 
 @Singleton
@@ -30,6 +28,29 @@ class GameMenu(Scene):
 
     def init_gui(self):
         self.gui = GUI()
+        TextObject.font = pygame.font.Font('./res/font/minicanton.ttf', 60)
+        start_game_button = Button(text='开始游戏', size=(200, 50),
+                                   normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                                   text_color=WHITE, text_size=48, text_pos=CENTER)
+        start_game_button.bind_hover(self.set_selected, 0)
+        start_game_button.bind_active(self.enter_next_scene)
+        edit_level_button = Button(text='编辑游戏', size=(200, 50),
+                                   normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                                   text_color=WHITE, text_size=48, text_pos=CENTER)
+        edit_level_button.bind_hover(self.set_selected, 1)
+        edit_level_button.bind_active(self.enter_next_scene)
+        exit_game_button = Button(text='退出游戏', size=(200, 50),
+                                   normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
+                                   text_color=WHITE, text_size=48, text_pos=CENTER)
+        exit_game_button.bind_hover(self.set_selected, 2)
+        exit_game_button.bind_active(self.enter_next_scene)
+        self.gui.add_button(start_game_button, pos=(350, 200))
+        self.gui.add_button(edit_level_button, pos=(350, 250))
+        self.gui.add_button(exit_game_button, pos=(350, 300))
+
+
+    def set_selected(self, x):
+        self.selected = x
 
 
     def show(self):
@@ -43,28 +64,26 @@ class GameMenu(Scene):
 
     def process_event(self, event):
         self.gui.process_event(event)
-        if event.type == pygame.QUIT:
-            sys.exit(0)
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                sys.exit(0)
-            elif event.key == pygame.K_DOWN:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
                 self.selected += 1
                 self.selected %= self.num
             elif event.key == pygame.K_UP:
                 self.selected -= 1
                 self.selected %= self.num
             elif event.key == pygame.K_RETURN:
-                if self.selected == 0:
-                    # gamescene = GameScene()
-                    # gamescene.show()
-                    self.next_scene = SELECT_LEVEL_SCENE
-                elif self.selected == 1:
-                    mapeditor = MapEditor()
-                    mapeditor.show()
-                    self.screen = pygame.display.set_mode((800, 600))
-                elif self.selected == 2:
-                    sys.exit(0)
+                self.enter_next_scene()
+
+
+    def enter_next_scene(self):
+        if self.selected == 0:
+            self.next_scene = SELECT_LEVEL_SCENE
+        elif self.selected == 1:
+            mapeditor = MapEditor()
+            mapeditor.show()
+            self.screen = pygame.display.set_mode((800, 600))
+        elif self.selected == 2:
+            sys.exit(0)
 
 
     def draw_background(self):
@@ -79,9 +98,9 @@ class GameMenu(Scene):
         self.screen.blit(brushwood_img[0], (200, 480))
         self.screen.blit(brushwood_img[0], (600, 480))
 
-        write_chars(self.screen, '开始游戏', 48, WHITE, (350, 200))
-        write_chars(self.screen, '编辑游戏', 48, WHITE, (350, 250))
-        write_chars(self.screen, '退出游戏', 48, WHITE, (350, 300))
+        # write_chars(self.screen, '开始游戏', 48, WHITE, (350, 200))
+        # write_chars(self.screen, '编辑游戏', 48, WHITE, (350, 250))
+        # write_chars(self.screen, '退出游戏', 48, WHITE, (350, 300))
 
         self.screen.blit(mushroom_img[0], (300, 200 + self.selected * 50))
 

@@ -5,8 +5,9 @@ from . constant import *
 
 
 class Button(ClickableObject, StateChangeableObject, TextObject, pygame.sprite.Sprite):
-    def __init__(self, size=INIT_BUTTON_SIZE, text=INIT_BUTTON_TEXT,
+    def __init__(self, id=0, size=INIT_BUTTON_SIZE, text=INIT_BUTTON_TEXT,
                  text_size=INIT_BUTTON_TEXT_SIZE, text_color=INIT_BUTTON_TEXT_COLOR,
+                 text_pos=INIT_BUTTON_TEXT_POS,
                  normal_color=INIT_BUTTON_NORMAL_COLOR, hover_color=INIT_BUTTON_HOVER_COLOR,
                  active_color=INIT_BUTTON_ACTIVE_COLOR,
                  normal_image=None, hover_image=None, active_image=None):
@@ -19,7 +20,9 @@ class Button(ClickableObject, StateChangeableObject, TextObject, pygame.sprite.S
             normal_color=normal_color, hover_color=hover_color, active_color=active_color,
             normal_image=normal_image, hover_image=hover_image, active_image=active_image)
 
-        TextObject.__init__(self,text=text, text_size=text_size, text_color=text_color)
+        TextObject.__init__(self,text=text, text_size=text_size, text_color=text_color, text_pos=text_pos)
+
+        self.id = id
 
         self.init_button()
 

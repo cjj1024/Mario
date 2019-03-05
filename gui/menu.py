@@ -17,8 +17,8 @@ class Menu(Button):
 
     def update(self, screen):
         super().update()
+        self.menuitem_group.update()
         if self.is_expand:
-            self.menuitem_group.update()
             self.menuitem_group.draw(screen)
 
 
@@ -51,9 +51,9 @@ class Menu(Button):
     def process_event(self, event):
         super(Menu, self).process_event(event)
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.is_expand = False
-
         if self.is_expand:
             for menuitem in self.menuitem_group:
                 menuitem.process_event(event)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.is_expand = False

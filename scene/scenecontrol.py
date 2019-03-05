@@ -18,7 +18,6 @@ class SceneControl():
         clock = pygame.time.Clock()
         while True:
             self.scene.show()
-
             self.check_event()
 
             if self.scene.next_scene != NOW_SCENE:
@@ -52,3 +51,8 @@ class SceneControl():
 
         for event in pygame.event.get():
             self.scene.process_event(event)
+            if event.type == pygame.QUIT:
+                sys.exit(0)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit(0)

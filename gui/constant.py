@@ -16,6 +16,12 @@ DEEPSKYBLUE2 =  (0, 178, 238)
 DEEPSKYBLUE3 =  (0, 154, 205)
 
 
+# 文字在图片中的起始位置
+LEFT =                          1
+CENTER =                        2
+RIGHT =                         3
+
+
 # 可点击控件的状态
 # 正常状态
 NORMAL = 0
@@ -40,6 +46,8 @@ INIT_BUTTON_TEXT =              'Button'
 INIT_BUTTON_TEXT_SIZE =         32
 # 默认按钮文字颜色
 INIT_BUTTON_TEXT_COLOR =        BLACK
+# 默认按钮文字位置
+INIT_BUTTON_TEXT_POS =          CENTER
 
 
 # 默认菜单属性
@@ -81,10 +89,7 @@ INIT_INPUTBOX_COLOR =           WHITE
 INIT_INPUTBOX_TEXT_COLOR =      BLACK
 
 
-# 文字在图片中的起始位置
-LEFT =                          1
-CENTER =                        2
-RIGHT =                         3
+
 
 
 # 默认窗口属性

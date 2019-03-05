@@ -4,10 +4,11 @@ from . constant import *
 
 class TextObject():
     font = pygame.font.Font('./res/font/simkai.ttf', 60)
-    def __init__(self, text, text_size, text_color):
+    def __init__(self, text, text_size, text_color, text_pos):
         self.text = text
         self.text_size = text_size
         self.text_color = text_color
+        self.text_pos = text_pos
 
 
     def get_text_image_size(self, text, size):
@@ -30,7 +31,7 @@ class TextObject():
 
     # 把背景图片与文字合并起来
     # fit为真时，比较文字所需大小与图片大小，取小的size
-    def merge_text_image(self, text, text_size, text_color, image, fit=True, pos=CENTER):
+    def merge_text_image(self, text, text_size, text_color, image, fit=True):
         if not text:
             return
 
@@ -46,16 +47,16 @@ class TextObject():
 
         # 使用copy(), 避免修改原图片
         res_img = image.copy()
-        if pos == LEFT:
+        if self.text_pos == LEFT:
             offset_x = 0
             offset_y = int((res_img.get_height() - text_image.get_height()) / 2)
             res_img.blit(text_image, (0, offset_y))
-        elif pos == CENTER:
+        elif self.text_pos == CENTER:
             # 使文字在图片中央
             offset_x = int((res_img.get_width() - text_image.get_width()) / 2)
             offset_y = int((res_img.get_height() - text_image.get_height()) / 2)
             res_img.blit(text_image, (offset_x, offset_y))
-        elif pos == RIGHT:
+        elif self.text_pos == RIGHT:
             offset_x = res_img.get_width() - text_image.get_width()
             offset_y = int((res_img.get_height() - text_image.get_height()) / 2)
         res_img.blit(text_image, (offset_x, offset_y))

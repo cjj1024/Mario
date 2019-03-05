@@ -39,8 +39,11 @@ class GameScene(Scene):
         setting_menu.add_menuitem(sound_menuitem)
 
         system_menu = Menu(text="系统")
+
         menubar.add_menu(system_menu)
         exit_menuitem = MenuItem(text="退出")
+        exit_menuitem.bind_active(
+            lambda: sys.exit(0))
         system_menu.add_menuitem(exit_menuitem)
 
         self.gui.add_menubar(menubar, pos=(0, 0))
@@ -286,12 +289,9 @@ class GameScene(Scene):
 
     def process_event(self, event):
         self.gui.process_event(event)
-        if event.type == pygame.QUIT:
-            sys.exit(0)
+
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                sys.exit(0)
-            elif event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT:
                 self.mario.set_status(WALK)
                 self.mario.set_direction(LEFT)
             elif event.key == pygame.K_RIGHT:
