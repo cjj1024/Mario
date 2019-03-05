@@ -26,7 +26,7 @@ class SceneControl():
                     self.pre_scene = GAME_SCENE
                 elif self.scene.next_scene == GAME_SCENE:
                     if self.pre_scene == SELECT_LEVEL_SCENE:
-                        self.scene = GameScene(self.scene.level + 1)
+                        self.scene = GameScene(self.scene.level)
                     else:
                         self.scene = GameScene()
                     self.pre_scene = GAME_SCENE
