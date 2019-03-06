@@ -130,7 +130,9 @@ class GameScene(Scene):
             self.process_mario_mushroom_collision(mushroom)
 
         if enemy:
-            self.process_mario_enemy_collision_x()
+            if self.mario.rect.x > enemy.rect.x and self.mario.rect.left + 10 < enemy.rect.right or \
+                self.mario.rect.x < enemy.rect.x and self.mario.rect.right - 10 > enemy.rect.left:
+                self.process_mario_enemy_collision_x()
 
         if checkpoint:
             self.process_mario_checkpoint_collision(checkpoint)
@@ -282,9 +284,9 @@ class GameScene(Scene):
 
     # 展示信息
     def show_info(self):
-        write_chars(self.screen, "分数: " + str(self.mario.score), 32, WHITE, (0, 0))
-        write_chars(self.screen, "硬币: " + str(self.mario.coin_num), 32, WHITE, (0, 32))
-        write_chars(self.screen, "生命: " + str(self.mario.life), 32, WHITE, (0, 64))
+        write_chars(self.screen, "分数: " + str(self.mario.score), 32, WHITE, (650, 0))
+        write_chars(self.screen, "硬币: " + str(self.mario.coin_num), 32, WHITE, (650, 32))
+        write_chars(self.screen, "生命: " + str(self.mario.life), 32, WHITE, (650, 64))
 
 
     def process_event(self, event):

@@ -2,6 +2,11 @@ import json
 import tkinter
 
 from sprite.coin import *
+from gui.gui import *
+from gui.widget import *
+from gui.button import *
+from gui.inputbox import *
+from gui.label import *
 
 
 # 分为游戏编辑区域和物品选择区域
@@ -39,11 +44,13 @@ class MapEditor():
 
             self.draw_background()
 
+            self.gui.update(self.screen)
             pygame.display.update()
 
 
     def check_event(self):
         for event in pygame.event.get():
+            self.gui.process_event(event)
             if event.type == pygame.QUIT:
                 self.store()
                 self.completed = True
@@ -256,16 +263,37 @@ class MapEditor():
 
 
     # 获得用户输入的场景的长度
+    # def get_length(self):
+    #     win = tkinter.Tk()
+    #     tkinter.Label(win, text='请输入长度(单位为px, 要求为40的整数倍): ').pack()
+    #     text = tkinter.StringVar()
+    #     text.set("1600")
+    #     b = tkinter.Entry(win, textvariable=text)
+    #     tkinter.Button(win, text='确定', command=lambda :self.save_length(text)).pack(side=tkinter.RIGHT)
+    #     b.pack(side=tkinter.TOP)
+    #     b.focus()
+    #     win.mainloop()
+
+
     def get_length(self):
-        win = tkinter.Tk()
-        tkinter.Label(win, text='请输入长度(单位为px, 要求为40的整数倍): ').pack()
-        text = tkinter.StringVar()
-        text.set("1600")
-        b = tkinter.Entry(win, textvariable=text)
-        tkinter.Button(win, text='确定', command=lambda :self.save_length(text)).pack(side=tkinter.RIGHT)
-        b.pack(side=tkinter.TOP)
-        b.focus()
-        win.mainloop()
+        self.gui = GUI()
+
+        label = Label(size=(300, 50), text="输入场景长度(40的整数倍):", text_size=48, text_pos=LEFT)
+        inputbox = InputBox()
+        button = Button(text="确定", normal_color=GREY, hover_color=YELLOW, active_color=RED)
+        widget = Widget()
+        widget.add_label(label, pos=(10, 50))
+        widget.add_inputbox(inputbox, pos=(10, 100))
+        widget.add_button(button, pos=(10, 150))
+        self.gui.add_widget(widget, pos=(100, 100))
+
+        while button.status != ACTIVE:
+            self.screen.fill(BLACK, (0, 0, 1600, 800))
+            for event in pygame.event.get():
+                self.gui.process_event(event)
+            self.gui.update(self.screen)
+            pygame.display.update()
+
 
 
     def save_length(self, text):

@@ -2,6 +2,7 @@ import pygame
 import json
 
 from tool.init import *
+from . colliderbox import *
 
 class Mario(pygame.sprite.Sprite):
     def __init__(self):
@@ -228,6 +229,3 @@ class Mario(pygame.sprite.Sprite):
         self.small_jump_left_img = mario_small_left_img[0][4]
 
         self.small_dead_img = mario_small_right_img[0][5]
-
-
-

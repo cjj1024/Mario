@@ -33,7 +33,7 @@ class TextObject():
     # fit为真时，比较文字所需大小与图片大小，取小的size
     def merge_text_image(self, text, text_size, text_color, image, fit=True):
         if not text:
-            return
+            return None
 
         if fit:
             # 如果文字大小超过控件大小， 则使用控件的size

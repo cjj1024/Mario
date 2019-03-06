@@ -11,7 +11,6 @@ class Menu(Button):
         self.total_height = self.rect.height
 
         self.is_expand = False
-
         self.menuitem_group = pygame.sprite.Group()
 
 

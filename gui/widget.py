@@ -31,7 +31,8 @@ class Widget(GUI, pygame.sprite.Sprite):
 
 
     def init_widget(self):
-        exit_button = Button(text='X', size=(30, 30))
+        exit_button = Button(text='X', size=(30, 30), normal_color=INIT_WIDGET_COLOR, hover_color=RED,
+                             active_color=RED)
         exit_button.bind_active(self.destroy)
         self.add_button(exit_button, pos=(self.rect.width - 30, 0))
 
@@ -114,3 +115,12 @@ class Widget(GUI, pygame.sprite.Sprite):
     def adjust_pos(self, x, y):
         self.rect.x += x
         self.rect.y += y
+
+        for button in self.button_group:
+            button.adjust_pos(x, y)
+        for label in self.label_group:
+            label.adjust_pos(x, y)
+        for inputbox in self.inputbox_group:
+            inputbox.adjust_pos(x, y)
+        for menubar in self.menubar_group:
+            menubar.adjust_pos(x, y)

@@ -87,6 +87,8 @@ INIT_INPUTBOX_TEXT_SIZE =       32
 INIT_INPUTBOX_COLOR =           WHITE
 # 默认输入框文字颜色
 INIT_INPUTBOX_TEXT_COLOR =      BLACK
+# 默认输入框文字开始位置
+INIT_INPUTBOX_TEXT_POS =        LEFT
 
 
 
@@ -110,3 +112,5 @@ INIT_LABEL_TEXT =               'Label'
 INIT_LABEL_TEXT_COLOR =         BLACK
 # 默认标签大小
 INIT_LABEL_TEXT_SIZE =          16
+# 默认标签文字位置
+INIT_LABEL_TEXT_POS =           CENTER
