@@ -8,6 +8,7 @@ class Scene():
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.fps = 60
+        self.self_scene = None
         self.next_scene = NOW_SCENE
 
 

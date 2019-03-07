@@ -15,6 +15,8 @@ class GameScene(Scene):
     def __init__(self, level=-1):
         Scene.__init__(self)
 
+        self.self_scene = GAME_SCENE
+
         if not level == -1:
             self.level = Level(level)
 
@@ -41,12 +43,19 @@ class GameScene(Scene):
         system_menu = Menu(text="系统")
 
         menubar.add_menu(system_menu)
+        return_menu_menuitem = MenuItem(text='返回菜单')
+        return_menu_menuitem.bind_active(self.enter_gamemenu_sceen)
+        system_menu.add_menuitem(return_menu_menuitem)
         exit_menuitem = MenuItem(text="退出")
         exit_menuitem.bind_active(
             lambda: sys.exit(0))
         system_menu.add_menuitem(exit_menuitem)
 
         self.gui.add_menubar(menubar, pos=(0, 0))
+
+
+    def enter_gamemenu_sceen(self):
+        self.next_scene = GAME_MENU_SCENE
 
 
     def show(self):
@@ -71,8 +80,6 @@ class GameScene(Scene):
         if not self.player_group.has(self.mario):
             self.next_scene = DEATH_SCENE
             self.player_group.add(self.mario)
-        else:
-            self.next_scene = NOW_SCENE
 
 
     # 根据mario的x, y轴的速度移动mario

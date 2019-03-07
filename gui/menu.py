@@ -4,7 +4,7 @@ from . menuitem import *
 class Menu(Button):
     def __init__(self, size=INIT_MENU_SIZE,text=None, text_size=INIT_MENU_TEXT_SIZE,
                  text_color=INIT_MENU_TEXT_COLOR):
-        Button.__init__(self, size=size, text=text, text_size=text_size, text_color=text_color,
+        Button.__init__(self, size=size, text=text, text_size=text_size, text_color=text_color, fit_text=True,
                         normal_color=INIT_MENU_COLOR, hover_color=INIT_MENU_HOVER_COLOR,
                         active_color=INIT_MENU_ACTIVE_COLOR)
 

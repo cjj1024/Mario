@@ -60,7 +60,7 @@ INIT_MENU_HOVER_COLOR =         DEEPSKYBLUE1
 # 默认菜单点击颜色
 INIT_MENU_ACTIVE_COLOR =        DEEPSKYBLUE2
 # 默认菜单文字大小
-INIT_MENU_TEXT_SIZE =           32
+INIT_MENU_TEXT_SIZE =           18
 # 默认菜单文字颜色
 INIT_MENU_TEXT_COLOR =          BLACK
 
@@ -71,7 +71,7 @@ INIT_MENUITEM_SIZE =            (40, 20)
 # 默认菜单项悬浮颜色
 INIT_MENUITEM_HOVER_COLOR =     DEEPSKYBLUE3
 # 默认菜单项文字大小
-INIT_MENUITEM_TEXT_SIZE =       32
+INIT_MENUITEM_TEXT_SIZE =       18
 # 默认菜单项文字颜色
 INIT_MENUITEM_TEXT_COLOR =      BLACK
 

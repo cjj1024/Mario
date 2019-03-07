@@ -18,7 +18,6 @@ class ClickableObject():
         self.hover_function = None
         self.hover_function_args = None
 
-        print(size)
         self.rect = pygame.Rect((0, 0), size)
 
         self.change_status = False

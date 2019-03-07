@@ -7,6 +7,9 @@ from gui.widget import *
 from gui.button import *
 from gui.inputbox import *
 from gui.label import *
+from gui.menuitem import *
+from gui.menu import *
+from gui.menubar import *
 
 
 # 分为游戏编辑区域和物品选择区域
@@ -24,6 +27,8 @@ class MapEditor():
         self.image = brick_img[0]
         self.imageId = 1000
 
+        self.init_gui()
+
         self.start_x = 0
         self.length = 0
         self.get_length()
@@ -36,6 +41,42 @@ class MapEditor():
         self.completed = False
 
         self.filename = ""
+
+
+    def init_gui(self):
+        self.gui = GUI()
+
+        menubar = MenuBar()
+
+        file_menu = Menu(text='文件')
+        save_menuitem = MenuItem(text='保存')
+        save_menuitem.bind_active(self.save_level_data, save_menuitem)
+        file_menu.add_menuitem(save_menuitem)
+        load_menuitem = MenuItem(text='导入')
+        file_menu.add_menuitem(load_menuitem)
+
+        system_menu = Menu(text="系统")
+        return_menu_menuitem = MenuItem(text='返回菜单')
+        return_menu_menuitem.bind_active(self.enter_gamemenu_sceen)
+        system_menu.add_menuitem(return_menu_menuitem)
+        exit_menuitem = MenuItem(text="退出")
+        exit_menuitem.bind_active(
+            lambda: sys.exit(0))
+        system_menu.add_menuitem(exit_menuitem)
+
+        menubar.add_menu(file_menu)
+        menubar.add_menu(system_menu)
+
+        self.gui.add_menubar(menubar, pos=(0, 0))
+
+
+    def save_level_data(self, menuitem):
+        menuitem.status = HOVER
+        self.store()
+
+
+    def enter_gamemenu_sceen(self):
+        self.next_scene = GAME_MENU_SCENE
 
 
     def show(self):
@@ -142,8 +183,9 @@ class MapEditor():
                         self.image = castle_brick_img[7]
                         self.imageId = 307
                     else:
-                        self.row, self.column = self.get_grid(x, y)
-                        self.map[self.row][self.column] = self.imageId
+                        if x > 0 and x < 800 and y > 0 and y < 600:
+                            self.row, self.column = self.get_grid(x, y)
+                            self.map[self.row][self.column] = self.imageId
                 # 鼠标右键
                 elif event.button == 3:
                     x, y = event.pos
@@ -263,24 +305,39 @@ class MapEditor():
 
 
     # 获得用户输入的场景的长度
-    # def get_length(self):
-    #     win = tkinter.Tk()
-    #     tkinter.Label(win, text='请输入长度(单位为px, 要求为40的整数倍): ').pack()
-    #     text = tkinter.StringVar()
-    #     text.set("1600")
-    #     b = tkinter.Entry(win, textvariable=text)
-    #     tkinter.Button(win, text='确定', command=lambda :self.save_length(text)).pack(side=tkinter.RIGHT)
-    #     b.pack(side=tkinter.TOP)
-    #     b.focus()
-    #     win.mainloop()
-
-
     def get_length(self):
-        self.gui = GUI()
-
         label = Label(size=(300, 50), text="输入场景长度(40的整数倍):", text_size=48, text_pos=LEFT)
-        inputbox = InputBox()
+        inputbox = InputBox(text='800')
         button = Button(text="确定", normal_color=GREY, hover_color=YELLOW, active_color=RED)
+        button.bind_active(self.save_length, inputbox)
+        widget = Widget()
+        widget.add_label(label, pos=(10, 50))
+        widget.add_inputbox(inputbox, pos=(10, 100))
+        widget.add_button(button, pos=(10, 150))
+        self.gui.add_widget(widget, pos=(100, 100))
+
+
+        while button.status != ACTIVE:
+            self.screen.fill(BLACK, (0, 0, 1600, 800))
+            for event in pygame.event.get():
+                self.gui.process_event(event)
+            self.gui.update(self.screen)
+            pygame.display.update()
+
+        widget.destroy()
+
+
+
+    def save_length(self, inputbox):
+        self.length = int(inputbox.get_text())
+
+
+    # 用json格式保存关卡信息
+    def store(self):
+        label = Label(size=(300, 50), text='输入关卡名称(如level2)', text_size=48, text_pos=LEFT)
+        inputbox = InputBox(text='default')
+        button = Button(text='确定', normal_color=GREY, hover_color=YELLOW, active_color=RED)
+        button.bind_active(self.save_filename, inputbox)
         widget = Widget()
         widget.add_label(label, pos=(10, 50))
         widget.add_inputbox(inputbox, pos=(10, 100))
@@ -294,23 +351,7 @@ class MapEditor():
             self.gui.update(self.screen)
             pygame.display.update()
 
-
-
-    def save_length(self, text):
-        self.length = int(str(text.get()))
-
-
-    # 用json格式保存关卡信息
-    def store(self):
-        win = tkinter.Tk()
-        frame = tkinter.Frame()
-        tkinter.Label(frame, text="输入关卡名: ").pack(side=tkinter.LEFT)
-        filename = tkinter.StringVar()
-        filename.set('default')
-        tkinter.Entry(frame, textvariable=filename).pack(side=tkinter.RIGHT)
-        frame.pack(side=tkinter.TOP)
-        tkinter.Button(win, text='确认', command=lambda :self.save_filename(filename)).pack(side=tkinter.BOTTOM)
-        tkinter.mainloop()
+        widget.destroy()
 
 
         data = {}
@@ -395,5 +436,5 @@ class MapEditor():
             fp.write(json.dumps(data, indent=4))
 
 
-    def save_filename(self, text):
-        self.filename = str(text.get())
+    def save_filename(self, inputbox):
+        self.filename = inputbox.get_text()

@@ -14,6 +14,8 @@ class SelectLevelScene(Scene):
     def __init__(self):
         Scene.__init__(self)
 
+        self.self_scene = SELECT_LEVEL_SCENE
+
         self.level = 0
 
         self.row = 1
@@ -63,6 +65,16 @@ class SelectLevelScene(Scene):
         level5_button.bind_active(self.enter_next_scene)
         self.gui.add_button(level5_button, pos=(0, 100))
 
+        return_menu_button = Button(text='返回菜单', text_color=WHITE, text_size=48,
+                                    normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2)
+        return_menu_button.bind_active(self.enter_gamemenu_sceen)
+        self.gui.add_button(return_menu_button,
+                            pos=(SCREEN_SIZE[0]-return_menu_button.rect.width - 10,
+                                 SCREEN_SIZE[1]-return_menu_button.rect.height - 10))
+
+
+    def enter_gamemenu_sceen(self):
+        self.next_scene = GAME_MENU_SCENE
 
     def set_level(self, level):
         self.level = level

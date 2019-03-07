@@ -10,7 +10,6 @@ from . selectlevelscene import *
 class SceneControl():
     def __init__(self, scene):
         self.scene = scene
-        self.pre_scene = GAME_MENU_SCENE
         self.is_active = True
 
 
@@ -21,21 +20,21 @@ class SceneControl():
             self.check_event()
 
             if self.scene.next_scene != NOW_SCENE:
-                if self.scene.next_scene == GAME_MENU_SCENE:
+                next_scene = self.scene.next_scene
+                self.scene.next_scene = NOW_SCENE
+
+                if next_scene == GAME_MENU_SCENE:
                     self.scene = GameMenu()
-                    self.pre_scene = GAME_SCENE
-                elif self.scene.next_scene == GAME_SCENE:
-                    if self.pre_scene == SELECT_LEVEL_SCENE:
+                    print('game menu')
+                elif next_scene == GAME_SCENE:
+                    if self.scene.self_scene == SELECT_LEVEL_SCENE:
                         self.scene = GameScene(self.scene.level)
                     else:
                         self.scene = GameScene()
-                    self.pre_scene = GAME_SCENE
-                elif self.scene.next_scene == DEATH_SCENE:
+                elif next_scene == DEATH_SCENE:
                     self.scene = DeathScene(self.scene.mario)
-                    self.pre_scene = DEATH_SCENE
-                elif self.scene.next_scene == SELECT_LEVEL_SCENE:
+                elif next_scene == SELECT_LEVEL_SCENE:
                     self.scene = SelectLevelScene()
-                    self.pre_scene = SELECT_LEVEL_SCENE
 
 
             clock.tick(self.scene.fps)

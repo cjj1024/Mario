@@ -12,6 +12,8 @@ class GameMenu(Scene):
     def __init__(self):
         Scene.__init__(self)
 
+        self.self_scene = GAME_MENU_SCENE
+
         # 记录用户的选择
         # 1 开始游戏
         # 2 编辑地图

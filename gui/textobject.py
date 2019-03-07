@@ -4,11 +4,12 @@ from . constant import *
 
 class TextObject():
     font = pygame.font.Font('./res/font/simkai.ttf', 60)
-    def __init__(self, text, text_size, text_color, text_pos):
+    def __init__(self, text, text_size, text_color, text_pos, fit_text=False):
         self.text = text
         self.text_size = text_size
         self.text_color = text_color
         self.text_pos = text_pos
+        self.fit_text=fit_text
 
 
     def get_text_image_size(self, text, size):
@@ -31,11 +32,11 @@ class TextObject():
 
     # 把背景图片与文字合并起来
     # fit为真时，比较文字所需大小与图片大小，取小的size
-    def merge_text_image(self, text, text_size, text_color, image, fit=True):
+    def merge_text_image(self, text, text_size, text_color, image):
         if not text:
             return None
 
-        if fit:
+        if not self.fit_text:
             # 如果文字大小超过控件大小， 则使用控件的size
             if image.get_width() / len(list(text)) > text_size:
                 text_size = text_size
@@ -44,9 +45,11 @@ class TextObject():
 
         text_image = self.get_text_image(text, text_size, text_color)
 
-
-        # 使用copy(), 避免修改原图片
-        res_img = image.copy()
+        if not self.fit_text:
+            # 使用copy(), 避免修改原图片
+            res_img = image.copy()
+        else:
+            res_img = pygame.transform.scale(image, text_image.get_size())
         if self.text_pos == LEFT:
             offset_x = 0
             offset_y = int((res_img.get_height() - text_image.get_height()) / 2)
