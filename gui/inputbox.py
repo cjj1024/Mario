@@ -19,6 +19,9 @@ class InputBox(ClickableObject, TextObject, pygame.sprite.Sprite):
 
         self.image = self.background_image.copy()
 
+        self.image = self.merge_text_image(self.text, self.text_size, self.text_color,
+                                           self.background_image)
+
 
         self.is_enable_input = False
 
@@ -28,7 +31,7 @@ class InputBox(ClickableObject, TextObject, pygame.sprite.Sprite):
         if key == pygame.K_BACKSPACE:
             self.text = self.text[:-1]
             self.image = self.merge_text_image(self.text, self.text_size, self.text_color,
-                                               self.background_image, False)
+                                               self.background_image)
             if not self.image:
                 self.image = self.background_image
 
@@ -39,7 +42,7 @@ class InputBox(ClickableObject, TextObject, pygame.sprite.Sprite):
             self.text += chr(key)
 
             self.image = self.merge_text_image(self.text, self.text_size, self.text_color,
-                                               self.background_image, False)
+                                               self.background_image)
 
 
     def process_event(self, event):

@@ -66,75 +66,190 @@ class Level():
         # 4200 Piranha
 
         # 每个管道都是存档点
-        for x, y in data['pipe']:
-            self.pipe_group.add(Pipe(1200, x, y))
-            self.checkpoint_group.add(Checkpoint(400, x, y))
+        try:
+            for x, y in data['pipe']:
+                self.pipe_group.add(Pipe(1200, x, y))
+                self.checkpoint_group.add(Checkpoint(400, x, y))
+        except:
+            print('load pipe error!')
+        else:
+            print('load pipe successfully!')
 
-        for x, y in data['piranha']:
-            self.plant_enemy.add(Piranha(4200, x, y))
+        try:
+            for x, y in data['piranha']:
+                self.plant_enemy.add(Piranha(4200, x, y))
+        except:
+            print('load piranha error!')
+        else:
+            print('load piranha successfully!')
 
-        for x, y in data['castle_brick0']:
-            self.background_group.add(Brick(300, x, y))
+        try:
+            for x, y in data['castle_brick0']:
+                self.background_group.add(Brick(300, x, y))
+        except:
+            print('load castle_brick0 error!')
+        else:
+            print('load castle_brick0 successfully!')
 
-        for x, y in data['castle_brick1']:
-            self.background_group.add(Brick(301, x, y))
+        try:
+            for x, y in data['castle_brick1']:
+                self.background_group.add(Brick(301, x, y))
+        except:
+            print('load castle_brick1 error!')
+        else:
+            print('load castle_brick1 successfully!')
 
-        for x, y in data['castle_brick2']:
-            self.background_group.add(Brick(302, x, y))
+        try:
+            for x, y in data['castle_brick2']:
+                self.background_group.add(Brick(302, x, y))
+        except:
+            print('load castle_brick2 error!')
+        else:
+            print('load castle_brick2 successfully!')
 
-        for x, y in data['castle_brick3']:
-            self.background_group.add(Brick(303, x, y))
+        try:
+            for x, y in data['castle_brick3']:
+                self.background_group.add(Brick(303, x, y))
+        except:
+            print('load castle_brick3 error!')
+        else:
+            print('load castle_brick3 successfully!')
 
-        for x, y in data['castle_brick4']:
-            self.background_group.add(Brick(304, x, y))
+        try:
+            for x, y in data['castle_brick4']:
+                self.background_group.add(Brick(304, x, y))
+        except:
+            print('load castle_brick4 error!')
+        else:
+            print('load castle_brick4 successfully!')
 
-        for x, y in data['castle_brick5']:
-            self.background_group.add(Brick(305, x, y))
+        try:
+            for x, y in data['castle_brick5']:
+                self.background_group.add(Brick(305, x, y))
+        except:
+            print('load castle_brick5 error!')
+        else:
+            print('load castle_brick5 successfully!')
 
-        for x, y in data['castle_brick6']:
-            self.background_group.add(Brick(306, x, y))
+        try:
+            for x, y in data['castle_brick6']:
+                self.background_group.add(Brick(306, x, y))
+        except:
+            print('load castle_brick6 error!')
+        else:
+            print('load castle_brick6 successfully!')
 
-        for x, y in data['castle_brick7']:
-            self.background_group.add(Brick(307, x, y))
+        try:
+            for x, y in data['castle_brick7']:
+                self.background_group.add(Brick(307, x, y))
+        except:
+            print('load castle_brick7 error!')
+        else:
+            print('load castle_brick7 successfully!')
 
-        for x, y in data['brick1']:
-            self.brick_group.add(Brick(1000, x, y))
+        try:
+            for x, y in data['brick1']:
+                self.brick_group.add(Brick(1000, x, y))
+        except:
+            print('load brick1 error!')
+        else:
+            print('load brick1 successfully!')
 
-        for x, y in data['brick2']:
-            self.brick_group.add(Brick(1001, x, y))
+        try:
+            for x, y in data['brick2']:
+                self.brick_group.add(Brick(1001, x, y))
+        except:
+            print('load brick2 error!')
+        else:
+            print('load brick2 successfully!')
 
-        for x, y in data['brick3']:
-            self.brick_group.add(Brick(1002, x, y))
+        try:
+            for x, y in data['brick3']:
+                self.brick_group.add(Brick(1002, x, y))
+        except:
+            print('load brick3 error!')
+        else:
+            print('load brick3 successfully!')
 
-        for x, y in data['coin']:
-            self.brick_group.add(Brick(2100, x, y))
+        try:
+            for x, y in data['coin']:
+                self.brick_group.add(Brick(2100, x, y))
+        except:
+            print('load coin error!')
+        else:
+            print('load coin successfully!')
 
-        for x, y in data['mushroom_grow']:
-            self.brick_group.add(Brick(2200, x, y))
+        try:
+            for x, y in data['mushroom_grow']:
+                self.brick_group.add(Brick(2200, x, y))
+        except:
+            print('load mushroom_grow error!')
+        else:
+            print('load mushroom_grow successfully!')
 
-        for x, y in data['mushroom_life']:
-            self.brick_group.add(Brick(2201, x, y))
+        try:
+            for x, y in data['mushroom_life']:
+                self.brick_group.add(Brick(2201, x, y))
+        except:
+            print('load mushroom_life error!')
+        else:
+            print('load mushroom_life successfully!')
 
-        for x, y in data['mushroom_death']:
-            self.brick_group.add(Brick(2202, x, y))
+        try:
+            for x, y in data['mushroom_death']:
+                self.brick_group.add(Brick(2202, x, y))
+        except:
+            print('load mushroom_death error!')
+        else:
+            print('load mushroom_death successfully!')
 
-        for x, y in data['goomba']:
-            self.enemy_group.add(Goomba(4000, x, y))
+        try:
+            for x, y in data['goomba']:
+                self.enemy_group.add(Goomba(4000, x, y))
+        except:
+            print('load goomba error!')
+        else:
+            print('load goomba successfully!')
 
-        for x, y in data['koopa']:
-            self.enemy_group.add(Koopa(4100, x, y))
+        try:
+            for x, y in data['koopa']:
+                self.enemy_group.add(Koopa(4100, x, y))
+        except:
+            print('load koopa error!')
+        else:
+            print('load koopa successfully!')
 
-        for x, y in data['cloud1']:
-            self.background_group.add(Cloud(200, x, y))
+        try:
+            for x, y in data['cloud1']:
+                self.background_group.add(Cloud(200, x, y))
+        except:
+            print('load cloud1 error!')
+        else:
+            print('load cloud1 successfully!')
 
-        for x, y in data['cloud2']:
-            self.background_group.add(Cloud(201, x, y))
+        try:
+            for x, y in data['cloud2']:
+                self.background_group.add(Cloud(201, x, y))
+        except:
+            print('load cloud2 error!')
+        else:
+            print('load cloud2 successfully!')
 
-        for x, y in data['brushwood1']:
-            self.background_group.add(Brushwood(100, x, y))
+        try:
+            for x, y in data['brushwood1']:
+                self.background_group.add(Brushwood(100, x, y))
+        except:
+            print('load brushwood1 error!')
+        else:
+            print('load brushwood1 successfully!')
 
-        for x, y in data['brushwood2']:
-            self.background_group.add(Brushwood(101, x, y))
+        try:
+            for x, y in data['brushwood2']:
+                self.background_group.add(Brushwood(101, x, y))
+        except:
+            print('load brushwood2 error!')
+        else:
+            print('load brushwood2 successfully!')
 
 
     def update(self, screen):

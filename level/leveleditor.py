@@ -1,5 +1,4 @@
 import json
-import tkinter
 
 from sprite.coin import *
 from gui.gui import *
@@ -27,8 +26,6 @@ class MapEditor():
         self.image = brick_img[0]
         self.imageId = 1000
 
-        self.init_gui()
-
         self.start_x = 0
         self.length = 0
         self.get_length()
@@ -42,6 +39,8 @@ class MapEditor():
 
         self.filename = ""
 
+        self.init_gui()
+
 
     def init_gui(self):
         self.gui = GUI()
@@ -53,6 +52,7 @@ class MapEditor():
         save_menuitem.bind_active(self.save_level_data, save_menuitem)
         file_menu.add_menuitem(save_menuitem)
         load_menuitem = MenuItem(text='导入')
+        load_menuitem.bind_active(self.load_level_data, load_menuitem)
         file_menu.add_menuitem(load_menuitem)
 
         system_menu = Menu(text="系统")
@@ -70,13 +70,20 @@ class MapEditor():
         self.gui.add_menubar(menubar, pos=(0, 0))
 
 
+    def load_level_data(self, menuitem):
+        menuitem.status = HOVER
+        filename = self.get_filename()
+
+
+
     def save_level_data(self, menuitem):
         menuitem.status = HOVER
-        self.store()
+        self.store(self.get_filename())
+        self.completed = True
 
 
     def enter_gamemenu_sceen(self):
-        self.next_scene = GAME_MENU_SCENE
+        self.completed = True
 
 
     def show(self):
@@ -93,11 +100,11 @@ class MapEditor():
         for event in pygame.event.get():
             self.gui.process_event(event)
             if event.type == pygame.QUIT:
-                self.store()
+                self.store(self.get_filename())
                 self.completed = True
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.store()
+                    self.store(self.get_filename())
                     self.completed = True
                 elif event.key == pygame.K_LEFT:
                     if self.start_x >= 40:
@@ -306,6 +313,8 @@ class MapEditor():
 
     # 获得用户输入的场景的长度
     def get_length(self):
+        self.gui = GUI()
+
         label = Label(size=(300, 50), text="输入场景长度(40的整数倍):", text_size=48, text_pos=LEFT)
         inputbox = InputBox(text='800')
         button = Button(text="确定", normal_color=GREY, hover_color=YELLOW, active_color=RED)
@@ -332,8 +341,7 @@ class MapEditor():
         self.length = int(inputbox.get_text())
 
 
-    # 用json格式保存关卡信息
-    def store(self):
+    def get_filename(self):
         label = Label(size=(300, 50), text='输入关卡名称(如level2)', text_size=48, text_pos=LEFT)
         inputbox = InputBox(text='default')
         button = Button(text='确定', normal_color=GREY, hover_color=YELLOW, active_color=RED)
@@ -343,6 +351,7 @@ class MapEditor():
         widget.add_inputbox(inputbox, pos=(10, 100))
         widget.add_button(button, pos=(10, 150))
         self.gui.add_widget(widget, pos=(100, 100))
+
 
         while button.status != ACTIVE:
             self.screen.fill(BLACK, (0, 0, 1600, 800))
@@ -354,6 +363,8 @@ class MapEditor():
         widget.destroy()
 
 
+    # 用json格式保存关卡信息
+    def store(self, filename):
         data = {}
         data["id"] = 2
         data['length']  = self.length
