@@ -14,13 +14,19 @@ from sprite.checkpoint import *
 class Level():
     def __init__(self, level):
         filename = './level/level' + str(level) + '.json'
-        with open(filename) as fp:
-            data = json.load(fp)
+        try:
+            with open(filename) as fp:
+                data = json.load(fp)
+        except:
+            print("load level error!")
+        else:
+            print('load level successfully!')
 
         self.length = data['length']
         self.start_x = 0
 
         self.brick_group = pygame.sprite.Group()
+        self.castle_group = pygame.sprite.Group()
         self.pipe_group = pygame.sprite.Group()
         self.plant_enemy = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
@@ -78,30 +84,33 @@ class Level():
         try:
             for x, y in data['piranha']:
                 self.plant_enemy.add(Piranha(4200, x, y))
-        except:
+        except Exception as err:
+            print(err)
             print('load piranha error!')
         else:
             print('load piranha successfully!')
 
         try:
             for x, y in data['castle_brick0']:
-                self.background_group.add(Brick(300, x, y))
-        except:
+                self.castle_group.add(Brick(300, x, y))
+        except Exception as err:
+            print(err)
             print('load castle_brick0 error!')
         else:
             print('load castle_brick0 successfully!')
 
         try:
             for x, y in data['castle_brick1']:
-                self.background_group.add(Brick(301, x, y))
-        except:
+                self.castle_group.add(Brick(301, x, y))
+        except Exception as err:
+            print(err)
             print('load castle_brick1 error!')
         else:
             print('load castle_brick1 successfully!')
 
         try:
             for x, y in data['castle_brick2']:
-                self.background_group.add(Brick(302, x, y))
+                self.castle_group.add(Brick(302, x, y))
         except:
             print('load castle_brick2 error!')
         else:
@@ -109,7 +118,7 @@ class Level():
 
         try:
             for x, y in data['castle_brick3']:
-                self.background_group.add(Brick(303, x, y))
+                self.castle_group.add(Brick(303, x, y))
         except:
             print('load castle_brick3 error!')
         else:
@@ -117,7 +126,7 @@ class Level():
 
         try:
             for x, y in data['castle_brick4']:
-                self.background_group.add(Brick(304, x, y))
+                self.castle_group.add(Brick(304, x, y))
         except:
             print('load castle_brick4 error!')
         else:
@@ -125,7 +134,7 @@ class Level():
 
         try:
             for x, y in data['castle_brick5']:
-                self.background_group.add(Brick(305, x, y))
+                self.castle_group.add(Brick(305, x, y))
         except:
             print('load castle_brick5 error!')
         else:
@@ -133,7 +142,7 @@ class Level():
 
         try:
             for x, y in data['castle_brick6']:
-                self.background_group.add(Brick(306, x, y))
+                self.castle_group.add(Brick(306, x, y))
         except:
             print('load castle_brick6 error!')
         else:
@@ -141,7 +150,7 @@ class Level():
 
         try:
             for x, y in data['castle_brick7']:
-                self.background_group.add(Brick(307, x, y))
+                self.castle_group.add(Brick(307, x, y))
         except:
             print('load castle_brick7 error!')
         else:
@@ -272,3 +281,6 @@ class Level():
 
         self.pipe_group.update(self.start_x)
         self.pipe_group.draw(screen)
+
+        self.castle_group.update(self.start_x)
+        self.castle_group.draw(screen)

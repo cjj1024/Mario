@@ -5,7 +5,8 @@ NOW_SCENE =             0
 GAME_MENU_SCENE =       1
 GAME_SCENE =            2
 DEATH_SCENE =           3
-SELECT_LEVEL_SCENE =    4
+WIN_SCENE =             4
+SELECT_LEVEL_SCENE =    5
 
 
 # 场景宽高

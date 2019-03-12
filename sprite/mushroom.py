@@ -27,7 +27,7 @@ class Mushroom(pygame.sprite.Sprite):
         elif self.type == 3201:
             player.life += 1
         elif self.type == 3202:
-            player.life -= 1
+            player.set_status(DEATH)
 
         self.kill()
 
@@ -40,12 +40,13 @@ class Mushroom(pygame.sprite.Sprite):
 
 
     def init_image(self):
+        print(self.type)
         if self.type == 3200:
             self.image = mushroom_img[0]
         elif self.type == 3201:
-            self.image = mushroom_img[1]
-        elif self.type == 3202:
             self.image = mushroom_img[2]
+        elif self.type == 3202:
+            self.image = mushroom_img[4]
         else:
             self.image = mushroom_img[0]
 

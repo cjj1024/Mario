@@ -5,6 +5,7 @@ from . gamemenu import *
 from . gamescene import *
 from . deathscene import *
 from . selectlevelscene import *
+from . winscene import *
 
 
 class SceneControl():
@@ -33,6 +34,8 @@ class SceneControl():
                         self.scene = GameScene()
                 elif next_scene == DEATH_SCENE:
                     self.scene = DeathScene(self.scene.mario)
+                elif next_scene == WIN_SCENE:
+                    self.scene = WinScene(self.scene.mario)
                 elif next_scene == SELECT_LEVEL_SCENE:
                     self.scene = SelectLevelScene()
 

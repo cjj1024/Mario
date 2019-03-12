@@ -33,6 +33,7 @@ class MapEditor():
         self.map = []
         for i in range(30):
             self.map.append([0] * int(self.length / 20))
+        print('size', len(self.map[0]), len(self.map))
 
         # 标记用户是否编辑完成
         self.completed = False
@@ -72,13 +73,252 @@ class MapEditor():
 
     def load_level_data(self, menuitem):
         menuitem.status = HOVER
-        filename = self.get_filename()
+        self.get_filename()
+        try:
+            with open('level/' + self.filename + '.json') as fp:
+                data = json.load(fp)
+        except Exception as e:
+            print(e)
+            print('laod level error!')
+        else:
+            print('load level successfully!')
+
+        try:
+            for x, y in data['pipe']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 1200
+        except Exception as e:
+            print(e)
+            print('load pipe error!')
+        else:
+            print('load pipe successfully!')
+
+        try:
+            for x, y in data['piranha']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 4200
+        except Exception as e:
+            print(e)
+            print('load piranha error!')
+        else:
+            print('load piranha successfully!')
+
+        try:
+            for x, y in data['castle_brick0']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 300
+        except Exception as e:
+            print(x/20, y/20)
+            print(e)
+            print('load castle_brick0 error!')
+        else:
+            print('load castle_brick0 successfully!')
+
+        try:
+            for x, y in data['castle_brick1']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 301
+        except Exception as e:
+            print(e)
+            print('load castle_brick1 error!')
+        else:
+            print('load castle_brick1 successfully!')
+
+        try:
+            for x, y in data['castle_brick2']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 302
+        except Exception as e:
+            print(e)
+            print('load castle_brick2 error!')
+        else:
+            print('load castle_brick2 successfully!')
+
+        try:
+            for x, y in data['castle_brick3']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 303
+        except Exception as e:
+            print(e)
+            print('load castle_brick3 error!')
+        else:
+            print('load castle_brick3 successfully!')
+
+        try:
+            for x, y in data['castle_brick4']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 304
+        except Exception as e:
+            print(e)
+            print('load castle_brick4 error!')
+        else:
+            print('load castle_brick4 successfully!')
+
+        try:
+            for x, y in data['castle_brick5']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 305
+        except Exception as e:
+            print(e)
+            print('load castle_brick5 error!')
+        else:
+            print('load castle_brick5 successfully!')
+
+        try:
+            for x, y in data['castle_brick6']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 306
+        except Exception as e:
+            print(e)
+            print('load castle_brick6 error!')
+        else:
+            print('load castle_brick6 successfully!')
+
+        try:
+            for x, y in data['castle_brick7']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 307
+        except Exception as e:
+            print(e)
+            print('load castle_brick7 error!')
+        else:
+            print('load castle_brick7 successfully!')
+
+        try:
+            for x, y in data['brick1']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 1000
+        except Exception as e:
+            print(e)
+            print('load brick1 error!')
+        else:
+            print('load brick1 successfully!')
+
+        try:
+            for x, y in data['brick2']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 1001
+        except Exception as e:
+            print(e)
+            print('load brick2 error!')
+        else:
+            print('load brick2 successfully!')
+
+        try:
+            for x, y in data['brick3']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 1002
+        except Exception as e:
+            print(e)
+            print('load brick3 error!')
+        else:
+            print('load brick3 successfully!')
+
+        try:
+            for x, y in data['coin']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 2100
+        except Exception as e:
+            print(e)
+            print('load coin error!')
+        else:
+            print('load coin successfully!')
+
+        try:
+            for x, y in data['mushroom_grow']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 2200
+        except Exception as e:
+            print(e)
+            print('load mushroom_grow error!')
+        else:
+            print('load mushroom_grow successfully!')
+
+        try:
+            for x, y in data['mushroom_life']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 2201
+        except Exception as e:
+            print(e)
+            print('load mushroom_life error!')
+        else:
+            print('load mushroom_life successfully!')
+
+        try:
+            for x, y in data['mushroom_death']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 2202
+        except Exception as e:
+            print(e)
+            print('load mushroom_death error!')
+        else:
+            print('load mushroom_death successfully!')
+
+        try:
+            for x, y in data['goomba']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 4000
+        except Exception as e:
+            print(e)
+            print('load goomba error!')
+        else:
+            print('load goomba successfully!')
+
+        try:
+            for x, y in data['koopa']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 4100
+        except Exception as e:
+            print(e)
+            print('load koopa error!')
+        else:
+            print('load koopa successfully!')
+
+        try:
+            for x, y in data['cloud1']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 200
+        except Exception as e:
+            print(e)
+            print('load cloud1 error!')
+        else:
+            print('load cloud1 successfully!')
+
+        try:
+            for x, y in data['cloud2']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 201
+        except Exception as e:
+            print(e)
+            print('load cloud2 error!')
+        else:
+            print('load cloud2 successfully!')
+
+        try:
+            for x, y in data['brushwood1']:
+                i, j = self.get_grid(x, y)
+                self.map[i][j] = 100
+        except Exception as e:
+            print(e)
+            print('load brushwood1 error!')
+        else:
+            print('load brushwood1 successfully!')
+
+        try:
+            for x, y in data['brushwood2']:
+                self.map[int(x/20)][int(y/20)] = 101
+        except Exception as e:
+            print(e)
+            print('load brushwood2 error!')
+        else:
+            print('load brushwood2 successfully!')
 
 
 
     def save_level_data(self, menuitem):
         menuitem.status = HOVER
-        self.store(self.get_filename())
+        self.get_filename()
+        self.store()
         self.completed = True
 
 
@@ -100,11 +340,13 @@ class MapEditor():
         for event in pygame.event.get():
             self.gui.process_event(event)
             if event.type == pygame.QUIT:
-                self.store(self.get_filename())
+                self.get_filename()
+                self.store()
                 self.completed = True
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.store(self.get_filename())
+                    self.get_filename()
+                    self.store()
                     self.completed = True
                 elif event.key == pygame.K_LEFT:
                     if self.start_x >= 40:
@@ -364,7 +606,7 @@ class MapEditor():
 
 
     # 用json格式保存关卡信息
-    def store(self, filename):
+    def store(self):
         data = {}
         data["id"] = 2
         data['length']  = self.length
@@ -437,9 +679,9 @@ class MapEditor():
                 elif self.map[i][j] == 305:
                     data['castle_brick5'].append(self.get_pos(i, j))
                 elif self.map[i][j] == 306:
-                    data['castle_brick5'].append(self.get_pos(i, j))
-                elif self.map[i][j] == 307:
                     data['castle_brick6'].append(self.get_pos(i, j))
+                elif self.map[i][j] == 307:
+                    data['castle_brick7'].append(self.get_pos(i, j))
 
 
 

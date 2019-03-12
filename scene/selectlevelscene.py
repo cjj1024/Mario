@@ -61,7 +61,7 @@ class SelectLevelScene(Scene):
         level5_button = Button(id=5, text='第五关', size=(200, 50),
                                normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2,
                                text_color=WHITE, text_size=48, text_pos=CENTER)
-        level5_button.bind_hover(self.set_level, 4)
+        level5_button.bind_hover(self.set_level, 5)
         level5_button.bind_active(self.enter_next_scene)
         self.gui.add_button(level5_button, pos=(0, 100))
 

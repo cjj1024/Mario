@@ -126,12 +126,16 @@ class GameScene(Scene):
         enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
         piranha = pygame.sprite.spritecollideany(self.mario, self.level.plant_enemy)
         checkpoint = pygame.sprite.spritecollideany(self.mario, self.level.checkpoint_group)
+        win = pygame.sprite.spritecollideany(self.mario, self.level.castle_group)
 
         if brick:
             self.process_mario_collision_x(brick)
 
         if pipe:
             self.process_mario_collision_x(pipe)
+
+        if win:
+            self.process_win()
 
         if mushroom:
             self.process_mario_mushroom_collision(mushroom)
@@ -146,6 +150,10 @@ class GameScene(Scene):
 
         if piranha:
             self.process_mario_piranha_collision()
+
+    def process_win(self):
+        self.next_scene = WIN_SCENE
+
 
     def process_mario_piranha_collision(self):
         self.mario.set_status(DEATH)
