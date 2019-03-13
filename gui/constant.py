@@ -1,8 +1,9 @@
 
 # 颜色
 RED =           (255, 0, 0)
-YELLOW =        (0, 255, 0)
+GREEN =         (0, 255, 0)
 BLUE =          (0, 0, 255)
+YELLOW =        (255, 255, 0)
 WHITE =         (255, 255, 255)
 BLACK =         (0, 0, 0)
 SPRINGGREEN =   (0, 255, 127)
@@ -114,3 +115,12 @@ INIT_LABEL_TEXT_COLOR =         BLACK
 INIT_LABEL_TEXT_SIZE =          16
 # 默认标签文字位置
 INIT_LABEL_TEXT_POS =           CENTER
+
+
+# 默认滑动条属性
+# 默认滑动条值
+INIT_SLIDER_VALUE =             0
+# 默认滑动条大小
+INIT_SLIDER_SIZE =              (300, 40)
+# 默认滑动条颜色
+INIT_SLIDER_COLOR =             GREEN

@@ -8,6 +8,9 @@ from gui.gui import *
 from gui.menuitem import *
 from gui.menu import *
 from gui.menubar import *
+from gui.slider import *
+from gui.widget import *
+from gui.label import *
 
 
 @Singleton
@@ -16,6 +19,8 @@ class GameScene(Scene):
         Scene.__init__(self)
 
         self.self_scene = GAME_SCENE
+
+        self.sound_volume = 0
 
         if not level == -1:
             self.level = Level(level)
@@ -38,6 +43,7 @@ class GameScene(Scene):
         setting_menu = Menu(text="设置")
         menubar.add_menu(setting_menu)
         sound_menuitem = MenuItem(text="声音")
+        sound_menuitem.bind_active(self.set_volumn, sound_menuitem)
         setting_menu.add_menuitem(sound_menuitem)
 
         system_menu = Menu(text="系统")
@@ -54,13 +60,38 @@ class GameScene(Scene):
         self.gui.add_menubar(menubar, pos=(0, 0))
 
 
+    def set_volumn(self, button):
+        button.status = HOVER
+
+        widget = Widget()
+        music_label = Label(text='声音', text_size=48)
+        music_slider = Slider(value=pygame.mixer.music.get_volume())
+        widget.add_label(music_label, pos=(0, 100))
+        widget.add_slider(music_slider, pos=(music_label.rect.width, 100))
+        sound_label = Label(text='音效', text_size=48)
+        sound_slider = Slider(value=pygame.mixer.music.get_volume())
+        widget.add_label(sound_label, pos=(0, 200))
+        widget.add_slider(sound_slider, pos=(sound_label.rect.width, 200))
+        self.gui.add_widget(widget, pos=(100, 200))
+
+        clock = pygame.time.Clock()
+        while widget.alive():
+            for event in pygame.event.get():
+                self.gui.process_event(event)
+            self.update()
+            self.gui.update(self.screen)
+            pygame.display.update()
+            pygame.mixer.music.set_volume(music_slider.value)
+            self.sound_volume = sound_slider.value
+            clock.tick(60)
+
+
     def enter_gamemenu_sceen(self):
         self.next_scene = GAME_MENU_SCENE
 
 
-    def show(self):
+    def update(self):
         self.screen.fill(SKYBLUE, (0, 0, 800, 600))
-
         self.level.update(self.screen)
         self.coin_group.update()
         self.coin_group.draw(self.screen)
@@ -68,6 +99,10 @@ class GameScene(Scene):
         self.mushroom_group.draw(self.screen)
         self.player_group.update()
         self.player_group.draw(self.screen)
+
+
+    def show(self):
+        self.update()
 
         self.move_mario()
         self.move_item(self.level.enemy_group)

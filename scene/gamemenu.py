@@ -24,6 +24,7 @@ class GameMenu(Scene):
 
         pygame.mixer.music.load(music['main_theme'])
         pygame.mixer.music.play(loops=100)
+        pygame.mixer.music.set_volume(0.1)
 
         self.init_gui()
 

@@ -46,6 +46,10 @@ class Widget(GUI, pygame.sprite.Sprite):
             inputbox.kill()
         for widget in self.widget_group:
             widget.kill()
+        for label in self.label_group:
+            label.kill()
+        for slider in self.slider_group:
+            slider.kill()
 
         self.kill()
 
@@ -68,14 +72,7 @@ class Widget(GUI, pygame.sprite.Sprite):
             if self.enable_drag:
                 self.drag(event.rel)
 
-        for button in self.button_group:
-            button.process_event(event)
-        for menubar in self.menubar_group:
-            menubar.process_event(event)
-        for inputbox in self.inputbox_group:
-            inputbox.process_event(event)
-        for widget in self.widget_group:
-            widget.process_event(event)
+        super().process_event(event)
 
 
     # 判断x, y是否在控件区域内
@@ -106,10 +103,9 @@ class Widget(GUI, pygame.sprite.Sprite):
         for label in self.label_group:
             label.rect.x += rel[0]
             label.rect.y += rel[1]
-
-
-    def check_event(self):
-        pass
+        for slider in self.slider_group:
+            slider.rect.x += rel[0]
+            slider.rect.y += rel[1]
 
 
     def adjust_pos(self, x, y):
@@ -124,3 +120,5 @@ class Widget(GUI, pygame.sprite.Sprite):
             inputbox.adjust_pos(x, y)
         for menubar in self.menubar_group:
             menubar.adjust_pos(x, y)
+        for slider in self.slider_group:
+            slider.adjust_pos(x, y)

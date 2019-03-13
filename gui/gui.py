@@ -10,6 +10,7 @@ class GUI():
         self.inputbox_group = pygame.sprite.Group()
         self.widget_group = pygame.sprite.Group()
         self.label_group = pygame.sprite.Group()
+        self.slider_group = pygame.sprite.Group()
 
 
     def add_button(self, button, pos=(0, 0)):
@@ -42,6 +43,11 @@ class GUI():
         self.label_group.add(label)
 
 
+    def add_slider(self, slider, pos=(0, 0)):
+        slider.adjust_pos(self.rect.x, self.rect.y)
+        slider.adjust_pos(pos[0], pos[1])
+        self.slider_group.add(slider)
+
 
     def update(self, screen):
         self.button_group.update()
@@ -53,6 +59,8 @@ class GUI():
         self.label_group.update()
         self.label_group.draw(screen)
 
+        self.slider_group.update()
+        self.slider_group.draw(screen)
 
         self.widget_group.update(screen)
 
@@ -68,3 +76,5 @@ class GUI():
             widget.process_event(event)
         for menubar in self.menubar_group:
             menubar.process_event(event)
+        for slider in self.slider_group:
+            slider.process_event(event)

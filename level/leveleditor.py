@@ -567,13 +567,14 @@ class MapEditor():
         widget.add_button(button, pos=(10, 150))
         self.gui.add_widget(widget, pos=(100, 100))
 
-
+        clock = pygame.time.Clock()
         while button.status != ACTIVE:
             self.screen.fill(BLACK, (0, 0, 1600, 800))
             for event in pygame.event.get():
                 self.gui.process_event(event)
             self.gui.update(self.screen)
             pygame.display.update()
+            clock.tick(60)
 
         widget.destroy()
 
@@ -595,12 +596,14 @@ class MapEditor():
         self.gui.add_widget(widget, pos=(100, 100))
 
 
+        clock = pygame.time.Clock()
         while button.status != ACTIVE:
             self.screen.fill(BLACK, (0, 0, 1600, 800))
             for event in pygame.event.get():
                 self.gui.process_event(event)
             self.gui.update(self.screen)
             pygame.display.update()
+            clock.tick(60)
 
         widget.destroy()
 
