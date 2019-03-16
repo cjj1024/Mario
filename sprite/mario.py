@@ -202,6 +202,8 @@ class Mario(pygame.sprite.Sprite):
             self.rect.height = self.stand_left.get_rect().height
             self.rect.y -= 40
 
+            pygame.mixer.Sound.play(sound['powerup'])
+
 
     def init_image(self):
         self.big_stand_right_img = mario_big_right_img_img[0][6]

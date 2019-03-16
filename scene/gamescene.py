@@ -15,15 +15,12 @@ from gui.label import *
 
 @Singleton
 class GameScene(Scene):
-    def __init__(self, level=-1):
+    def __init__(self):
         Scene.__init__(self)
 
         self.self_scene = GAME_SCENE
 
         self.sound_volume = 0
-
-        if not level == -1:
-            self.level = Level(level)
 
         self.player_group = pygame.sprite.Group()
         self.coin_group = pygame.sprite.Group()
@@ -33,6 +30,10 @@ class GameScene(Scene):
         self.player_group.add(self.mario)
 
         self.init_gui()
+
+
+    def set_level(self, level):
+        self.level = Level(level)
 
 
     def init_gui(self):
@@ -240,6 +241,7 @@ class GameScene(Scene):
 
         if enemy:
             self.process_mario_enemy_collision_y(enemy)
+
 
         if checkpoint:
             self.process_mario_checkpoint_collision(checkpoint)

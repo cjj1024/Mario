@@ -24,6 +24,11 @@ class SelectLevelScene(Scene):
 
         self.init_gui()
 
+
+    def enter_scent(self):
+        self.level = 0
+
+
     def set_level(self, level):
         self.level = level
 

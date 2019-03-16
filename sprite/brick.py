@@ -77,24 +77,29 @@ class Brick(StillObject):
         if self.type == 1002:
             self.kill()
             player.score += 5
+            pygame.mixer.Sound.play(sound['brick_smash'])
         elif self.type == 2100:
             self.type = 1003
             self.image = brick_img[6]
             group.add(Coin(self.rect.x, self.rect.y))
             player.coin_num += 1
             player.score += 10
+            pygame.mixer.Sound.play(sound['coin'])
         elif self.type == 2200:
             self.type = 1003
             self.image = brick_img[6]
             group.add(Mushroom(self.rect.x, self.rect.y, 3200))
+            pygame.mixer.Sound.play(sound['powerup_appears'])
         elif self.type == 2201:
             self.type = 1003
             self.image = brick_img[6]
             group.add(Mushroom(self.rect.x, self.rect.y, 3201))
+            pygame.mixer.Sound.play(sound['powerup_appears'])
         elif self.type == 2202:
             self.type = 1003
             self.image = brick_img[6]
             group.add(Mushroom(self.rect.x, self.rect.y, 3202))
+            pygame.mixer.Sound.play(sound['powerup_appears'])
 
 
 

@@ -16,6 +16,10 @@ class Scene():
         pygame.display.update()
 
 
+    def enter_scent(self):
+        pass
+
+
     def process_event(self, event):
         pass
 

@@ -21,6 +21,7 @@ class SceneControl():
             self.check_event()
 
             if self.scene.next_scene != NOW_SCENE:
+                pre_scene = self.scene.self_scene
                 next_scene = self.scene.next_scene
                 self.scene.next_scene = NOW_SCENE
 
@@ -28,17 +29,18 @@ class SceneControl():
                     self.scene = GameMenu()
                     print('game menu')
                 elif next_scene == GAME_SCENE:
-                    if self.scene.self_scene == SELECT_LEVEL_SCENE:
-                        self.scene = GameScene(self.scene.level)
-                    else:
+                    level = self.scene.level
+                    self.scene = GameScene()
+                    if pre_scene == SELECT_LEVEL_SCENE:
                         self.scene = GameScene()
+                        self.scene.set_level(level)
+
                 elif next_scene == DEATH_SCENE:
                     self.scene = DeathScene(self.scene.mario)
                 elif next_scene == WIN_SCENE:
                     self.scene = WinScene(self.scene.mario)
                 elif next_scene == SELECT_LEVEL_SCENE:
                     self.scene = SelectLevelScene()
-
 
             clock.tick(self.scene.fps)
 

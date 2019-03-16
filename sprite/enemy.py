@@ -1,5 +1,6 @@
 import pygame
 
+from tool.init import *
 from tool.globaldata import *
 
 
@@ -19,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
     def set_status(self, status):
         if self.status != DEATH:
             self.status = status
+            pygame.mixer.Sound.play(sound['kick'])
 
 
     def init_image(self):
