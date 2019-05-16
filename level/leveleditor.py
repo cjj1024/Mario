@@ -362,6 +362,8 @@ class MapEditor():
                 # 鼠标左键
                 if event.button == 1:
                     x, y = event.pos
+                    if x > 0 and x < 80 and y > 0 and y < 40:
+                        continue
                     if x > 840 and x < 880 and y > 0 and y < 40:
                         self.image = brick_img[0]
                         self.imageId = 1000

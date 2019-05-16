@@ -1,4 +1,5 @@
 import sys
+import random
 
 from sprite.mario import *
 from level.level import *
@@ -13,7 +14,7 @@ from gui.widget import *
 from gui.label import *
 
 
-@Singleton
+# @Singleton
 class GameScene(Scene):
     def __init__(self):
         Scene.__init__(self)
@@ -179,6 +180,7 @@ class GameScene(Scene):
         if enemy:
             if self.mario.rect.x > enemy.rect.x and self.mario.rect.left + 10 < enemy.rect.right or \
                 self.mario.rect.x < enemy.rect.x and self.mario.rect.right - 10 > enemy.rect.left:
+                print(random.random())
                 self.process_mario_enemy_collision_x()
 
         if checkpoint:
@@ -226,8 +228,7 @@ class GameScene(Scene):
         brick = pygame.sprite.spritecollideany(self.mario, self.level.brick_group)
         pipe = pygame.sprite.spritecollideany(self.mario, self.level.pipe_group)
         mushroom = pygame.sprite.spritecollideany(self.mario, self.mushroom_group)
-        enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
-        piranha = pygame.sprite.spritecollideany(self.mario, self.level.plant_enemy)
+
         checkpoint = pygame.sprite.spritecollideany(self.mario, self.level.checkpoint_group)
 
         if brick:
@@ -239,13 +240,14 @@ class GameScene(Scene):
         if mushroom:
             self.process_mario_mushroom_collision(mushroom)
 
+        enemy = pygame.sprite.spritecollideany(self.mario, self.level.enemy_group)
         if enemy:
             self.process_mario_enemy_collision_y(enemy)
-
 
         if checkpoint:
             self.process_mario_checkpoint_collision(checkpoint)
 
+        piranha = pygame.sprite.spritecollideany(self.mario, self.level.plant_enemy)
         if piranha:
             self.process_mario_piranha_collision()
 

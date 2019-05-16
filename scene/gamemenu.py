@@ -57,8 +57,6 @@ class GameMenu(Scene):
 
 
     def show(self):
-        self.next_scene = NOW_SCENE
-
         self.draw_background()
 
         self.gui.update(self.screen)
@@ -80,7 +78,8 @@ class GameMenu(Scene):
 
     def enter_next_scene(self):
         if self.selected == 0:
-            self.next_scene = SELECT_LEVEL_SCENE
+            # self.next_scene = SELECT_LEVEL_SCENE
+            self.next_scene = SELECT_DIFFICULTY_SCENE
         elif self.selected == 1:
             mapeditor = MapEditor()
             mapeditor.show()

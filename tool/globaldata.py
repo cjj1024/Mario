@@ -1,12 +1,26 @@
+from . singleton import *
+
+
+# 游戏难度
+# 当碰到敌人时， 以一定概率触发不死
+# 困难
+HARD =                  0.1
+# 普通
+NORMAL =                0.3
+# 简单
+EASY =                  0.5
+
+
 
 # 场景
 # NOWSCENE 当前场景
-NOW_SCENE =             0
-GAME_MENU_SCENE =       1
-GAME_SCENE =            2
-DEATH_SCENE =           3
-WIN_SCENE =             4
-SELECT_LEVEL_SCENE =    5
+NOW_SCENE =                 0
+GAME_MENU_SCENE =           1
+GAME_SCENE =                2
+DEATH_SCENE =               3
+WIN_SCENE =                 4
+SELECT_LEVEL_SCENE =        5
+SELECT_DIFFICULTY_SCENE =   6
 
 
 # 场景宽高
@@ -86,3 +100,9 @@ BLACK =     (0, 0, 0)
 SKYBLUE =   (135, 206, 235)
 MAGENTA =   (255, 0, 255)
 LIGHTBLUE = (173, 216, 230)
+
+
+@Singleton
+class GlobalData(object):
+    def __init__(self):
+        self.game_probability = EASY

@@ -83,7 +83,7 @@ class Level():
 
         try:
             for x, y in data['piranha']:
-                self.plant_enemy.add(Piranha(4200, x, y))
+                self.plant_enemy.add(Piranha(4200, x + 5, y + 10))
         except Exception as err:
             print(err)
             print('load piranha error!')

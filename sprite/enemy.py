@@ -3,7 +3,6 @@ import pygame
 from tool.init import *
 from tool.globaldata import *
 
-
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, type, x, y):
         pygame.sprite.Sprite.__init__(self)

@@ -1,7 +1,9 @@
 import pygame
 import json
+import random
 
 from tool.init import *
+
 from . colliderbox import *
 
 class Mario(pygame.sprite.Sprite):
@@ -32,6 +34,8 @@ class Mario(pygame.sprite.Sprite):
 
         self.init_image()
         self.set_shape(SMALL)
+
+        self.globalData = GlobalData()
 
 
     def update(self):
@@ -130,6 +134,9 @@ class Mario(pygame.sprite.Sprite):
         # 要变成死亡状态
         if status == DEATH:
             if self.is_new_life:
+                return
+            if random.random() < self.globalData.game_probability:
+                self.is_new_life = True
                 return
             if self.shape == BIG:
                 self.set_shape(SMALL)

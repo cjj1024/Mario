@@ -87,6 +87,7 @@ class SelectLevelScene(Scene):
 
     def show(self):
         self.screen.fill(SKYBLUE, (0, 0, 800, 600))
+        self.draw_background()
 
         self.gui.update(self.screen)
         pygame.display.update()
@@ -105,3 +106,16 @@ class SelectLevelScene(Scene):
         #         self.level = (self.level + 1) % self.num
         #     elif event.key == pygame.K_RETURN:
         #         self.next_scene = GAME_SCENE
+
+
+    def draw_background(self):
+        self.screen.fill(SKYBLUE, (0, 0, 800, 600))
+        for i in range(0, 800, 40):
+            self.screen.blit(brick_img[0], (i, 520))
+        for i in range(0, 800, 40):
+            self.screen.blit(brick_img[0], (i, 560))
+        self.screen.blit(cloud_img[0], (600, 100))
+        self.screen.blit(brushwood_img[0], (0, 480))
+        self.screen.blit(brushwood_img[0], (40, 480))
+        self.screen.blit(brushwood_img[0], (200, 480))
+        self.screen.blit(brushwood_img[0], (600, 480))

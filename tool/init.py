@@ -8,6 +8,9 @@ from . globaldata import *
 pygame.init()
 pygame.display.set_mode((800, 600))
 
+cjj = pygame.image.load('./res/image/cjj.png')
+cjj.set_colorkey(WHITE)
+
 mario_img = load_image('./res/image/mario.png')
 
 # big 40x80px
@@ -57,6 +60,9 @@ piranha_img = []
 # 40x60px
 for i in range(2):
     piranha_img.append(get_image(enemy_img, i * 16 + 192, 8, 16, 24))
+
+for i in range(len(piranha_img)):
+    piranha_img[i] = pygame.transform.scale(piranha_img[i], (30, 40))
 
 
 background_img = load_image('./res/image/background.png')
@@ -138,7 +144,8 @@ for i in range(4):
 coin_img = []
 # 40x40px
 for i in range(4):
-    coin_img.append(get_image(item_img, i * 16, 96, 16, 16))
+    coin_img.append(get_image(item_img, i * 16, 112, 16, 16))
+
 
 
 music =     load_musics('./res/music')
@@ -147,6 +154,8 @@ sound =     load_sounds('./res/sound')
 font =      pygame.font.Font('./res/font/minicanton.TTF', FONT_SIZE)
 
 
+game_difficulty = EASY
+
 pygame.display.set_caption('超级玛丽')
-icon = load_image('./res/image/icon.png')
+icon = pygame.transform.scale(pygame.image.load('./res/image/game_icon.ico'), (32, 32))
 pygame.display.set_icon(icon)
