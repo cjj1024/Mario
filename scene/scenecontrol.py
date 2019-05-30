@@ -15,6 +15,8 @@ class SceneControl():
         self.is_active = True
         self.is_pause = False
 
+        self.globalData = GlobalData()
+
 
     def show_scene(self):
         clock = pygame.time.Clock()
@@ -28,14 +30,13 @@ class SceneControl():
             self.check_event()
 
 
-            if self.scene.next_scene != NOW_SCENE:
+            if self.globalData.scene != NOW_SCENE:
                 pre_scene = self.scene.self_scene
-                next_scene = self.scene.next_scene
-                self.scene.next_scene = NOW_SCENE
+                next_scene = self.globalData.scene
+                self.globalData.scene = NOW_SCENE
 
                 if next_scene == GAME_MENU_SCENE:
                     self.scene = GameMenu()
-                    print('game menu')
                 elif next_scene == GAME_SCENE:
                     if pre_scene == SELECT_LEVEL_SCENE:
                         level = self.scene.level

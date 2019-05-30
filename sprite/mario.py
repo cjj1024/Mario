@@ -148,6 +148,7 @@ class Mario(pygame.sprite.Sprite):
                 self.speed_y = BIG_JUMP_SPEED_Y
                 self.speed_x = 0
                 pygame.mixer.Sound.play(sound['death'])
+                self.globalData.scene = DEATH_SCENE
         elif status == JUMP:
             key = pygame.key.get_pressed()
             if key[pygame.K_a]:

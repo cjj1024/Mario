@@ -106,3 +106,4 @@ LIGHTBLUE = (173, 216, 230)
 class GlobalData(object):
     def __init__(self):
         self.game_probability = EASY
+        self.scene = NOW_SCENE

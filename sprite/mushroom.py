@@ -40,7 +40,6 @@ class Mushroom(pygame.sprite.Sprite):
 
 
     def init_image(self):
-        print(self.type)
         if self.type == 3200:
             self.image = mushroom_img[0]
         elif self.type == 3201:

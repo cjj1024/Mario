@@ -33,7 +33,6 @@ class MapEditor():
         self.map = []
         for i in range(30):
             self.map.append([0] * int(self.length / 20))
-        print('size', len(self.map[0]), len(self.map))
 
         # 标记用户是否编辑完成
         self.completed = False
@@ -108,7 +107,6 @@ class MapEditor():
                 i, j = self.get_grid(x, y)
                 self.map[i][j] = 300
         except Exception as e:
-            print(x/20, y/20)
             print(e)
             print('load castle_brick0 error!')
         else:

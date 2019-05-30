@@ -14,9 +14,10 @@ from gui.widget import *
 from gui.label import *
 
 
-# @Singleton
+@Singleton
 class GameScene(Scene):
     def __init__(self):
+        print("init game scene")
         Scene.__init__(self)
 
         self.self_scene = GAME_SCENE
@@ -31,6 +32,8 @@ class GameScene(Scene):
         self.player_group.add(self.mario)
 
         self.init_gui()
+
+        self.globalData = GlobalData()
 
 
     def set_level(self, level):
@@ -89,7 +92,7 @@ class GameScene(Scene):
 
 
     def enter_gamemenu_sceen(self):
-        self.next_scene = GAME_MENU_SCENE
+        self.globalData.scene = GAME_MENU_SCENE
 
 
     def update(self):
@@ -115,7 +118,7 @@ class GameScene(Scene):
         pygame.display.update()
 
         if not self.player_group.has(self.mario):
-            self.next_scene = DEATH_SCENE
+            self.globalData.scene = DEATH_SCENE
             self.player_group.add(self.mario)
 
 
@@ -180,7 +183,6 @@ class GameScene(Scene):
         if enemy:
             if self.mario.rect.x > enemy.rect.x and self.mario.rect.left + 10 < enemy.rect.right or \
                 self.mario.rect.x < enemy.rect.x and self.mario.rect.right - 10 > enemy.rect.left:
-                print(random.random())
                 self.process_mario_enemy_collision_x()
 
         if checkpoint:
@@ -190,7 +192,7 @@ class GameScene(Scene):
             self.process_mario_piranha_collision()
 
     def process_win(self):
-        self.next_scene = WIN_SCENE
+        self.globalData.scene = WIN_SCENE
 
 
     def process_mario_piranha_collision(self):

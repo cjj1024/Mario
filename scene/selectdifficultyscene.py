@@ -24,7 +24,10 @@ class SelectDifficultyScene(Scene):
 
 
     def enter_next_scene(self):
-        self.next_scene = SELECT_LEVEL_SCENE
+        self.globalData.scene = SELECT_LEVEL_SCENE
+
+    def enter_gamemenu_sceen(self):
+        self.globalData.scene = GAME_MENU_SCENE
 
 
     def init_gui(self):
@@ -49,6 +52,13 @@ class SelectDifficultyScene(Scene):
         hard_button.bind_hover(self.set_difficulty, HARD)
         hard_button.bind_active(self.enter_next_scene)
         self.gui.add_button(hard_button, pos=(300, 300))
+
+        return_menu_button = Button(text='返回菜单', text_color=WHITE, text_size=48,
+                                    normal_color=SKYBLUE, hover_color=DEEPSKYBLUE1, active_color=DEEPSKYBLUE2)
+        return_menu_button.bind_active(self.enter_gamemenu_sceen)
+        self.gui.add_button(return_menu_button,
+                            pos=(SCREEN_SIZE[0]-return_menu_button.rect.width - 5,
+                                 SCREEN_SIZE[1]-return_menu_button.rect.height - 85))
 
 
     def show(self):
