@@ -1,6 +1,6 @@
 import pygame
 
-from . tool import *
+from . load import *
 from . globaldata import *
 
 

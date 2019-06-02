@@ -9,14 +9,15 @@ def load_images(directory, colorkey=MAGENTA, accept=('.jpg', '.bmp', '.png')):
         # 把文件名分成名字和扩展名
         name, ext = os.path.splitext(filename)
         # 判断文件是否为可接受的文件类型
-        if ext.lower() in accept:
-            img = pygame.image.load(os.path.join(directory, filename))
-            if img.get_alpha():
-                img = img.convert_alpha()
-            else:
-                img.set_colorkey(colorkey)
-                img = img.convert()
-            images[name] = img
+        # if ext.lower() in accept:
+        #         #     img = pygame.image.load(os.path.join(directory, filename))
+        #         #     if img.get_alpha():
+        #         #         img = img.convert_alpha()
+        #         #     else:
+        #         #         img.set_colorkey(colorkey)
+        #         #         img = img.convert()
+        #         #     images[name] = img
+        images[name] = load_image(filename, colorkey)
 
     return images
 
